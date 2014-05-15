@@ -7,6 +7,7 @@ Installation
 Install from PyPI_ using pip_
 
 .. code-block:: bash
+
     $ pip install pokitdok
 
 
