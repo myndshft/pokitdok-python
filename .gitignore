@@ -17,7 +17,7 @@ sdist
 develop-eggs
 .installed.cfg
 lib64
-venv
+venv*
 __pycache__
 
 # Installer logs

@@ -1,2 +1,3 @@
 from __future__ import absolute_import
-import pokitdok.api
+
+from .client import PokitDokClient
