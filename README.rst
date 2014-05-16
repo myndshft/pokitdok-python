@@ -24,10 +24,10 @@ Quick start
 
     import pokitdok
 
-    client = pokitdok.api.PokitDokClient('<your client id>', '<your client secret>')
+    pd = pokitdok.api.PokitDokClient('<your client id>', '<your client secret>')
 
     #submit an eligibility request
-    eligibility_response = client.eligibility({
+    eligibility_response = pd.eligibility({
         "trading_partner_id": "2",
         "member_id": "W00000000000",
         "provider_id": "1467560003",
@@ -40,7 +40,7 @@ Quick start
     })
 
     #Check on pending platform activities
-    client.activities()
+    pd.activities()
 
 See the documentation_ for detailed information on all of the PokitDok Platform APIs
 
