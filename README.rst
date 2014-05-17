@@ -39,6 +39,9 @@ Quick start
         "service_types": ["Health Benefit Plan Coverage"]
     })
 
+    #retrieve provider information by NPI
+    pd.providers('1467560003')
+
     #Check on pending platform activities
     pd.activities()
 
@@ -49,6 +52,7 @@ Supported Python Versions
 
 This library aims to support and is tested against these Python versions:
 
+* 2.6.9
 * 2.7.6
 * 3.4.0
 * PyPy
@@ -60,7 +64,7 @@ License
 
 Copyright (c) 2014 PokitDok, Inc.  See LICENSE for details.
 
-.. _documentation:
+.. _documentation: https://platform.pokitdok.com
 .. _issues: https://github.com/PokitDokInc/pokitdok-python/issues
 .. _PyPI: https://pypi.python.org/pypi
 .. _pip: https://pypi.python.org/pypi/pip

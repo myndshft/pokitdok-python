@@ -17,10 +17,10 @@ from setuptools import setup
 setup(
     name="pokitdok",
     version="0.0.1",
-    url="https://github.com/PokitDokInc/pokitdok-python",
     license="MIT",
     author="PokitDok, Inc.",
     author_email="support@pokitdok.com",
+    url="https://platform.pokitdok.com",
     description="PokitDok Platform API Client",
     long_description=__doc__,
     packages=["pokitdok", "pokitdok.api"],

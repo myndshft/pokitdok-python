@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 from __future__ import absolute_import
 import json
-
+import pokitdok
+import requests
 from requests_oauthlib import OAuth2Session
 from oauthlib.oauth2 import BackendApplicationClient
 
@@ -19,10 +21,13 @@ class PokitDokClient(object):
             :param client_secret: The client secret for your PokitDok Platform Application
             :param base: The base URL to use for API requests.  Defaults to https://platform.pokitdok.com
         """
-        self.headers = {
-            'Content-type': 'application/json',
-            'Content-type': 'application/json'
+        self.base_headers = {
+            'User-Agent': 'python-pokitdok/{0} {1}'.format(pokitdok.__version__, requests.utils.default_user_agent())
         }
+        self.json_headers = {
+            'Content-type': 'application/json',
+        }
+        self.json_headers.update(self.base_headers)
         self.client_id = client_id
         self.client_secret = client_secret
         self.client_access_token = None
@@ -60,7 +65,7 @@ class PokitDokClient(object):
             :param claims_request: dictionary representing a claims request
         """
         claims_url = "{0}/claims/".format(self.url_base)
-        return self.api_client.post(claims_url, data=json.dumps(claims_request), headers=self.headers).json()
+        return self.api_client.post(claims_url, data=json.dumps(claims_request), headers=self.json_headers).json()
 
     def claims_status(self, claims_status_request):
         """
@@ -70,7 +75,7 @@ class PokitDokClient(object):
         """
         claims_status_url = "{0}/claims/status/".format(self.url_base)
         return self.api_client.post(claims_status_url, data=json.dumps(claims_status_request),
-                                    headers=self.headers).json()
+                                    headers=self.json_headers).json()
 
     def eligibility(self, eligibility_request):
         """
@@ -79,7 +84,7 @@ class PokitDokClient(object):
             :param eligibility_request: dictionary representing an eligibility request
         """
         eligibility_url = "{0}/eligibility/".format(self.url_base)
-        return self.api_client.post(eligibility_url, data=json.dumps(eligibility_request), headers=self.headers).json()
+        return self.api_client.post(eligibility_url, data=json.dumps(eligibility_request), headers=self.json_headers).json()
 
     def enrollment(self, enrollment_request):
         """
@@ -88,7 +93,7 @@ class PokitDokClient(object):
             :param enrollment_request: dictionary representing an enrollment request
         """
         enrollment_url = "{0}/enrollment/".format(self.url_base)
-        return self.api_client.post(enrollment_url, data=json.dumps(enrollment_request), headers=self.headers).json()
+        return self.api_client.post(enrollment_url, data=json.dumps(enrollment_request), headers=self.json_headers).json()
 
     def files(self, trading_partner_id, x12_file):
         """
@@ -99,6 +104,7 @@ class PokitDokClient(object):
         """
         files_url = "{0}/files/".format(self.url_base)
         return self.api_client.post(files_url,
+                                    headers=self.base_headers,
                                     data={'trading_partner_id': trading_partner_id},
                                     files={'file': open(x12_file, 'rb')}).json()
 
@@ -108,4 +114,4 @@ class PokitDokClient(object):
         """
         #TODO: support all query string parameters
         providers_url = "{0}/providers/{1}".format(self.url_base, provider_id if provider_id else '')
-        return self.api_client.get(providers_url).json()
+        return self.api_client.get(providers_url, headers=self.base_headers).json()
