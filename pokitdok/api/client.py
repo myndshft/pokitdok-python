@@ -19,7 +19,10 @@ class PokitDokClient(object):
             :param client_secret: The client secret for your PokitDok Platform Application
             :param base: The base URL to use for API requests.  Defaults to https://platform.pokitdok.com
         """
-        self.headers = {'Content-type': 'application/json'}
+        self.headers = {
+            'Content-type': 'application/json',
+            'Content-type': 'application/json'
+        }
         self.client_id = client_id
         self.client_secret = client_secret
         self.client_access_token = None
@@ -87,14 +90,17 @@ class PokitDokClient(object):
         enrollment_url = "{0}/enrollment/".format(self.url_base)
         return self.api_client.post(enrollment_url, data=json.dumps(enrollment_request), headers=self.headers).json()
 
-    def files(self, x12_file):
+    def files(self, trading_partner_id, x12_file):
         """
             Submit a raw X12 file to the platform for processing
 
+            :param trading_partner_id: the trading partner that should receive the X12 file information
             :param x12_file: the path to a X12 file to be submitted to the platform for processing
         """
         files_url = "{0}/files/".format(self.url_base)
-        return self.api_client.post(files_url, files={'file': open(x12_file, 'rb')}).json()
+        return self.api_client.post(files_url,
+                                    data={'trading_partner_id': trading_partner_id},
+                                    files={'file': open(x12_file, 'rb')}).json()
 
     def providers(self, provider_id=None):
         """

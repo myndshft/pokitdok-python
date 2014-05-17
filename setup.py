@@ -28,7 +28,7 @@ setup(
     include_package_data=True,
     platforms="any",
     install_requires=[
-        "requests>=2.2.1", "requests-oauthlib>=0.4.0"
+        "requests>=2.3.0", "requests-oauthlib>=0.4.0"
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
