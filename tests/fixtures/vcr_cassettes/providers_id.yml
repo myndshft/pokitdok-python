@@ -1,0 +1,37 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      User-Agent: [python-requests/2.3.0 CPython/2.7.5 Darwin/13.1.0]
+    method: GET
+    uri: http://localhost:5002/api/v3/providers/1467560003
+  response:
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 2, "rate_limit_reset":
+        1400294198, "processing_time": 78, "rate_limit_cap": 1000, "credits_remaining":
+        -6, "credits_billed": 1}, "data": {"provider": {"first_name": "JEROME", "last_name":
+        "AYA-AY", "middle_name": "BENITEZ", "name": "JEROME BENITEZ AYA-AY", "npi_id":
+        "1467560003", "licences": [{"state": "SC", "number": "27210"}], "gender":
+        "Male", "locations": [{"address_lines": ["PO BOX 2168"], "city": "SPARTANBURG",
+        "country": "US", "zipcode": "29304", "phone": "8645604304", "state": "SC",
+        "geo_location": [-81.863874, 34.916625], "role": "mailing"}, {"address_lines":
+        ["8311 WARREN H ABERNATHY HWY"], "city": "SPARTANBURG", "country": "US", "zipcode":
+        "29301", "phone": "8645625100", "state": "SC", "geo_location": [-82.014564,
+        34.93627], "role": ["practice", "office"]}, {"address_lines": ["853 N CHURCH
+        ST STE 510"], "city": "SPARTANBURG", "zipcode": "29303", "state": "SC", "geo_location":
+        [-81.94176, 34.96555], "role": "practice"}, {"address_lines": ["408 LITCHFIELD
+        DR"], "city": "MOORE", "zipcode": "29369", "state": "SC", "geo_location":
+        [-81.97699, 34.8981], "role": "mailing"}], "specialties": ["FAMILY MEDICINE"],
+        "prefix": "DR", "date_of_birth": 1972, "education": {"medical_school": "J
+        C EDWARDS SCHOOL MEDICAL MARSHALL UNLIMITED, HUNTINGTON WEST VIRGINIA 2575",
+        "graduation_year": 2004}}}}'}
+    headers:
+      charset: [utf-8]
+      content-length: ['1341']
+      content-type: [text/html; charset=utf-8]
+      date: ['Sat, 17 May 2014 01:42:30 GMT']
+      mimetype: [application/json]
+      server: [Werkzeug/0.9.4 Python/2.7.3]
+    status: {code: 200, message: OK}
+version: 1
