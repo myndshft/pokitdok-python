@@ -40,10 +40,34 @@ Quick start
     })
 
     #retrieve provider information by NPI
-    pd.providers('1467560003')
+    pd.providers(npi='1467560003')
+
+    #search providers by name (individuals)
+    pd.providers(first_name='JEROME', last_name='AYA-AY')
+    pd.providers(first_name='juliette', last_name='saad')
+
+    #search providers by name (organizations)
+    pd.providers(name='Qliance')
+
+    #search providers by location and/or specialty
+    pd.providers(zipcode='29307', radius='10mi')
+    pd.providers(zipcode='29307', radius='10mi', specialty='RHEUMATOLOGY')
+
+    #Submit X12 files directly for processing on the platform
+    pd.files('MOCKPAYER', '/x12_files/eligibility_requests_batch_20.270')
 
     #Check on pending platform activities
+
+    #check on a specific activity
+    pd.activities(activity_id='5362b5a064da150ef6f2526c')
+
+    #check on a batch of activities
+    pd.activities(parent_id='537cd4b240b35755f5128d5c')
+
+    #retrieve an index of activities
     pd.activities()
+
+
 
 See the documentation_ for detailed information on all of the PokitDok Platform APIs
 

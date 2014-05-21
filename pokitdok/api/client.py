@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 import json
+import os
 import pokitdok
 import requests
 from requests_oauthlib import OAuth2Session
@@ -43,12 +44,26 @@ class PokitDokClient(object):
         """
         return self.api_client.fetch_token(self.token_url, client_id=self.client_id, client_secret=self.client_secret)
 
-    def activities(self, activity_id=None):
+    def activities(self, activity_id=None, **kwargs):
         """
             Fetch platform activity information
+
+            :param activity_id: the id of a specific platform activity that should be retrieved.
+                                If omitted, an index listing of activities is returned.  If included
+                                other keyword arguments are ignored.
+
+            Keyword arguments that may be used to refine an activity search:
+
+            :param parent_id: The parent activity id of the activities.  This is used to track
+                              child activities that are the result of a batch operation.
+
         """
         activities_url = "{0}/activities/{1}".format(self.url_base, activity_id if activity_id else '')
-        return self.api_client.get(activities_url).json()
+        request_args = {}
+        if activity_id is None:
+            request_args.update(kwargs)
+
+        return self.api_client.get(activities_url, params=request_args, headers=self.base_headers).json()
 
     def cash_prices(self):
         """
@@ -56,7 +71,7 @@ class PokitDokClient(object):
         """
         #TODO: support all query string possibilities
         cash_prices_url = "{0}/prices/cash/".format(self.url_base)
-        return self.api_client.get(cash_prices_url).json()
+        return self.api_client.get(cash_prices_url, headers=self.base_headers).json()
 
     def claims(self, claims_request):
         """
@@ -84,7 +99,8 @@ class PokitDokClient(object):
             :param eligibility_request: dictionary representing an eligibility request
         """
         eligibility_url = "{0}/eligibility/".format(self.url_base)
-        return self.api_client.post(eligibility_url, data=json.dumps(eligibility_request), headers=self.json_headers).json()
+        return self.api_client.post(eligibility_url, data=json.dumps(eligibility_request),
+                                    headers=self.json_headers).json()
 
     def enrollment(self, enrollment_request):
         """
@@ -93,7 +109,8 @@ class PokitDokClient(object):
             :param enrollment_request: dictionary representing an enrollment request
         """
         enrollment_url = "{0}/enrollment/".format(self.url_base)
-        return self.api_client.post(enrollment_url, data=json.dumps(enrollment_request), headers=self.json_headers).json()
+        return self.api_client.post(enrollment_url, data=json.dumps(enrollment_request),
+                                    headers=self.json_headers).json()
 
     def files(self, trading_partner_id, x12_file):
         """
@@ -106,12 +123,30 @@ class PokitDokClient(object):
         return self.api_client.post(files_url,
                                     headers=self.base_headers,
                                     data={'trading_partner_id': trading_partner_id},
-                                    files={'file': open(x12_file, 'rb')}).json()
+                                    files={'file': (os.path.split(x12_file)[-1], open(x12_file, 'rb'),
+                                                    'application/EDI-X12')}).json()
 
-    def providers(self, provider_id=None):
+    def providers(self, npi=None, **kwargs):
         """
-            Fetch health care provider information
+            Search health care providers in the PokitDok directory
+
+            :param npi: The National Provider Identifier for an Individual Provider or Organization
+                        When a NPI value is specified, no other parameters will be considered.
+
+            Keyword arguments that may be used to refine a providers search:
+
+            :param zipcode: A zip code that should be searched in/around for providers
+            :param radius: A value representing the search distance from a geographic center point
+                           May be expressed in miles like: 10mi
+            :param first_name: The first name of a provider to include in the search criteria
+            :param last_name: The last name of a provider to include in the search criteria
+            :param limit: The number of provider results that should be included in search results
+
         """
-        #TODO: support all query string parameters
-        providers_url = "{0}/providers/{1}".format(self.url_base, provider_id if provider_id else '')
-        return self.api_client.get(providers_url, headers=self.base_headers).json()
+
+        providers_url = "{0}/providers/{1}".format(self.url_base, npi if npi else '')
+        request_args = {}
+        if npi is None:
+            request_args.update(kwargs)
+
+        return self.api_client.get(providers_url, params=request_args, headers=self.base_headers).json()
