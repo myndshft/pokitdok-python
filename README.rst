@@ -86,10 +86,11 @@ You may have luck with other interpreters - let us know how it goes.
 License
 -------
 
-Copyright (c) 2014 PokitDok, Inc.  See LICENSE for details.
+Copyright (c) 2014 PokitDok, Inc.  See LICENSE_ for details.
 
 .. _documentation: https://platform.pokitdok.com
 .. _issues: https://github.com/PokitDokInc/pokitdok-python/issues
 .. _PyPI: https://pypi.python.org/pypi
 .. _pip: https://pypi.python.org/pypi/pip
+.. _LICENSE: LICENSE.txt
 
