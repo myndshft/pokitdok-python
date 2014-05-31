@@ -16,7 +16,7 @@ from setuptools import setup
 
 setup(
     name="pokitdok",
-    version="0.0.1",
+    version="0.1",
     license="MIT",
     author="PokitDok, Inc.",
     author_email="support@pokitdok.com",
@@ -38,6 +38,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: Implementation :: PyPy",
