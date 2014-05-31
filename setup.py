@@ -21,6 +21,7 @@ setup(
     author="PokitDok, Inc.",
     author_email="support@pokitdok.com",
     url="https://platform.pokitdok.com",
+    download_url = 'https://github.com/pokitdok/pokitdok-python/tarball/0.1',
     description="PokitDok Platform API Client",
     long_description=__doc__,
     packages=["pokitdok", "pokitdok.api"],
@@ -30,6 +31,7 @@ setup(
     install_requires=[
         "requests>=2.3.0", "requests-oauthlib>=0.4.0"
     ],
+    keywords = ['health', 'api', 'pokitdok', 'X12', 'eligibility', 'claims', 'providers', 'prices', 'healthcare'],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
