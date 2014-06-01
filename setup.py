@@ -22,12 +22,12 @@ from setuptools import setup
 
 setup(
     name="pokitdok",
-    version="0.2",
+    version="0.3",
     license="MIT",
     author="PokitDok, Inc.",
     author_email="support@pokitdok.com",
     url="https://platform.pokitdok.com",
-    download_url = 'https://github.com/pokitdok/pokitdok-python/tarball/0.2',
+    download_url = 'https://github.com/pokitdok/pokitdok-python/tarball/0.3',
     description="PokitDok Platform API Client",
     long_description=__doc__,
     packages=["pokitdok", "pokitdok.api"],
