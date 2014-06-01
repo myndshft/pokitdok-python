@@ -28,7 +28,7 @@ Quick start
 
     #submit an eligibility request
     eligibility_response = pd.eligibility({
-        "trading_partner_id": "2",
+        "trading_partner_id": "MOCKPAYER",
         "member_id": "W00000000000",
         "provider_id": "1467560003",
         "provider_name": "AYA-AY",
@@ -43,11 +43,10 @@ Quick start
     pd.providers(npi='1467560003')
 
     #search providers by name (individuals)
-    pd.providers(first_name='JEROME', last_name='AYA-AY')
-    pd.providers(first_name='juliette', last_name='saad')
+    pd.providers(first_name='Jerome', last_name='Aya-Ay')
 
     #search providers by name (organizations)
-    pd.providers(name='Qliance')
+    pd.providers(organization_name='Qliance')
 
     #search providers by location and/or specialty
     pd.providers(zipcode='29307', radius='10mi')
@@ -89,7 +88,7 @@ License
 Copyright (c) 2014 PokitDok, Inc.  See LICENSE_ for details.
 
 .. _documentation: https://platform.pokitdok.com
-.. _issues: https://github.com/PokitDokInc/pokitdok-python/issues
+.. _issues: https://github.com/pokitdok/pokitdok-python/issues
 .. _PyPI: https://pypi.python.org/pypi
 .. _pip: https://pypi.python.org/pypi/pip
 .. _LICENSE: LICENSE.txt
