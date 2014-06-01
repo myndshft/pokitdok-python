@@ -1,27 +1,33 @@
+#
+# Copyright (C) 2014, All Rights Reserved, PokitDok, Inc.
+# https://www.pokitdok.com
+#
+# Please see the License.txt file for more information.
+# All other rights reserved.
+#
 """
 PokitDok Platform API Client for Python
 ---------------------------------------
 
-DESCRIPTION
 The PokitDok Platform API Client makes it easy it interact with the
 PokitDok Platform APIs when writing client applications in Python.
 
 See https://platform.pokitdok.com for more information.
 
-LICENSE
-The PokitDok Platform API Client for Python is distributed under the MIT License
+
+The PokitDok Platform API Client for Python is distributed under the MIT License.
 """
 from setuptools import setup
 
 
 setup(
     name="pokitdok",
-    version="0.1",
+    version="0.2",
     license="MIT",
     author="PokitDok, Inc.",
     author_email="support@pokitdok.com",
     url="https://platform.pokitdok.com",
-    download_url = 'https://github.com/pokitdok/pokitdok-python/tarball/0.1',
+    download_url = 'https://github.com/pokitdok/pokitdok-python/tarball/0.2',
     description="PokitDok Platform API Client",
     long_description=__doc__,
     packages=["pokitdok", "pokitdok.api"],
