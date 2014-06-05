@@ -22,13 +22,14 @@ class PokitDokClient(object):
         This class provides a wrapper around requests and requests-oauth
         to handle common API operations
     """
-    def __init__(self, client_id, client_secret, base="https://platform.pokitdok.com", version="v3"):
+    def __init__(self, client_id, client_secret, base="https://platform.pokitdok.com", version="v4"):
         """
             Initialize a new PokitDok API Client
 
             :param client_id: The client id for your PokitDok Platform Application
             :param client_secret: The client secret for your PokitDok Platform Application
             :param base: The base URL to use for API requests.  Defaults to https://platform.pokitdok.com
+            :param version: The API version that should be used for requests.  Defaults to the latest version.
         """
         self.base_headers = {
             'User-Agent': 'python-pokitdok/{0} {1}'.format(pokitdok.__version__, requests.utils.default_user_agent())
@@ -133,6 +134,17 @@ class PokitDokClient(object):
                                     data={'trading_partner_id': trading_partner_id},
                                     files={'file': (os.path.split(x12_file)[-1], open(x12_file, 'rb'),
                                                     'application/EDI-X12')}).json()
+
+    def payers(self, **kwargs):
+        """
+            Fetch payer information for supported trading partners
+
+        """
+        request_args = {}
+        request_args.update(kwargs)
+
+        payers_url = "{0}/payers/".format(self.url_base)
+        return self.api_client.get(payers_url, params=request_args, headers=self.base_headers).json()
 
     def providers(self, npi=None, **kwargs):
         """
