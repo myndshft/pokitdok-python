@@ -30,17 +30,21 @@ Quick start
 
     pd = pokitdok.api.connect('<your client id>', '<your client secret>')
 
-    #submit an eligibility request
+    #submit a v4 eligibility request
     eligibility_response = pd.eligibility({
-        "trading_partner_id": "MOCKPAYER",
-        "member_id": "W00000000000",
-        "provider_id": "1467560003",
-        "provider_name": "AYA-AY",
-        "provider_first_name": "JEROME",
-        "provider_type": "Person",
-        "member_name": "JANE DOE",
-        "member_birth_date": "1970-01-01",
-        "service_types": ["Health Benefit Plan Coverage"]
+        "member": {
+            "birth_date": "1970-01-01",
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "id": "W000000000"
+        },
+        "provider": {
+            "first_name": "JEROME",
+            "last_name": "AYA-AY",
+            "npi": "1467560003"
+        },
+        "service_types": ["health_benefit_plan_coverage"],
+        "trading_partner_id": "MOCKPAYER"
     })
 
     #retrieve provider information by NPI
