@@ -7,8 +7,8 @@ import vcr
 
 
 #Fake client id/secret for local testing
-CLIENT_ID = 'RqBJvsK2TyFxNHT8m89g'
-CLIENT_SECRET = 'OFQjUABycPb7OT08JKJ8hbTu0Tn4Es76tcrNahcg'
+CLIENT_ID = 'HriWakiWYQuCm5IK7yPp'
+CLIENT_SECRET = 'jPb7EivoN6qaK9RF9lU8vtfqtjuEq82AruVpGPVA'
 BASE_URL = 'http://localhost:5002'
 os.environ['DEBUG'] = 'True'
 
@@ -36,21 +36,36 @@ class TestAPIClient(TestCase):
     def test_eligibility(self):
         with pd_vcr.use_cassette('eligibility.yml'):
             eligibility_response = self.pd.eligibility({
-                "trading_partner_id": "MOCKPAYER",
-                "member_id": "W0000000000",
-                "provider_id": "1467560003",
-                "provider_name": "AYA-AY",
-                "provider_first_name": "JEROME",
-                "provider_type": "Person",
-                "member_name": "JOHN DOE",
-                "member_birth_date": "01/01/1970",
-                "service_types": ["Health Benefit Plan Coverage"]
+                "member": {
+                    "birth_date": "1970-01-01",
+                    "first_name": "Jane",
+                    "last_name": "Doe",
+                    "id": "W000000000"
+                },
+                "provider": {
+                    "first_name": "JEROME",
+                    "last_name": "AYA-AY",
+                    "npi": "1467560003"
+                },
+                "service_types": ["health_benefit_plan_coverage"],
+                "trading_partner_id": "MOCKPAYER"
             })
             assert "meta" in eligibility_response
             assert "data" in eligibility_response
+            print(len(eligibility_response['data']['coverage']['deductibles']))
+            assert len(eligibility_response['data']['coverage']['deductibles']) == 8
+
+    def test_payers(self):
+        with pd_vcr.use_cassette('payers.yml'):
+            payers_response = self.pd.payers()
+            assert "meta" in payers_response
+            assert "data" in payers_response
+            for payer in payers_response['data']:
+                assert 'trading_partner_id' in payer
 
     def test_providers_with_id(self):
         with pd_vcr.use_cassette('providers_id.yml'):
-            providers_response = self.pd.providers(provider_id='1467560003')
+            providers_response = self.pd.providers(npi='1467560003')
             assert "meta" in providers_response
             assert "data" in providers_response
+            assert providers_response['data']['provider']['last_name'] == 'AYA-AY'

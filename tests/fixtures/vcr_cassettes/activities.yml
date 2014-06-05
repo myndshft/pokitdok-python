@@ -4,652 +4,128 @@ interactions:
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
-      User-Agent: [python-requests/2.3.0 CPython/2.7.5 Darwin/13.1.0]
+      User-Agent: [python-pokitdok/0.3 python-requests/2.3.0 CPython/2.6.8 Darwin/13.1.0]
     method: GET
-    uri: http://localhost:5002/api/v3/activities/
+    uri: http://localhost:5002/api/v4/activities/
   response:
-    body: {string: !!python/unicode '{"meta": {"processing_time": 19, "next": "http://localhost:5002/api/v3/activities/?offset=20"},
-        "data": [{"units_of_work": 1, "_type": "OHPActivityModel", "name": "eligibility",
-        "parameters": {"provider_id": "1467560003", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "update_dt": "Sun Mar 23 00:28:19 2014", "deleted": false, "member_name":
-        "BRIAN CORBIN", "payer_id": "042064683", "correlation_id": "3b82c4f8-6b4b-43d9-9bc7-83d1c33441ef",
-        "insert_dt": "Sun Mar 23 00:28:19 2014", "member_first_name": "BRIAN", "service_types":
-        ["Health Benefit Plan Coverage"], "trading_partner_id": "2", "member_id":
-        "W199138913", "member_last_name": "CORBIN", "provider_name": "AYA-AY", "member_birth_date":
-        "Mon Apr 18 00:00:00 1977", "provider_first_name": "JEROME", "provider_type":
-        "1"}, "update_dt": "Sun Mar 23 00:28:19 2014", "remaining_transitions": ["wait",
-        "receive", "process", "complete"], "state": {"name": "failed", "title": "Failed"},
-        "deleted": false, "correlation_id": "3b82c4f8-6b4b-43d9-9bc7-83d1c33441ef",
-        "insert_dt": "Sun Mar 23 00:28:19 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "2", "_id": "532e2aa356c02c04bc4c6e42", "transition_path":
-        ["generate", "transmit", "wait", "receive", "process", "complete"], "history":
-        [{"record_dt": "Sun Mar 23 00:28:19 2014", "name": "init", "title": "Initializing"},
-        {"record_dt": "Sun Mar 23 00:28:19 2014", "name": "generating", "title": "Generating
-        X12 transactions"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name":
-        "eligibility", "parameters": {"provider_id": "1467560003", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "update_dt": "Sun Mar 23 00:27:08 2014", "deleted": false, "member_name":
-        "BRIAN CORBIN", "payer_id": "042064683", "correlation_id": "90af79b9-f3bd-41f5-8669-6c85e332686d",
-        "insert_dt": "Sun Mar 23 00:27:08 2014", "member_first_name": "BRIAN", "service_types":
-        ["Health Benefit Plan Coverage"], "trading_partner_id": "2", "member_id":
-        "W199138913", "member_last_name": "CORBIN", "provider_name": "AYA-AY", "member_birth_date":
-        "Mon Apr 18 00:00:00 1977", "provider_first_name": "JEROME", "provider_type":
-        "1"}, "update_dt": "Sun Mar 23 00:27:08 2014", "remaining_transitions": ["wait",
-        "receive", "process", "complete"], "state": {"name": "failed", "title": "Failed"},
-        "deleted": false, "correlation_id": "90af79b9-f3bd-41f5-8669-6c85e332686d",
-        "insert_dt": "Sun Mar 23 00:27:08 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "2", "_id": "532e2a5c56c02c0492d3e796", "transition_path":
-        ["generate", "transmit", "wait", "receive", "process", "complete"], "history":
-        [{"record_dt": "Sun Mar 23 00:27:08 2014", "name": "init", "title": "Initializing"},
-        {"record_dt": "Sun Mar 23 00:27:08 2014", "name": "generating", "title": "Generating
-        X12 transactions"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name":
-        "eligibility", "parameters": {"provider_id": "1467560003", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "update_dt": "Sun Mar 23 00:31:11 2014", "deleted": false, "member_name":
-        "BRIAN CORBIN", "payer_id": "042064683", "correlation_id": "e6a020be-4418-427f-aa74-5a859b0743da",
-        "insert_dt": "Sun Mar 23 00:31:11 2014", "member_first_name": "BRIAN", "service_types":
-        ["Health Benefit Plan Coverage"], "trading_partner_id": "2", "member_id":
-        "W199138913", "member_last_name": "CORBIN", "provider_name": "AYA-AY", "member_birth_date":
-        "Mon Apr 18 00:00:00 1977", "provider_first_name": "JEROME", "provider_type":
-        "1"}, "update_dt": "Sun Mar 23 00:31:11 2014", "remaining_transitions": ["wait",
-        "receive", "process", "complete"], "state": {"name": "failed", "title": "Failed"},
-        "deleted": false, "correlation_id": "e6a020be-4418-427f-aa74-5a859b0743da",
-        "insert_dt": "Sun Mar 23 00:31:11 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "2", "_id": "532e2b4f56c02c051cc74785", "transition_path":
-        ["generate", "transmit", "wait", "receive", "process", "complete"], "history":
-        [{"record_dt": "Sun Mar 23 00:31:11 2014", "name": "init", "title": "Initializing"},
-        {"record_dt": "Sun Mar 23 00:31:11 2014", "name": "generating", "title": "Generating
-        X12 transactions"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name":
-        "eligibility", "parameters": {"provider_id": "1467560003", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "update_dt": "Sun Mar 23 00:35:24 2014", "deleted": false, "member_name":
-        "BRIAN CORBIN", "payer_id": "042064683", "correlation_id": "0fe138b6-5426-4c13-a5b1-a4d162d6ee60",
-        "insert_dt": "Sun Mar 23 00:35:24 2014", "member_first_name": "BRIAN", "service_types":
-        ["Health Benefit Plan Coverage"], "trading_partner_id": "2", "member_id":
-        "W199138913", "member_last_name": "CORBIN", "provider_name": "AYA-AY", "member_birth_date":
-        "Mon Apr 18 00:00:00 1977", "provider_first_name": "JEROME", "provider_type":
-        "1"}, "update_dt": "Sun Mar 23 00:35:24 2014", "remaining_transitions": ["wait",
-        "receive", "process", "complete"], "state": {"name": "failed", "title": "Failed"},
-        "deleted": false, "correlation_id": "0fe138b6-5426-4c13-a5b1-a4d162d6ee60",
-        "insert_dt": "Sun Mar 23 00:35:24 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "2", "_id": "532e2c4c56c02c05b443bacb", "transition_path":
-        ["generate", "transmit", "wait", "receive", "process", "complete"], "history":
-        [{"record_dt": "Sun Mar 23 00:35:24 2014", "name": "init", "title": "Initializing"},
-        {"record_dt": "Sun Mar 23 00:35:24 2014", "name": "generating", "title": "Generating
-        X12 transactions"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name":
-        "eligibility", "parameters": {"provider_id": "1467560003", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "update_dt": "Sun Mar 23 00:34:52 2014", "deleted": false, "member_name":
-        "BRIAN CORBIN", "payer_id": "042064683", "correlation_id": "29507f39-8279-4aa1-8963-64cdcd797b80",
-        "insert_dt": "Sun Mar 23 00:34:52 2014", "member_first_name": "BRIAN", "service_types":
-        ["Health Benefit Plan Coverage"], "trading_partner_id": "2", "member_id":
-        "W199138913", "member_last_name": "CORBIN", "provider_name": "AYA-AY", "member_birth_date":
-        "Mon Apr 18 00:00:00 1977", "provider_first_name": "JEROME", "provider_type":
-        "1"}, "update_dt": "Sun Mar 23 00:34:52 2014", "remaining_transitions": ["wait",
-        "receive", "process", "complete"], "state": {"name": "failed", "title": "Failed"},
-        "deleted": false, "correlation_id": "29507f39-8279-4aa1-8963-64cdcd797b80",
-        "insert_dt": "Sun Mar 23 00:34:52 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "2", "_id": "532e2c2c56c02c059c7efd8d", "transition_path":
-        ["generate", "transmit", "wait", "receive", "process", "complete"], "history":
-        [{"record_dt": "Sun Mar 23 00:34:52 2014", "name": "init", "title": "Initializing"},
-        {"record_dt": "Sun Mar 23 00:34:52 2014", "name": "generating", "title": "Generating
-        X12 transactions"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name":
-        "enrollment", "parameters": {"reference_number": "12456", "trading_partner_id":
-        "MOCKPAYER", "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37
-        2014", "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "6c306a4c-eadc-471d-bc37-34f015834223",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "6c306a4c-eadc-471d-bc37-34f015834223",
-        "insert_dt": "Thu Mar 20 14:15:27 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532af7ff56c02c4b26fa6570", "transition_path":
-        ["batch", "generate", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Thu Mar 20 14:15:27 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 14:47:06 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 14:47:06 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "32757b0b-dcb7-44f3-b991-aeb193820f11",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "32757b0b-dcb7-44f3-b991-aeb193820f11",
-        "insert_dt": "Thu Mar 20 14:22:53 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532af9bd56c02c4bd4cd9711", "transition_path":
-        ["batch", "generate", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Thu Mar 20 14:22:53 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 14:47:06 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 14:47:06 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "24f54cbd-0e49-4db3-8e48-2505e130a00f",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "24f54cbd-0e49-4db3-8e48-2505e130a00f",
-        "insert_dt": "Thu Mar 20 14:45:42 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532aff1656c02c4f35c8f28b", "transition_path":
-        ["batch", "generate", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Thu Mar 20 14:45:42 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 14:47:06 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 14:47:06 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "a23c3934-8baa-46b1-b570-40709fe60a86",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "a23c3934-8baa-46b1-b570-40709fe60a86",
-        "insert_dt": "Thu Mar 20 15:00:07 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532b027756c02c52b0ab173d", "transition_path":
-        ["batch", "generate", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Thu Mar 20 15:00:07 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 14:47:06 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 14:47:06 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "1bd62156-59a9-4682-9609-089bd845508d",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["receive", "process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "1bd62156-59a9-4682-9609-089bd845508d",
-        "insert_dt": "Fri Mar 21 14:57:15 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532c534b56c02c246548f625", "transition_path":
-        ["batch", "generate", "store", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Fri Mar 21 14:57:15 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 14:57:31 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 14:57:31 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "d90a08b7-1a98-43ba-8d86-d18e9f7356e1",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["receive", "process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "d90a08b7-1a98-43ba-8d86-d18e9f7356e1",
-        "insert_dt": "Fri Mar 21 14:57:17 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532c534d56c02c246548f626", "transition_path":
-        ["batch", "generate", "store", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Fri Mar 21 14:57:17 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 14:57:31 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 14:57:32 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "46223a98-b40a-447a-8850-1d1fba747852",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["receive", "process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "46223a98-b40a-447a-8850-1d1fba747852",
-        "insert_dt": "Fri Mar 21 14:57:18 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532c534e56c02c246548f627", "transition_path":
-        ["batch", "generate", "store", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Fri Mar 21 14:57:18 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 14:57:32 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 14:57:32 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "59f127b1-1291-40a1-b776-5001bacf74a8",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["receive", "process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "59f127b1-1291-40a1-b776-5001bacf74a8",
-        "insert_dt": "Fri Mar 21 14:57:19 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532c534f56c02c246548f628", "transition_path":
-        ["batch", "generate", "store", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Fri Mar 21 14:57:19 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 14:57:32 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 14:57:32 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "e24b45f7-0cd9-4e22-aa9e-b7c7193c537e",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["receive", "process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "e24b45f7-0cd9-4e22-aa9e-b7c7193c537e",
-        "insert_dt": "Fri Mar 21 14:57:21 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532c535156c02c246548f629", "transition_path":
-        ["batch", "generate", "store", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Fri Mar 21 14:57:21 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 14:57:32 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 14:57:32 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "1dd1e918-bdf7-4748-8671-f558e3f8c6b0",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["receive", "process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "1dd1e918-bdf7-4748-8671-f558e3f8c6b0",
-        "insert_dt": "Fri Mar 21 15:01:24 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532c544456c02c2566fbda34", "transition_path":
-        ["batch", "generate", "store", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Fri Mar 21 15:01:24 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 15:01:33 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 15:01:33 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "cecb92a9-8db3-45a8-8094-a0901121bec1",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["receive", "process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "cecb92a9-8db3-45a8-8094-a0901121bec1",
-        "insert_dt": "Fri Mar 21 15:01:25 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532c544556c02c2566fbda35", "transition_path":
-        ["batch", "generate", "store", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Fri Mar 21 15:01:25 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 15:01:33 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 15:01:33 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "d5ba323e-e052-4371-9713-739fc032d10b",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["receive", "process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "d5ba323e-e052-4371-9713-739fc032d10b",
-        "insert_dt": "Fri Mar 21 15:01:25 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532c544556c02c2566fbda36", "transition_path":
-        ["batch", "generate", "store", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Fri Mar 21 15:01:25 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 15:01:33 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 15:01:33 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "10ce0eb9-ec9c-4a11-a715-3e227b2fdbbd",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["receive", "process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "10ce0eb9-ec9c-4a11-a715-3e227b2fdbbd",
-        "insert_dt": "Fri Mar 21 15:01:26 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532c544656c02c2566fbda37", "transition_path":
-        ["batch", "generate", "store", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Fri Mar 21 15:01:26 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 15:01:33 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 15:01:33 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "ea9dc7bc-abdd-4a68-9ca8-9a9edc78a050",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["receive", "process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "ea9dc7bc-abdd-4a68-9ca8-9a9edc78a050",
-        "insert_dt": "Fri Mar 21 15:01:27 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532c544756c02c2566fbda38", "transition_path":
-        ["batch", "generate", "store", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Fri Mar 21 15:01:27 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 15:01:33 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 15:01:33 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}, {"units_of_work": 1, "_type": "OHPActivityModel", "name": "enrollment",
-        "parameters": {"reference_number": "12456", "trading_partner_id": "MOCKPAYER",
-        "payer": {"tax_id": "654456654"}, "update_dt": "Thu Mar 13 20:00:37 2014",
-        "deleted": false, "subscriber": {"maintenance_type": "Addition", "first_name":
-        "JOHN", "last_name": "DOE", "benefits": [{"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Health", "coordination_of_benefits": [{"status": "Unknown", "group_or_policy_number":
-        "890111", "payer_responsibility": "Primary"}]}, {"maintenance_type": "Addition",
-        "late_enrollment": false, "begin_date": "Sat Jun  1 00:00:00 1996", "benefit_type":
-        "Dental"}, {"maintenance_type": "Addition", "late_enrollment": false, "begin_date":
-        "Sat Jun  1 00:00:00 1996", "benefit_type": "Vision"}], "relationship": "Self",
-        "contacts": [{"communication_type2": "Work Phone Number", "primary_communication_type":
-        "Home Phone Number", "communication_number2": "7172341240", "primary_communication_number":
-        "7172343334"}], "benefit_status": "Active", "gender": "Male", "employment_status":
-        "Full-time", "subscriber_number": "123456789", "group_or_policy_number": "123456001",
-        "maintenance_reason": "Active", "member_id": "123456789", "handicapped": false,
-        "eligibility_begin_date": "Thu May 23 00:00:00 1996", "ssn": "123456789",
-        "address": {"city": "CAMP HILL", "line2": "APT 3G", "county": "CUMBERLAND",
-        "state": "PA", "postal_code": "17011", "line": "100 MARKET ST"}, "birth_date":
-        "Fri Aug 16 00:00:00 1940", "middle_name": "P", "substance_abuse": false,
-        "tobacco_use": false}, "correlation_id": "ea6e37fd-b183-449b-925c-54263b605554",
-        "insert_dt": "Thu Mar 13 20:00:37 2014", "purpose": "Original", "client_id":
-        "RqBJvsK2TyFxNHT8m89g", "action": "Change", "dependents": [], "sponsor": {"tax_id":
-        "999888777"}}, "update_dt": "Fri Mar 21 15:11:19 2014", "remaining_transitions":
-        ["receive", "process", "complete"], "outbound_batch_file_url": "https://ohp-files-staging.s3.amazonaws.com/08019e355afc4dc7b70c39501a47f410",
-        "state": {"name": "waiting", "title": "Waiting on Trading Partner Response"},
-        "deleted": false, "correlation_id": "ea6e37fd-b183-449b-925c-54263b605554",
-        "insert_dt": "Fri Mar 21 15:01:27 2014", "client_id": "RqBJvsK2TyFxNHT8m89g",
-        "trading_partner_id": "MOCKPAYER", "_id": "532c544756c02c2566fbda39", "transition_path":
-        ["batch", "generate", "store", "transmit", "wait", "receive", "process", "complete"],
-        "history": [{"record_dt": "Fri Mar 21 15:01:27 2014", "name": "init", "title":
-        "Initializing"}, {"record_dt": "Fri Mar 21 15:01:33 2014", "name": "pending",
-        "title": "Pending Batch Transmission to Trading Partner"}, {"record_dt": "Fri
-        Mar 21 15:01:33 2014", "name": "generating", "title": "Generating X12 transactions"},
-        {"record_dt": "Fri Mar 21 15:04:13 2014", "name": "stored", "title": "Batch
-        transactions stored for later processing"}, {"record_dt": "Fri Mar 21 15:11:19
-        2014", "name": "transmitting", "title": "Transmitting transactions to Trading
-        Partner"}]}]}'}
+    body: {string: !!python/unicode '{"meta": {"processing_time": 8, "rate_limit_amount":
+        16, "rate_limit_reset": 1401996053, "rate_limit_cap": 1000}, "data": [{"units_of_work":
+        1, "name": "providers", "parameters": {"provider_id": "1467560003"}, "state":
+        {"name": "failed", "title": "Failed"}, "trading_partner_id": "PokitDok", "id":
+        "5390b5a756c02c38bd37f25e", "transition_path": ["process", "complete"], "history":
+        [{"record_dt": "2014-06-05T18:23:35.616000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-06-05T18:23:35.617000", "name": "processing", "title":
+        "Processing X12 transactions"}]}, {"units_of_work": 1, "name": "providers",
+        "parameters": {"provider_id": "1467560003"}, "state": {"name": "failed", "title":
+        "Failed"}, "trading_partner_id": "PokitDok", "id": "5390b50556c02c379d64d6d0",
+        "transition_path": ["process", "complete"], "history": [{"record_dt": "2014-06-05T18:20:53.671000",
+        "name": "init", "title": "Initializing"}, {"record_dt": "2014-06-05T18:20:53.671000",
+        "name": "processing", "title": "Processing X12 transactions"}]}, {"units_of_work":
+        1, "name": "providers", "parameters": {"npi_id": "1467560003"}, "state": {"name":
+        "completed", "title": "Completed"}, "trading_partner_id": "PokitDok", "id":
+        "5390bc2a56c02c3f39400dee", "transition_path": ["process", "complete"], "history":
+        [{"record_dt": "2014-06-05T18:51:22.752000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-06-05T18:51:22.757000", "name": "processing", "title":
+        "Processing X12 transactions"}]}, {"units_of_work": 1, "name": "providers",
+        "parameters": {"npi_id": "1467560003"}, "state": {"name": "completed", "title":
+        "Completed"}, "trading_partner_id": "PokitDok", "id": "5390bb2956c02c3f39400deb",
+        "transition_path": ["process", "complete"], "history": [{"record_dt": "2014-06-05T18:47:05.088000",
+        "name": "init", "title": "Initializing"}, {"record_dt": "2014-06-05T18:47:05.093000",
+        "name": "processing", "title": "Processing X12 transactions"}]}, {"units_of_work":
+        1, "name": "providers", "parameters": {"provider_id": "1467560003"}, "state":
+        {"name": "failed", "title": "Failed"}, "trading_partner_id": "PokitDok", "id":
+        "5390b53a56c02c379d64d6d1", "transition_path": ["process", "complete"], "history":
+        [{"record_dt": "2014-06-05T18:21:46.667000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-06-05T18:21:46.668000", "name": "processing", "title":
+        "Processing X12 transactions"}]}, {"units_of_work": 1, "name": "eligibility",
+        "parameters": {"service_types": ["health_benefit_plan_coverage"], "client_id":
+        "HriWakiWYQuCm5IK7yPp", "member": {"birth_date": "1970-01-01", "first_name":
+        "Jane", "last_name": "Doe", "id": "W000000000"}, "correlation_id": "e1676007-8fe8-426d-800d-8c4260ef28cd",
+        "trading_partner_id": "MOCKPAYER", "provider": {"first_name": "JEROME", "last_name":
+        "AYA-AY", "npi": "1467560003"}, "async": false, "transaction_code": "request"},
+        "state": {"name": "completed", "title": "Completed"}, "result": {"service_types":
+        ["professional_physician_visit_office"], "client_id": "HriWakiWYQuCm5IK7yPp",
+        "payer": {"id": "MOCKPAYER", "name": "MOCK PAYER INC"}, "subscriber": {"birth_date":
+        "1970-01-01", "first_name": "Jane", "last_name": "Doe", "id": "W000000000",
+        "address": {"city": "SPARTANBURG", "state": "SC", "zipcode": "29307", "address_lines":
+        ["123 MAIN ST"]}}, "correlation_id": "e1676007-8fe8-426d-800d-8c4260ef28cd",
+        "trading_partner_id": "MOCKPAYER", "provider": {"first_name": "JEROME", "last_name":
+        "JEROME AYA-AY", "npi": "1467560003"}, "coverage": {"service_types": ["professional_physician_visit_office"],
+        "group_number": "088818801000013", "out_of_pocket": [{"in_plan_network": "yes",
+        "benefit_amount": {"currency": "USD", "amount": "3000"}, "coverage_level":
+        "individual"}, {"in_plan_network": "yes", "benefit_amount": {"currency": "USD",
+        "amount": "2983.57"}, "coverage_level": "individual", "time_period": "remaining"},
+        {"in_plan_network": "yes", "benefit_amount": {"currency": "USD", "amount":
+        "6000"}, "coverage_level": "family"}, {"in_plan_network": "yes", "benefit_amount":
+        {"currency": "USD", "amount": "5956.09"}, "coverage_level": "family", "time_period":
+        "remaining"}, {"in_plan_network": "no", "benefit_amount": {"currency": "USD",
+        "amount": "12500"}, "coverage_level": "individual"}, {"in_plan_network": "no",
+        "benefit_amount": {"currency": "USD", "amount": "12483.57"}, "coverage_level":
+        "individual", "time_period": "remaining"}, {"in_plan_network": "no", "benefit_amount":
+        {"currency": "USD", "amount": "25000"}, "coverage_level": "family"}, {"in_plan_network":
+        "no", "benefit_amount": {"currency": "USD", "amount": "24956.09"}, "coverage_level":
+        "family", "messages": [{"message": "Unlimited Lifetime Benefits"}], "time_period":
+        "remaining"}], "level": "employee_and_spouse", "copay": [{"in_plan_network":
+        "yes", "service_types": ["professional_physician_visit_office"], "coverage_level":
+        "employee_and_spouse", "messages": [{"message": "PRIMARY OFFICE"}]}, {"in_plan_network":
+        "not_applicable", "service_types": ["professional_physician_visit_office"],
+        "coverage_level": "employee_and_spouse", "messages": [{"message": "GYN OFFICE
+        VS"}, {"message": "GYN VISIT"}, {"message": "SPEC OFFICE"}, {"message": "SPEC
+        VISIT"}, {"message": "PRIME CARE VST"}, {"message": "Plan Requires PreCert"},
+        {"message": "Commercial"}, {"message": "Plan includes NAP"}, {"message": "Pre-Existing
+        may apply"}]}], "deductibles": [{"messages": [{"message": "INT MED AND RX,GYN
+        OFFICE VS,DED INCLUDED IN OOP,GYN VISIT,SPEC OFFICE,SPEC VISIT,PRIMARY OFFICE,PRIME
+        CARE VST"}], "in_plan_network": "yes", "eligibility_date": "2013-01-01", "time_period":
+        "calendar_year", "coverage_level": "family", "benefit_amount": {"currency":
+        "USD", "amount": "6000"}}, {"in_plan_network": "yes", "time_period": "remaining",
+        "coverage_level": "family", "messages": [{"message": "INT MED AND RX"}], "benefit_amount":
+        {"currency": "USD", "amount": "5956.09"}}, {"messages": [{"message": "INT
+        MED AND RX,GYN OFFICE VS,DED INCLUDED IN OOP,GYN VISIT,SPEC OFFICE,SPEC VISIT,PRIMARY
+        OFFICE,PRIME CARE VST"}], "in_plan_network": "yes", "eligibility_date": "2013-01-01",
+        "time_period": "calendar_year", "coverage_level": "individual", "benefit_amount":
+        {"currency": "USD", "amount": "3000"}}, {"in_plan_network": "yes", "time_period":
+        "remaining", "coverage_level": "individual", "messages": [{"message": "INT
+        MED AND RX"}], "benefit_amount": {"currency": "USD", "amount": "2983.57"}},
+        {"messages": [{"message": "INT MED AND RX,GYN OFFICE VS,DED INCLUDED IN OOP,GYN
+        VISIT,SPEC OFFICE,SPEC VISIT,PRIME CARE VST"}], "in_plan_network": "no", "eligibility_date":
+        "2013-01-01", "time_period": "calendar_year", "coverage_level": "family",
+        "benefit_amount": {"currency": "USD", "amount": "12000"}}, {"in_plan_network":
+        "no", "time_period": "remaining", "coverage_level": "family", "messages":
+        [{"message": "INT MED AND RX"}], "benefit_amount": {"currency": "USD", "amount":
+        "11956.09"}}, {"messages": [{"message": "INT MED AND RX,GYN OFFICE VS,DED
+        INCLUDED IN OOP,GYN VISIT,SPEC OFFICE,SPEC VISIT,PRIME CARE VST"}], "in_plan_network":
+        "no", "eligibility_date": "2013-01-01", "time_period": "calendar_year", "coverage_level":
+        "individual", "benefit_amount": {"currency": "USD", "amount": "6000"}}, {"in_plan_network":
+        "no", "time_period": "remaining", "coverage_level": "individual", "messages":
+        [{"message": "INT MED AND RX"}], "benefit_amount": {"currency": "USD", "amount":
+        "5983.57"}}], "plan_begin_date": "2013-02-15", "eligibility_begin_date": "2012-02-01",
+        "coinsurance": [{"benefit_percent": 0.0, "service_types": ["professional_physician_visit_office"],
+        "coverage_level": "employee_and_spouse", "messages": [{"message": "GYN OFFICE
+        VS"}, {"message": "GYN VISIT"}, {"message": "SPEC OFFICE"}, {"message": "SPEC
+        VISIT"}, {"message": "PRIMARY OFFICE"}, {"message": "PRIME CARE VST"}], "in_plan_network":
+        "yes"}, {"benefit_percent": 0.5, "service_types": ["professional_physician_visit_office"],
+        "coverage_level": "employee_and_spouse", "messages": [{"message": "GYN OFFICE
+        VS,COINS APPLIES TO OUT OF POCKET"}, {"message": "GYN VISIT,COINS APPLIES
+        TO OUT OF POCKET"}, {"message": "SPEC OFFICE,COINS APPLIES TO OUT OF POCKET"},
+        {"message": "SPEC VISIT,COINS APPLIES TO OUT OF POCKET"}, {"message": "PRIME
+        CARE VST,COINS APPLIES TO OUT OF POCKET"}], "in_plan_network": "no"}], "group_description":
+        "MOCK INDIVIDUAL ADVANTAGE PLAN", "plan_number": "0888188", "service_date":
+        "2013-08-10"}, "valid_request": true}, "trading_partner_id": "MOCKPAYER",
+        "id": "5390bc2a56c02c3f39400dec", "transition_path": ["generate", "transmit",
+        "wait", "receive", "process", "complete"], "history": [{"record_dt": "2014-06-05T18:51:22.343000",
+        "name": "init", "title": "Initializing"}, {"record_dt": "2014-06-05T18:51:22.616000",
+        "name": "generating", "title": "Generating X12 transactions"}, {"record_dt":
+        "2014-06-05T18:51:22.618000", "name": "transmitting", "title": "Transmitting
+        transactions to Trading Partner"}, {"record_dt": "2014-06-05T18:51:22.621000",
+        "name": "waiting", "title": "Waiting on Trading Partner Response"}, {"record_dt":
+        "2014-06-05T18:51:22.622000", "name": "receiving", "title": "Receiving transactions
+        from Trading Partner"}, {"record_dt": "2014-06-05T18:51:22.721000", "name":
+        "processing", "title": "Processing X12 transactions"}]}]}'}
     headers:
       charset: [utf-8]
-      content-length: ['52420']
+      content-length: ['9246']
       content-type: [text/html; charset=utf-8]
-      date: ['Sat, 17 May 2014 01:53:53 GMT']
+      date: ['Thu, 05 Jun 2014 18:56:45 GMT']
       mimetype: [application/json]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}
