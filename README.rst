@@ -1,3 +1,7 @@
+.. image:: https://api.travis-ci.org/pokitdok/pokitdok-python.svg
+    :target: https://travis-ci.org/pokitdok/pokitdok-python
+
+
 PokitDok Platform API Client for Python
 =======================================
 
