@@ -37,6 +37,10 @@ setup(
     install_requires=[
         "requests>=2.3.0", "requests-oauthlib>=0.4.0"
     ],
+    tests_require=[
+        "vcrpy==1.0.2"
+    ],
+    test_suite = 'nose.collector',
     keywords = ['health', 'api', 'pokitdok', 'X12', 'eligibility', 'claims', 'providers', 'prices', 'healthcare'],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
