@@ -30,8 +30,21 @@ Quick start
 
     pd = pokitdok.api.connect('<your client id>', '<your client secret>')
 
+    #retrieve provider information by NPI
+    pd.providers(npi='1467560003')
+
+    #search providers by name (individuals)
+    pd.providers(first_name='Jerome', last_name='Aya-Ay')
+
+    #search providers by name (organizations)
+    pd.providers(organization_name='Qliance')
+
+    #search providers by location and/or specialty
+    pd.providers(zipcode='29307', radius='10mi')
+    pd.providers(zipcode='29307', radius='10mi', specialty='RHEUMATOLOGY')
+
     #submit a v4 eligibility request
-    eligibility_response = pd.eligibility({
+    pd.eligibility({
         "member": {
             "birth_date": "1970-01-01",
             "first_name": "Jane",
@@ -47,18 +60,53 @@ Quick start
         "trading_partner_id": "MOCKPAYER"
     })
 
-    #retrieve provider information by NPI
-    pd.providers(npi='1467560003')
-
-    #search providers by name (individuals)
-    pd.providers(first_name='Jerome', last_name='Aya-Ay')
-
-    #search providers by name (organizations)
-    pd.providers(organization_name='Qliance')
-
-    #search providers by location and/or specialty
-    pd.providers(zipcode='29307', radius='10mi')
-    pd.providers(zipcode='29307', radius='10mi', specialty='RHEUMATOLOGY')
+    #submit a v4 claims request
+    pd.claims({
+        "transaction_code": "chargeable",
+        "trading_partner_id": "MOCKPAYER",
+        "billing_provider": {
+            "taxonomy_code": "207Q00000X",
+            "first_name": "Jerome",
+            "last_name": "Aya-Ay",
+            "npi": "1467560003",
+            "address": {
+                "address_lines": [
+                    "8311 WARREN H ABERNATHY HWY"
+                ],
+                "city": "SPARTANBURG",
+                "state": "SC",
+                "zipcode": "29301"
+            },
+            "tax_id": "123456789"
+        },
+        "subscriber": {
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "member_id": "W000000000",
+            "address": {
+                "address_lines": ["123 N MAIN ST"],
+                "city": "SPARTANBURG",
+                "state": "SC",
+                "zipcode": "29301"
+            },
+            "birth_date": "1970-01-01",
+            "gender": "female"
+        },
+        "claim": {
+            "total_charge_amount": 60.0,
+            "service_lines": [
+                {
+                    "procedure_code": "99213",
+                    "charge_amount": 60.0,
+                    "unit_count": 1.0,
+                    "diagnosis_codes": [
+                        "487.1"
+                    ],
+                    "service_date": "2014-06-01"
+                }
+            ]
+        }
+    })
 
     #Submit X12 files directly for processing on the platform
     pd.files('MOCKPAYER', '/x12_files/eligibility_requests_batch_20.270')
