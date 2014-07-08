@@ -30,6 +30,12 @@ Quick start
 
     pd = pokitdok.api.connect('<your client id>', '<your client secret>')
 
+    #retrieve cash price information by zip and CPT code
+    pd.cash_prices(zip_code='32218', cpt_code='87799')
+
+    #retrieve insurance price information by zip and CPT code
+    pd.insurance_prices(zip_code='32218', cpt_code='87799')
+
     #retrieve provider information by NPI
     pd.providers(npi='1467560003')
 
@@ -124,7 +130,8 @@ Quick start
 
 
 
-See the documentation_ for detailed information on all of the PokitDok Platform APIs
+See the documentation_ for detailed information on all of the PokitDok Platform APIs.
+The Quick Start Guide is also available as an IPython_ notebook_.
 
 Supported Python Versions
 -------------------------
@@ -148,4 +155,6 @@ Copyright (c) 2014 PokitDok, Inc.  See LICENSE_ for details.
 .. _PyPI: https://pypi.python.org/pypi
 .. _pip: https://pypi.python.org/pypi/pip
 .. _LICENSE: LICENSE.txt
+.. _IPython: http://ipython.org/
+.. _notebook: notebooks/PlatformQuickStartDemo.ipynb
 

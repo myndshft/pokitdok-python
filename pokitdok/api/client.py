@@ -74,13 +74,12 @@ class PokitDokClient(object):
 
         return self.api_client.get(activities_url, params=request_args, headers=self.base_headers).json()
 
-    def cash_prices(self):
+    def cash_prices(self, **kwargs):
         """
             Fetch cash price information
         """
-        #TODO: support all query string possibilities
-        cash_prices_url = "{0}/prices/cash/".format(self.url_base)
-        return self.api_client.get(cash_prices_url, headers=self.base_headers).json()
+        cash_prices_url = "{0}/prices/cash".format(self.url_base)
+        return self.api_client.get(cash_prices_url, params=kwargs, headers=self.base_headers).json()
 
     def claims(self, claims_request):
         """
@@ -134,6 +133,13 @@ class PokitDokClient(object):
                                     data={'trading_partner_id': trading_partner_id},
                                     files={'file': (os.path.split(x12_file)[-1], open(x12_file, 'rb'),
                                                     'application/EDI-X12')}).json()
+
+    def insurance_prices(self, **kwargs):
+        """
+            Fetch insurance price information
+        """
+        insurance_prices_url = "{0}/prices/insurance".format(self.url_base)
+        return self.api_client.get(insurance_prices_url, params=kwargs, headers=self.base_headers).json()
 
     def payers(self, **kwargs):
         """

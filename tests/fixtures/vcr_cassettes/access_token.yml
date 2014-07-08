@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: client_secret=jPb7EivoN6qaK9RF9lU8vtfqtjuEq82AruVpGPVA&grant_type=client_credentials&client_id=HriWakiWYQuCm5IK7yPp
+    body: client_secret=jPb7EivoN6qaK9RF9lU8vtfqtjuEq82AruVpGPVA&client_id=HriWakiWYQuCm5IK7yPp&grant_type=client_credentials
     headers:
       Accept: [!!python/unicode application/json]
       Accept-Encoding: ['gzip, deflate']
@@ -10,13 +10,13 @@ interactions:
     method: POST
     uri: http://localhost:5002/oauth2/token
   response:
-    body: {string: !!python/unicode '{"access_token": "GRNGibbVXibv1iSKlmRME9FhZmO8pNzb1ROaV1Tk",
-        "token_type": "bearer", "expires": 1401998206, "expires_in": 3600}'}
+    body: {string: !!python/unicode '{"access_token": "GMgd6GvEl8LeOf5FfdxungK5A2qb4CcXcVHuB5WN",
+        "token_type": "bearer", "expires": 1404793292, "expires_in": 3600}'}
     headers:
       cache-control: [no-store]
       content-length: ['127']
       content-type: [application/json;charset=UTF-8]
-      date: ['Thu, 05 Jun 2014 18:56:45 GMT']
+      date: ['Tue, 08 Jul 2014 03:21:32 GMT']
       pragma: [no-cache]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}

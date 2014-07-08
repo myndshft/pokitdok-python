@@ -1,0 +1,30 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      User-Agent: [python-pokitdok/0.5 python-requests/2.3.0 CPython/2.6.8 Darwin/13.1.0]
+    method: GET
+    uri: http://localhost:5002/api/v4/prices/insurance?zip_code=32218&cpt_code=87799
+  response:
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 6, "rate_limit_reset":
+        1404793292, "processing_time": 8, "rate_limit_cap": 1000, "credits_remaining":
+        9999, "credits_billed": 1}, "data": {"amounts": [{"high_price": 159.75, "standard_deviation":
+        36.41, "average_price": 54.58, "payer_type": "insurance", "payment_type":
+        "allowed", "low_price": 19.98, "median_price": 56.25}, {"high_price": 188.91,
+        "standard_deviation": 26.58, "average_price": 104.77, "payer_type": "insurance",
+        "payment_type": "submitted", "low_price": 88.02, "median_price": 97.02}, {"average_price":
+        82.33, "payer_type": "medicare", "payment_type": "allowed"}, {"average_price":
+        100.29, "payer_type": "medicare", "payment_type": "submitted"}, {"average_price":
+        57.62, "payer_type": "medicare", "payment_type": "paid"}], "cpt_code": "87799",
+        "geo_zip_area": "322"}}'}
+    headers:
+      charset: [utf-8]
+      content-length: ['815']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 08 Jul 2014 04:04:36 GMT']
+      mimetype: [application/json]
+      server: [Werkzeug/0.9.4 Python/2.7.3]
+    status: {code: 200, message: OK}
+version: 1

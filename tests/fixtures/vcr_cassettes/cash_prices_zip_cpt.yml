@@ -1,0 +1,24 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      User-Agent: [python-pokitdok/0.5 python-requests/2.3.0 CPython/2.6.8 Darwin/13.1.0]
+    method: GET
+    uri: http://localhost:5002/api/v4/prices/cash?zip_code=32218&cpt_code=87799
+  response:
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 5, "rate_limit_reset":
+        1404793292, "processing_time": 8, "rate_limit_cap": 1000, "credits_remaining":
+        9999, "credits_billed": 1}, "data": {"high_price": 159.75, "cpt_code": "87799",
+        "low_price": 19.98, "geo_zip_area": "322", "standard_deviation": 36.4138,
+        "median_price": 56.25}}'}
+    headers:
+      charset: [utf-8]
+      content-length: ['310']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 08 Jul 2014 04:04:35 GMT']
+      mimetype: [application/json]
+      server: [Werkzeug/0.9.4 Python/2.7.3]
+    status: {code: 200, message: OK}
+version: 1
