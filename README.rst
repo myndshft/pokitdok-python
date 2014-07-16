@@ -1,6 +1,4 @@
-.. image:: https://api.travis-ci.org/pokitdok/pokitdok-python.svg
-    :target: https://travis-ci.org/pokitdok/pokitdok-python
-
+|build| |version| |wheel|
 
 PokitDok Platform API Client for Python
 =======================================
@@ -175,3 +173,11 @@ Copyright (c) 2014 PokitDok, Inc.  See LICENSE_ for details.
 .. _IPython: http://ipython.org/
 .. _notebook: notebooks/PlatformQuickStartDemo.ipynb
 
+.. |version| image:: https://badge.fury.io/py/pokitdok.svg
+    :target: https://pypi.python.org/pypi/pokitdok/
+
+.. |build| image:: https://api.travis-ci.org/pokitdok/pokitdok-python.svg
+    :target: https://travis-ci.org/pokitdok/pokitdok-python
+
+.. |wheel| image:: https://pypip.in/wheel/pokitdok/badge.png
+    :target: https://pypi.python.org/pypi/pokitdok/
