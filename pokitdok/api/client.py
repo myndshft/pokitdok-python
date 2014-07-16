@@ -96,7 +96,7 @@ class PokitDokClient(object):
 
             :param claims_status_request: dictionary representing a claims status request
         """
-        claims_status_url = "{0}/claims/status/".format(self.url_base)
+        claims_status_url = "{0}/claims/status".format(self.url_base)
         return self.api_client.post(claims_status_url, data=json.dumps(claims_status_request),
                                     headers=self.json_headers).json()
 

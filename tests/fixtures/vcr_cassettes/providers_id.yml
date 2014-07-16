@@ -4,13 +4,13 @@ interactions:
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
-      User-Agent: [python-pokitdok/0.5 python-requests/2.3.0 CPython/2.6.8 Darwin/13.1.0]
+      User-Agent: [python-pokitdok/0.5 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
     method: GET
     uri: http://localhost:5002/api/v4/providers/1467560003
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 4, "rate_limit_reset":
-        1404793292, "processing_time": 60, "rate_limit_cap": 1000, "credits_remaining":
-        9993, "credits_billed": 1}, "data": {"provider": {"first_name": "JEROME",
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 19, "rate_limit_reset":
+        1405482438, "processing_time": 12, "rate_limit_cap": 1000, "credits_remaining":
+        9994, "credits_billed": 1}, "data": {"provider": {"first_name": "JEROME",
         "last_name": "AYA-AY", "middle_name": "BENITEZ", "uuid": "fc44d0e0-ea7f-492e-90f0-0f9148453019",
         "locations": [{"address_lines": ["8311 WARREN H ABERNATHY HWY"], "city": "SPARTANBURG",
         "country": "US", "zipcode": "29301", "state": "SC", "geo_location": [-82.014564,
@@ -23,9 +23,9 @@ interactions:
         "J C EDWARDS SCH MED MARSHALL U, HUNTINGTON WV 2575", "graduation_year": "2004-01-01T00:00:00"}}}}'}
     headers:
       charset: [utf-8]
-      content-length: ['1056']
+      content-length: ['1057']
       content-type: [text/html; charset=utf-8]
-      date: ['Tue, 08 Jul 2014 03:21:32 GMT']
+      date: ['Wed, 16 Jul 2014 03:00:03 GMT']
       mimetype: [application/json]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}

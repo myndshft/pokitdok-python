@@ -4,218 +4,462 @@ interactions:
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
-      User-Agent: [python-pokitdok/0.5 python-requests/2.3.0 CPython/2.6.8 Darwin/13.1.0]
+      User-Agent: [python-pokitdok/0.5 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
     method: GET
     uri: http://localhost:5002/api/v4/activities/
   response:
-    body: {string: !!python/unicode '{"meta": {"processing_time": 21, "rate_limit_amount":
-        1, "rate_limit_reset": 1404793292, "rate_limit_cap": 1000}, "data": [{"units_of_work":
-        1, "name": "providers", "parameters": {"npi_id": "1467560003"}, "state": {"name":
-        "completed", "title": "Completed"}, "trading_partner_id": "PokitDok", "id":
-        "5390bd6e56c02c3f39400df1", "transition_path": ["process", "complete"], "history":
-        [{"record_dt": "2014-06-05T18:56:46.074000", "name": "init", "title": "Initializing"},
-        {"record_dt": "2014-06-05T18:56:46.079000", "name": "processing", "title":
-        "Processing X12 transactions"}]}, {"units_of_work": 1, "name": "providers",
-        "parameters": {"provider_id": "1467560003"}, "state": {"name": "failed", "title":
-        "Failed"}, "trading_partner_id": "PokitDok", "id": "5390b5a756c02c38bd37f25e",
-        "transition_path": ["process", "complete"], "history": [{"record_dt": "2014-06-05T18:23:35.616000",
-        "name": "init", "title": "Initializing"}, {"record_dt": "2014-06-05T18:23:35.617000",
+    body: {string: !!python/unicode '{"meta": {"processing_time": 22, "rate_limit_amount":
+        13, "rate_limit_reset": 1405482438, "next": "http://localhost:5002/api/v4/activities/?offset=20",
+        "rate_limit_cap": 1000}, "data": [{"units_of_work": 1, "name": "prices", "parameters":
+        {"cpt_code": "87799", "zip_code": "32218"}, "state": {"name": "completed",
+        "title": "Completed"}, "trading_partner_id": "PokitDok", "id": "53c5e8e456c02c2384314494",
+        "transition_path": ["process", "complete"], "history": [{"record_dt": "2014-07-16T02:52:20.064000",
+        "name": "init", "title": "Initializing"}, {"record_dt": "2014-07-16T02:52:20.128000",
         "name": "processing", "title": "Processing X12 transactions"}]}, {"units_of_work":
-        1, "name": "providers", "parameters": {"provider_id": "1467560003"}, "state":
-        {"name": "failed", "title": "Failed"}, "trading_partner_id": "PokitDok", "id":
-        "5390b50556c02c379d64d6d0", "transition_path": ["process", "complete"], "history":
-        [{"record_dt": "2014-06-05T18:20:53.671000", "name": "init", "title": "Initializing"},
-        {"record_dt": "2014-06-05T18:20:53.671000", "name": "processing", "title":
-        "Processing X12 transactions"}]}, {"units_of_work": 1, "name": "providers",
-        "parameters": {"npi_id": "1467560003"}, "state": {"name": "completed", "title":
-        "Completed"}, "trading_partner_id": "PokitDok", "id": "5390bc2a56c02c3f39400dee",
-        "transition_path": ["process", "complete"], "history": [{"record_dt": "2014-06-05T18:51:22.752000",
-        "name": "init", "title": "Initializing"}, {"record_dt": "2014-06-05T18:51:22.757000",
+        1, "name": "prices", "parameters": {"cpt_code": "87799", "zip_code": "32218"},
+        "state": {"name": "completed", "title": "Completed"}, "trading_partner_id":
+        "PokitDok", "id": "53c5e8e356c02c238431448d", "transition_path": ["process",
+        "complete"], "history": [{"record_dt": "2014-07-16T02:52:19.492000", "name":
+        "init", "title": "Initializing"}, {"record_dt": "2014-07-16T02:52:19.498000",
         "name": "processing", "title": "Processing X12 transactions"}]}, {"units_of_work":
-        1, "name": "providers", "parameters": {"npi_id": "1467560003"}, "state": {"name":
-        "completed", "title": "Completed"}, "trading_partner_id": "PokitDok", "id":
-        "5390bb2956c02c3f39400deb", "transition_path": ["process", "complete"], "history":
-        [{"record_dt": "2014-06-05T18:47:05.088000", "name": "init", "title": "Initializing"},
-        {"record_dt": "2014-06-05T18:47:05.093000", "name": "processing", "title":
-        "Processing X12 transactions"}]}, {"units_of_work": 1, "name": "providers",
-        "parameters": {"provider_id": "1467560003"}, "state": {"name": "failed", "title":
-        "Failed"}, "trading_partner_id": "PokitDok", "id": "5390b53a56c02c379d64d6d1",
-        "transition_path": ["process", "complete"], "history": [{"record_dt": "2014-06-05T18:21:46.667000",
-        "name": "init", "title": "Initializing"}, {"record_dt": "2014-06-05T18:21:46.668000",
+        1, "name": "providers", "parameters": {"first_name": "Creighton", "last_name":
+        "Likes"}, "state": {"name": "completed", "title": "Completed"}, "trading_partner_id":
+        "PokitDok", "id": "53c57e7556c02c057066aad6", "transition_path": ["process",
+        "complete"], "history": [{"record_dt": "2014-07-15T19:18:13.364000", "name":
+        "init", "title": "Initializing"}, {"record_dt": "2014-07-15T19:18:14.518000",
         "name": "processing", "title": "Processing X12 transactions"}]}, {"units_of_work":
-        1, "name": "eligibility", "parameters": {"service_types": ["health_benefit_plan_coverage"],
-        "client_id": "HriWakiWYQuCm5IK7yPp", "member": {"birth_date": "1970-01-01",
-        "first_name": "Jane", "last_name": "Doe", "id": "W000000000"}, "correlation_id":
-        "e1676007-8fe8-426d-800d-8c4260ef28cd", "trading_partner_id": "MOCKPAYER",
-        "provider": {"first_name": "JEROME", "last_name": "AYA-AY", "npi": "1467560003"},
-        "async": false, "transaction_code": "request"}, "state": {"name": "completed",
-        "title": "Completed"}, "result": {"service_types": ["professional_physician_visit_office"],
-        "client_id": "HriWakiWYQuCm5IK7yPp", "payer": {"id": "MOCKPAYER", "name":
-        "MOCK PAYER INC"}, "subscriber": {"birth_date": "1970-01-01", "first_name":
-        "Jane", "last_name": "Doe", "id": "W000000000", "address": {"city": "SPARTANBURG",
-        "state": "SC", "zipcode": "29307", "address_lines": ["123 MAIN ST"]}}, "correlation_id":
-        "e1676007-8fe8-426d-800d-8c4260ef28cd", "trading_partner_id": "MOCKPAYER",
-        "provider": {"first_name": "JEROME", "last_name": "JEROME AYA-AY", "npi":
-        "1467560003"}, "coverage": {"service_types": ["professional_physician_visit_office"],
-        "group_number": "088818801000013", "out_of_pocket": [{"in_plan_network": "yes",
-        "benefit_amount": {"currency": "USD", "amount": "3000"}, "coverage_level":
-        "individual"}, {"in_plan_network": "yes", "benefit_amount": {"currency": "USD",
-        "amount": "2983.57"}, "coverage_level": "individual", "time_period": "remaining"},
-        {"in_plan_network": "yes", "benefit_amount": {"currency": "USD", "amount":
-        "6000"}, "coverage_level": "family"}, {"in_plan_network": "yes", "benefit_amount":
-        {"currency": "USD", "amount": "5956.09"}, "coverage_level": "family", "time_period":
-        "remaining"}, {"in_plan_network": "no", "benefit_amount": {"currency": "USD",
-        "amount": "12500"}, "coverage_level": "individual"}, {"in_plan_network": "no",
-        "benefit_amount": {"currency": "USD", "amount": "12483.57"}, "coverage_level":
-        "individual", "time_period": "remaining"}, {"in_plan_network": "no", "benefit_amount":
-        {"currency": "USD", "amount": "25000"}, "coverage_level": "family"}, {"in_plan_network":
-        "no", "benefit_amount": {"currency": "USD", "amount": "24956.09"}, "coverage_level":
-        "family", "messages": [{"message": "Unlimited Lifetime Benefits"}], "time_period":
-        "remaining"}], "level": "employee_and_spouse", "copay": [{"in_plan_network":
-        "yes", "service_types": ["professional_physician_visit_office"], "coverage_level":
-        "employee_and_spouse", "messages": [{"message": "PRIMARY OFFICE"}]}, {"in_plan_network":
-        "not_applicable", "service_types": ["professional_physician_visit_office"],
-        "coverage_level": "employee_and_spouse", "messages": [{"message": "GYN OFFICE
-        VS"}, {"message": "GYN VISIT"}, {"message": "SPEC OFFICE"}, {"message": "SPEC
-        VISIT"}, {"message": "PRIME CARE VST"}, {"message": "Plan Requires PreCert"},
-        {"message": "Commercial"}, {"message": "Plan includes NAP"}, {"message": "Pre-Existing
-        may apply"}]}], "deductibles": [{"messages": [{"message": "INT MED AND RX,GYN
-        OFFICE VS,DED INCLUDED IN OOP,GYN VISIT,SPEC OFFICE,SPEC VISIT,PRIMARY OFFICE,PRIME
-        CARE VST"}], "in_plan_network": "yes", "eligibility_date": "2013-01-01", "time_period":
-        "calendar_year", "coverage_level": "family", "benefit_amount": {"currency":
-        "USD", "amount": "6000"}}, {"in_plan_network": "yes", "time_period": "remaining",
-        "coverage_level": "family", "messages": [{"message": "INT MED AND RX"}], "benefit_amount":
-        {"currency": "USD", "amount": "5956.09"}}, {"messages": [{"message": "INT
-        MED AND RX,GYN OFFICE VS,DED INCLUDED IN OOP,GYN VISIT,SPEC OFFICE,SPEC VISIT,PRIMARY
-        OFFICE,PRIME CARE VST"}], "in_plan_network": "yes", "eligibility_date": "2013-01-01",
-        "time_period": "calendar_year", "coverage_level": "individual", "benefit_amount":
-        {"currency": "USD", "amount": "3000"}}, {"in_plan_network": "yes", "time_period":
-        "remaining", "coverage_level": "individual", "messages": [{"message": "INT
-        MED AND RX"}], "benefit_amount": {"currency": "USD", "amount": "2983.57"}},
-        {"messages": [{"message": "INT MED AND RX,GYN OFFICE VS,DED INCLUDED IN OOP,GYN
-        VISIT,SPEC OFFICE,SPEC VISIT,PRIME CARE VST"}], "in_plan_network": "no", "eligibility_date":
-        "2013-01-01", "time_period": "calendar_year", "coverage_level": "family",
-        "benefit_amount": {"currency": "USD", "amount": "12000"}}, {"in_plan_network":
-        "no", "time_period": "remaining", "coverage_level": "family", "messages":
-        [{"message": "INT MED AND RX"}], "benefit_amount": {"currency": "USD", "amount":
-        "11956.09"}}, {"messages": [{"message": "INT MED AND RX,GYN OFFICE VS,DED
-        INCLUDED IN OOP,GYN VISIT,SPEC OFFICE,SPEC VISIT,PRIME CARE VST"}], "in_plan_network":
-        "no", "eligibility_date": "2013-01-01", "time_period": "calendar_year", "coverage_level":
-        "individual", "benefit_amount": {"currency": "USD", "amount": "6000"}}, {"in_plan_network":
-        "no", "time_period": "remaining", "coverage_level": "individual", "messages":
-        [{"message": "INT MED AND RX"}], "benefit_amount": {"currency": "USD", "amount":
-        "5983.57"}}], "plan_begin_date": "2013-02-15", "eligibility_begin_date": "2012-02-01",
-        "coinsurance": [{"benefit_percent": 0.0, "service_types": ["professional_physician_visit_office"],
-        "coverage_level": "employee_and_spouse", "messages": [{"message": "GYN OFFICE
-        VS"}, {"message": "GYN VISIT"}, {"message": "SPEC OFFICE"}, {"message": "SPEC
-        VISIT"}, {"message": "PRIMARY OFFICE"}, {"message": "PRIME CARE VST"}], "in_plan_network":
-        "yes"}, {"benefit_percent": 0.5, "service_types": ["professional_physician_visit_office"],
-        "coverage_level": "employee_and_spouse", "messages": [{"message": "GYN OFFICE
-        VS,COINS APPLIES TO OUT OF POCKET"}, {"message": "GYN VISIT,COINS APPLIES
-        TO OUT OF POCKET"}, {"message": "SPEC OFFICE,COINS APPLIES TO OUT OF POCKET"},
-        {"message": "SPEC VISIT,COINS APPLIES TO OUT OF POCKET"}, {"message": "PRIME
-        CARE VST,COINS APPLIES TO OUT OF POCKET"}], "in_plan_network": "no"}], "group_description":
-        "MOCK INDIVIDUAL ADVANTAGE PLAN", "plan_number": "0888188", "service_date":
-        "2013-08-10"}, "valid_request": true}, "trading_partner_id": "MOCKPAYER",
-        "id": "5390bc2a56c02c3f39400dec", "transition_path": ["generate", "transmit",
-        "wait", "receive", "process", "complete"], "history": [{"record_dt": "2014-06-05T18:51:22.343000",
-        "name": "init", "title": "Initializing"}, {"record_dt": "2014-06-05T18:51:22.616000",
-        "name": "generating", "title": "Generating X12 transactions"}, {"record_dt":
-        "2014-06-05T18:51:22.618000", "name": "transmitting", "title": "Transmitting
-        transactions to Trading Partner"}, {"record_dt": "2014-06-05T18:51:22.621000",
-        "name": "waiting", "title": "Waiting on Trading Partner Response"}, {"record_dt":
-        "2014-06-05T18:51:22.622000", "name": "receiving", "title": "Receiving transactions
-        from Trading Partner"}, {"record_dt": "2014-06-05T18:51:22.721000", "name":
-        "processing", "title": "Processing X12 transactions"}]}, {"units_of_work":
-        1, "name": "eligibility", "parameters": {"service_types": ["health_benefit_plan_coverage"],
-        "client_id": "HriWakiWYQuCm5IK7yPp", "member": {"birth_date": "1970-01-01",
-        "first_name": "Jane", "last_name": "Doe", "id": "W000000000"}, "correlation_id":
-        "a37f136c-b10f-401b-9a10-3fb71aeb1d9d", "trading_partner_id": "MOCKPAYER",
-        "provider": {"first_name": "JEROME", "last_name": "AYA-AY", "npi": "1467560003"},
-        "async": false, "transaction_code": "request"}, "state": {"name": "completed",
-        "title": "Completed"}, "result": {"service_types": ["professional_physician_visit_office"],
-        "client_id": "HriWakiWYQuCm5IK7yPp", "payer": {"id": "MOCKPAYER", "name":
-        "MOCK PAYER INC"}, "subscriber": {"birth_date": "1970-01-01", "first_name":
-        "Jane", "last_name": "Doe", "id": "W000000000", "address": {"city": "SPARTANBURG",
-        "state": "SC", "zipcode": "29307", "address_lines": ["123 MAIN ST"]}}, "correlation_id":
-        "a37f136c-b10f-401b-9a10-3fb71aeb1d9d", "trading_partner_id": "MOCKPAYER",
-        "provider": {"first_name": "JEROME", "last_name": "JEROME AYA-AY", "npi":
-        "1467560003"}, "coverage": {"service_types": ["professional_physician_visit_office"],
-        "group_number": "088818801000013", "out_of_pocket": [{"in_plan_network": "yes",
-        "benefit_amount": {"currency": "USD", "amount": "3000"}, "coverage_level":
-        "individual"}, {"in_plan_network": "yes", "benefit_amount": {"currency": "USD",
-        "amount": "2983.57"}, "coverage_level": "individual", "time_period": "remaining"},
-        {"in_plan_network": "yes", "benefit_amount": {"currency": "USD", "amount":
-        "6000"}, "coverage_level": "family"}, {"in_plan_network": "yes", "benefit_amount":
-        {"currency": "USD", "amount": "5956.09"}, "coverage_level": "family", "time_period":
-        "remaining"}, {"in_plan_network": "no", "benefit_amount": {"currency": "USD",
-        "amount": "12500"}, "coverage_level": "individual"}, {"in_plan_network": "no",
-        "benefit_amount": {"currency": "USD", "amount": "12483.57"}, "coverage_level":
-        "individual", "time_period": "remaining"}, {"in_plan_network": "no", "benefit_amount":
-        {"currency": "USD", "amount": "25000"}, "coverage_level": "family"}, {"in_plan_network":
-        "no", "benefit_amount": {"currency": "USD", "amount": "24956.09"}, "coverage_level":
-        "family", "messages": [{"message": "Unlimited Lifetime Benefits"}], "time_period":
-        "remaining"}], "level": "employee_and_spouse", "copay": [{"in_plan_network":
-        "yes", "service_types": ["professional_physician_visit_office"], "coverage_level":
-        "employee_and_spouse", "messages": [{"message": "PRIMARY OFFICE"}]}, {"in_plan_network":
-        "not_applicable", "service_types": ["professional_physician_visit_office"],
-        "coverage_level": "employee_and_spouse", "messages": [{"message": "GYN OFFICE
-        VS"}, {"message": "GYN VISIT"}, {"message": "SPEC OFFICE"}, {"message": "SPEC
-        VISIT"}, {"message": "PRIME CARE VST"}, {"message": "Plan Requires PreCert"},
-        {"message": "Commercial"}, {"message": "Plan includes NAP"}, {"message": "Pre-Existing
-        may apply"}]}], "deductibles": [{"messages": [{"message": "INT MED AND RX,GYN
-        OFFICE VS,DED INCLUDED IN OOP,GYN VISIT,SPEC OFFICE,SPEC VISIT,PRIMARY OFFICE,PRIME
-        CARE VST"}], "in_plan_network": "yes", "eligibility_date": "2013-01-01", "time_period":
-        "calendar_year", "coverage_level": "family", "benefit_amount": {"currency":
-        "USD", "amount": "6000"}}, {"in_plan_network": "yes", "time_period": "remaining",
-        "coverage_level": "family", "messages": [{"message": "INT MED AND RX"}], "benefit_amount":
-        {"currency": "USD", "amount": "5956.09"}}, {"messages": [{"message": "INT
-        MED AND RX,GYN OFFICE VS,DED INCLUDED IN OOP,GYN VISIT,SPEC OFFICE,SPEC VISIT,PRIMARY
-        OFFICE,PRIME CARE VST"}], "in_plan_network": "yes", "eligibility_date": "2013-01-01",
-        "time_period": "calendar_year", "coverage_level": "individual", "benefit_amount":
-        {"currency": "USD", "amount": "3000"}}, {"in_plan_network": "yes", "time_period":
-        "remaining", "coverage_level": "individual", "messages": [{"message": "INT
-        MED AND RX"}], "benefit_amount": {"currency": "USD", "amount": "2983.57"}},
-        {"messages": [{"message": "INT MED AND RX,GYN OFFICE VS,DED INCLUDED IN OOP,GYN
-        VISIT,SPEC OFFICE,SPEC VISIT,PRIME CARE VST"}], "in_plan_network": "no", "eligibility_date":
-        "2013-01-01", "time_period": "calendar_year", "coverage_level": "family",
-        "benefit_amount": {"currency": "USD", "amount": "12000"}}, {"in_plan_network":
-        "no", "time_period": "remaining", "coverage_level": "family", "messages":
-        [{"message": "INT MED AND RX"}], "benefit_amount": {"currency": "USD", "amount":
-        "11956.09"}}, {"messages": [{"message": "INT MED AND RX,GYN OFFICE VS,DED
-        INCLUDED IN OOP,GYN VISIT,SPEC OFFICE,SPEC VISIT,PRIME CARE VST"}], "in_plan_network":
-        "no", "eligibility_date": "2013-01-01", "time_period": "calendar_year", "coverage_level":
-        "individual", "benefit_amount": {"currency": "USD", "amount": "6000"}}, {"in_plan_network":
-        "no", "time_period": "remaining", "coverage_level": "individual", "messages":
-        [{"message": "INT MED AND RX"}], "benefit_amount": {"currency": "USD", "amount":
-        "5983.57"}}], "plan_begin_date": "2013-02-15", "eligibility_begin_date": "2012-02-01",
-        "coinsurance": [{"benefit_percent": 0.0, "service_types": ["professional_physician_visit_office"],
-        "coverage_level": "employee_and_spouse", "messages": [{"message": "GYN OFFICE
-        VS"}, {"message": "GYN VISIT"}, {"message": "SPEC OFFICE"}, {"message": "SPEC
-        VISIT"}, {"message": "PRIMARY OFFICE"}, {"message": "PRIME CARE VST"}], "in_plan_network":
-        "yes"}, {"benefit_percent": 0.5, "service_types": ["professional_physician_visit_office"],
-        "coverage_level": "employee_and_spouse", "messages": [{"message": "GYN OFFICE
-        VS,COINS APPLIES TO OUT OF POCKET"}, {"message": "GYN VISIT,COINS APPLIES
-        TO OUT OF POCKET"}, {"message": "SPEC OFFICE,COINS APPLIES TO OUT OF POCKET"},
-        {"message": "SPEC VISIT,COINS APPLIES TO OUT OF POCKET"}, {"message": "PRIME
-        CARE VST,COINS APPLIES TO OUT OF POCKET"}], "in_plan_network": "no"}], "group_description":
-        "MOCK INDIVIDUAL ADVANTAGE PLAN", "plan_number": "0888188", "service_date":
-        "2013-08-10"}, "valid_request": true}, "trading_partner_id": "MOCKPAYER",
-        "id": "5390bd6d56c02c3f39400def", "transition_path": ["generate", "transmit",
-        "wait", "receive", "process", "complete"], "history": [{"record_dt": "2014-06-05T18:56:45.954000",
-        "name": "init", "title": "Initializing"}, {"record_dt": "2014-06-05T18:56:45.969000",
-        "name": "generating", "title": "Generating X12 transactions"}, {"record_dt":
-        "2014-06-05T18:56:45.971000", "name": "transmitting", "title": "Transmitting
-        transactions to Trading Partner"}, {"record_dt": "2014-06-05T18:56:45.972000",
-        "name": "waiting", "title": "Waiting on Trading Partner Response"}, {"record_dt":
-        "2014-06-05T18:56:45.973000", "name": "receiving", "title": "Receiving transactions
-        from Trading Partner"}, {"record_dt": "2014-06-05T18:56:46.023000", "name":
-        "processing", "title": "Processing X12 transactions"}]}]}'}
+        1, "name": "claims", "parameters": {"claim": {"plan_participation": "assigned",
+        "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260"}, "subscriber": {"first_name": "John", "last_name":
+        "Doe", "gender": "male", "member_id": "W000000002", "payer_responsibility":
+        "primary", "address": {"address_lines": ["123 N MAIN ST"], "state": "SC",
+        "zipcode": "29301", "city": "SPARTANBURG"}, "birth_date": "1970-01-01"}, "correlation_id":
+        "634d8c1f-2940-44fb-8738-63418089f8bd", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "receiver": {"organization_name": "Magellan Behavioral Health", "id": "01260",
+        "email": "x12info@pokitdok.com"}, "submitter": {"organization_name": "PokitDok,
+        Inc.", "id": "453504565", "email": "x12info@pokitdok.com"}, "billing_provider":
+        {"first_name": "Jerome", "last_name": "Aya-Ay", "npi": "1467560003", "taxonomy_code":
+        "207Q00000X", "address": {"address_lines": ["8311 WARREN H ABERNATHY HWY"],
+        "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"}, "tax_id": "123456789"},
+        "transaction_code": "chargeable"}, "remaining_transitions": ["wait", "receive",
+        "process", "complete"], "state": {"name": "transmitting", "title": "Transmitting
+        transactions to Trading Partner"}, "trading_partner_id": "magellan_behavioral_health",
+        "id": "53c4990956c02c509fa09c02", "transition_path": ["schedule", "generate",
+        "store", "transmit", "wait", "receive", "process", "complete"], "history":
+        [{"record_dt": "2014-07-15T02:59:21.829000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-07-15T03:02:20.024000", "name": "scheduled", "title":
+        "Scheduled for next available transmission to Trading Partner"}, {"record_dt":
+        "2014-07-15T03:02:20.180000", "name": "generating", "title": "Generating X12
+        transactions"}, {"record_dt": "2014-07-15T03:02:20.559000", "name": "stored",
+        "title": "Batch transactions stored for later processing"}]}, {"units_of_work":
+        1, "name": "providers", "parameters": {"first_name": "CHARLES", "last_name":
+        "COX", "zipcode": "29307"}, "state": {"name": "completed", "title": "Completed"},
+        "trading_partner_id": "PokitDok", "id": "53c5810456c02c057066aae2", "transition_path":
+        ["process", "complete"], "history": [{"record_dt": "2014-07-15T19:29:08.299000",
+        "name": "init", "title": "Initializing"}, {"record_dt": "2014-07-15T19:29:08.621000",
+        "name": "processing", "title": "Processing X12 transactions"}]}, {"units_of_work":
+        1, "name": "claims", "parameters": {"claim": {"plan_participation": "assigned",
+        "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260"}, "subscriber": {"first_name": "John", "last_name":
+        "Doe", "gender": "male", "member_id": "W000000002", "payer_responsibility":
+        "primary", "address": {"address_lines": ["123 N MAIN ST"], "state": "SC",
+        "zipcode": "29301", "city": "SPARTANBURG"}, "birth_date": "1970-01-01"}, "correlation_id":
+        "0944a706-d642-4d35-b146-aad390022c17", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "receiver": {"organization_name": "Magellan Behavioral Health", "id": "01260",
+        "email": "x12info@pokitdok.com"}, "submitter": {"organization_name": "PokitDok,
+        Inc.", "id": "453504565", "email": "x12info@pokitdok.com"}, "billing_provider":
+        {"first_name": "Jerome", "last_name": "Aya-Ay", "npi": "1467560003", "taxonomy_code":
+        "207Q00000X", "address": {"address_lines": ["8311 WARREN H ABERNATHY HWY"],
+        "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"}, "tax_id": "123456789"},
+        "transaction_code": "chargeable"}, "remaining_transitions": ["wait", "receive",
+        "process", "complete"], "state": {"name": "transmitting", "title": "Transmitting
+        transactions to Trading Partner"}, "trading_partner_id": "magellan_behavioral_health",
+        "id": "53c49aa856c02c54da70488e", "transition_path": ["schedule", "generate",
+        "store", "transmit", "wait", "receive", "process", "complete"], "history":
+        [{"record_dt": "2014-07-15T03:06:16.577000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-07-15T03:06:19.466000", "name": "scheduled", "title":
+        "Scheduled for next available transmission to Trading Partner"}, {"record_dt":
+        "2014-07-15T03:06:19.575000", "name": "generating", "title": "Generating X12
+        transactions"}, {"record_dt": "2014-07-15T03:07:36.858000", "name": "stored",
+        "title": "Batch transactions stored for later processing"}]}, {"units_of_work":
+        1, "name": "claims", "parameters": {"claim": {"plan_participation": "assigned",
+        "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260"}, "subscriber": {"first_name": "John", "last_name":
+        "Doe", "gender": "male", "member_id": "W000000002", "payer_responsibility":
+        "primary", "address": {"address_lines": ["123 N MAIN ST"], "state": "SC",
+        "zipcode": "29301", "city": "SPARTANBURG"}, "birth_date": "1970-01-01"}, "correlation_id":
+        "929dc307-c624-48a8-9528-7a278dc71ca5", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "receiver": {"organization_name": "Magellan Behavioral Health", "id": "01260",
+        "email": "x12info@pokitdok.com"}, "submitter": {"organization_name": "PokitDok,
+        Inc.", "id": "453504565", "email": "x12info@pokitdok.com"}, "billing_provider":
+        {"first_name": "Jerome", "last_name": "Aya-Ay", "npi": "1467560003", "taxonomy_code":
+        "207Q00000X", "address": {"address_lines": ["8311 WARREN H ABERNATHY HWY"],
+        "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"}, "tax_id": "123456789"},
+        "transaction_code": "chargeable"}, "remaining_transitions": ["wait", "receive",
+        "process", "complete"], "state": {"name": "transmitting", "title": "Transmitting
+        transactions to Trading Partner"}, "trading_partner_id": "magellan_behavioral_health",
+        "id": "53c49af656c02c553224315b", "transition_path": ["schedule", "generate",
+        "store", "transmit", "wait", "receive", "process", "complete"], "history":
+        [{"record_dt": "2014-07-15T03:07:34.498000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-07-15T03:07:36.379000", "name": "scheduled", "title":
+        "Scheduled for next available transmission to Trading Partner"}, {"record_dt":
+        "2014-07-15T03:07:36.495000", "name": "generating", "title": "Generating X12
+        transactions"}, {"record_dt": "2014-07-15T03:07:36.860000", "name": "stored",
+        "title": "Batch transactions stored for later processing"}]}, {"units_of_work":
+        1, "name": "claims", "parameters": {"claim": {"plan_participation": "assigned",
+        "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260"}, "subscriber": {"first_name": "John", "last_name":
+        "Doe", "gender": "male", "member_id": "W000000002", "payer_responsibility":
+        "primary", "address": {"address_lines": ["123 N MAIN ST"], "state": "SC",
+        "zipcode": "29301", "city": "SPARTANBURG"}, "birth_date": "1970-01-01"}, "correlation_id":
+        "ef26e886-2d1c-4807-9aaf-8b1defb03749", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "receiver": {"organization_name": "Magellan Behavioral Health", "id": "01260",
+        "email": "x12info@pokitdok.com"}, "submitter": {"organization_name": "PokitDok,
+        Inc.", "id": "453504565", "email": "x12info@pokitdok.com"}, "billing_provider":
+        {"first_name": "Jerome", "last_name": "Aya-Ay", "npi": "1467560003", "taxonomy_code":
+        "207Q00000X", "address": {"address_lines": ["8311 WARREN H ABERNATHY HWY"],
+        "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"}, "tax_id": "123456789"},
+        "transaction_code": "chargeable"}, "remaining_transitions": ["wait", "receive",
+        "process", "complete"], "state": {"name": "transmitting", "title": "Transmitting
+        transactions to Trading Partner"}, "trading_partner_id": "magellan_behavioral_health",
+        "id": "53c49b8756c02c559cc4bed7", "transition_path": ["schedule", "generate",
+        "store", "transmit", "wait", "receive", "process", "complete"], "history":
+        [{"record_dt": "2014-07-15T03:09:59.275000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-07-15T03:10:01.952000", "name": "scheduled", "title":
+        "Scheduled for next available transmission to Trading Partner"}, {"record_dt":
+        "2014-07-15T03:10:02.064000", "name": "generating", "title": "Generating X12
+        transactions"}, {"record_dt": "2014-07-15T03:10:02.555000", "name": "stored",
+        "title": "Batch transactions stored for later processing"}]}, {"units_of_work":
+        1, "name": "claims", "parameters": {"claim": {"plan_participation": "assigned",
+        "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260"}, "subscriber": {"first_name": "John", "last_name":
+        "Doe", "gender": "male", "member_id": "W000000002", "payer_responsibility":
+        "primary", "address": {"address_lines": ["123 N MAIN ST"], "state": "SC",
+        "zipcode": "29301", "city": "SPARTANBURG"}, "birth_date": "1970-01-01"}, "correlation_id":
+        "b7a6f8b6-1964-4d08-85d8-e6bcef1ff09d", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "receiver": {"organization_name": "Magellan Behavioral Health", "id": "01260",
+        "email": "x12info@pokitdok.com"}, "submitter": {"organization_name": "PokitDok,
+        Inc.", "id": "453504565", "email": "x12info@pokitdok.com"}, "billing_provider":
+        {"first_name": "Jerome", "last_name": "Aya-Ay", "npi": "1467560003", "taxonomy_code":
+        "207Q00000X", "address": {"address_lines": ["8311 WARREN H ABERNATHY HWY"],
+        "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"}, "tax_id": "123456789"},
+        "transaction_code": "chargeable"}, "remaining_transitions": ["wait", "receive",
+        "process", "complete"], "state": {"name": "transmitting", "title": "Transmitting
+        transactions to Trading Partner"}, "trading_partner_id": "magellan_behavioral_health",
+        "id": "53c4a48156c02c559cc4bed8", "transition_path": ["schedule", "generate",
+        "store", "transmit", "wait", "receive", "process", "complete"], "history":
+        [{"record_dt": "2014-07-15T03:48:17.392000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-07-15T03:48:20.925000", "name": "scheduled", "title":
+        "Scheduled for next available transmission to Trading Partner"}, {"record_dt":
+        "2014-07-15T03:48:20.933000", "name": "generating", "title": "Generating X12
+        transactions"}, {"record_dt": "2014-07-15T03:48:21.259000", "name": "stored",
+        "title": "Batch transactions stored for later processing"}]}, {"units_of_work":
+        1, "name": "claims", "parameters": {"claim": {"plan_participation": "assigned",
+        "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260"}, "subscriber": {"first_name": "John", "last_name":
+        "Doe", "gender": "male", "member_id": "W000000002", "payer_responsibility":
+        "primary", "address": {"address_lines": ["123 N MAIN ST"], "state": "SC",
+        "zipcode": "29301", "city": "SPARTANBURG"}, "birth_date": "1970-01-01"}, "correlation_id":
+        "d8a4c712-56ac-416b-acc5-5b4df61d14c3", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "receiver": {"organization_name": "Magellan Behavioral Health", "id": "01260",
+        "email": "x12info@pokitdok.com"}, "submitter": {"organization_name": "PokitDok,
+        Inc.", "id": "453504565", "email": "x12info@pokitdok.com"}, "billing_provider":
+        {"first_name": "Jerome", "last_name": "Aya-Ay", "npi": "1467560003", "taxonomy_code":
+        "207Q00000X", "address": {"address_lines": ["8311 WARREN H ABERNATHY HWY"],
+        "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"}, "tax_id": "123456789"},
+        "transaction_code": "chargeable"}, "remaining_transitions": ["wait", "receive",
+        "process", "complete"], "state": {"name": "transmitting", "title": "Transmitting
+        transactions to Trading Partner"}, "trading_partner_id": "magellan_behavioral_health",
+        "id": "53c4a48d56c02c559cc4bed9", "transition_path": ["schedule", "generate",
+        "store", "transmit", "wait", "receive", "process", "complete"], "history":
+        [{"record_dt": "2014-07-15T03:48:29.854000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-07-15T03:48:31.853000", "name": "scheduled", "title":
+        "Scheduled for next available transmission to Trading Partner"}, {"record_dt":
+        "2014-07-15T03:48:31.966000", "name": "generating", "title": "Generating X12
+        transactions"}, {"record_dt": "2014-07-15T03:48:32.270000", "name": "stored",
+        "title": "Batch transactions stored for later processing"}]}, {"units_of_work":
+        1, "name": "claims", "parameters": {"claim": {"plan_participation": "assigned",
+        "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260"}, "subscriber": {"first_name": "John", "last_name":
+        "Doe", "gender": "male", "member_id": "W000000002", "payer_responsibility":
+        "primary", "address": {"address_lines": ["123 N MAIN ST"], "state": "SC",
+        "zipcode": "29301", "city": "SPARTANBURG"}, "birth_date": "1970-01-01"}, "correlation_id":
+        "2144baef-2401-4081-8666-91fe0d13e6b8", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "receiver": {"organization_name": "Magellan Behavioral Health", "id": "01260",
+        "email": "x12info@pokitdok.com"}, "submitter": {"organization_name": "PokitDok,
+        Inc.", "id": "453504565", "email": "x12info@pokitdok.com"}, "billing_provider":
+        {"first_name": "Jerome", "last_name": "Aya-Ay", "npi": "1467560003", "taxonomy_code":
+        "207Q00000X", "address": {"address_lines": ["8311 WARREN H ABERNATHY HWY"],
+        "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"}, "tax_id": "123456789"},
+        "transaction_code": "chargeable"}, "remaining_transitions": ["wait", "receive",
+        "process", "complete"], "state": {"name": "transmitting", "title": "Transmitting
+        transactions to Trading Partner"}, "trading_partner_id": "magellan_behavioral_health",
+        "id": "53c4a49356c02c559cc4beda", "transition_path": ["schedule", "generate",
+        "store", "transmit", "wait", "receive", "process", "complete"], "history":
+        [{"record_dt": "2014-07-15T03:48:35.071000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-07-15T03:48:36.851000", "name": "scheduled", "title":
+        "Scheduled for next available transmission to Trading Partner"}, {"record_dt":
+        "2014-07-15T03:48:36.858000", "name": "generating", "title": "Generating X12
+        transactions"}, {"record_dt": "2014-07-15T03:48:37.139000", "name": "stored",
+        "title": "Batch transactions stored for later processing"}]}, {"units_of_work":
+        1, "name": "claims", "parameters": {"claim": {"plan_participation": "assigned",
+        "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260"}, "subscriber": {"first_name": "John", "last_name":
+        "Doe", "gender": "male", "member_id": "W000000002", "payer_responsibility":
+        "primary", "address": {"address_lines": ["123 N MAIN ST"], "state": "SC",
+        "zipcode": "29301", "city": "SPARTANBURG"}, "birth_date": "1970-01-01"}, "correlation_id":
+        "fff8e499-c36f-41c3-a1df-01a8ad9e2ad3", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "receiver": {"organization_name": "Magellan Behavioral Health", "id": "01260",
+        "email": "x12info@pokitdok.com"}, "submitter": {"organization_name": "PokitDok,
+        Inc.", "id": "453504565", "email": "x12info@pokitdok.com"}, "billing_provider":
+        {"first_name": "Jerome", "last_name": "Aya-Ay", "npi": "1467560003", "taxonomy_code":
+        "207Q00000X", "address": {"address_lines": ["8311 WARREN H ABERNATHY HWY"],
+        "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"}, "tax_id": "123456789"},
+        "transaction_code": "chargeable"}, "remaining_transitions": ["wait", "receive",
+        "process", "complete"], "state": {"name": "transmitting", "title": "Transmitting
+        transactions to Trading Partner"}, "trading_partner_id": "magellan_behavioral_health",
+        "id": "53c4a4f856c02c559cc4bedb", "transition_path": ["schedule", "generate",
+        "store", "transmit", "wait", "receive", "process", "complete"], "history":
+        [{"record_dt": "2014-07-15T03:50:16.156000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-07-15T03:50:20.289000", "name": "scheduled", "title":
+        "Scheduled for next available transmission to Trading Partner"}, {"record_dt":
+        "2014-07-15T03:50:20.297000", "name": "generating", "title": "Generating X12
+        transactions"}, {"record_dt": "2014-07-15T03:50:20.727000", "name": "stored",
+        "title": "Batch transactions stored for later processing"}]}, {"units_of_work":
+        1, "name": "providers", "parameters": {"first_name": "CHARLES", "last_name":
+        "COX"}, "state": {"name": "completed", "title": "Completed"}, "trading_partner_id":
+        "PokitDok", "id": "53c580f656c02c057066aae1", "transition_path": ["process",
+        "complete"], "history": [{"record_dt": "2014-07-15T19:28:54.533000", "name":
+        "init", "title": "Initializing"}, {"record_dt": "2014-07-15T19:28:54.672000",
+        "name": "processing", "title": "Processing X12 transactions"}]}, {"units_of_work":
+        1, "name": "providers", "parameters": {"first_name": "KEITH", "last_name":
+        "COX"}, "state": {"name": "completed", "title": "Completed"}, "trading_partner_id":
+        "PokitDok", "id": "53c580c656c02c057066aae0", "transition_path": ["process",
+        "complete"], "history": [{"record_dt": "2014-07-15T19:28:06.228000", "name":
+        "init", "title": "Initializing"}, {"record_dt": "2014-07-15T19:28:07.062000",
+        "name": "processing", "title": "Processing X12 transactions"}]}, {"units_of_work":
+        1, "name": "claims", "parameters": {"claim": {"plan_participation": "assigned",
+        "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260"}, "subscriber": {"first_name": "Jane", "last_name":
+        "Doe", "gender": "female", "member_id": "W000000001", "payer_responsibility":
+        "primary", "address": {"address_lines": ["123 N MAIN ST"], "state": "SC",
+        "zipcode": "29301", "city": "SPARTANBURG"}, "birth_date": "1970-01-01"}, "correlation_id":
+        "7173fd94-ba94-4633-ab5d-72d41c0264f7", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "receiver": {"organization_name": "Magellan Behavioral Health", "id": "01260",
+        "email": "x12info@pokitdok.com"}, "submitter": {"organization_name": "PokitDok,
+        Inc.", "id": "453504565", "email": "x12info@pokitdok.com"}, "billing_provider":
+        {"first_name": "Jerome", "last_name": "Aya-Ay", "npi": "1467560003", "taxonomy_code":
+        "207Q00000X", "address": {"address_lines": ["8311 WARREN H ABERNATHY HWY"],
+        "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"}, "tax_id": "123456789"},
+        "transaction_code": "chargeable"}, "remaining_transitions": ["wait", "receive",
+        "process", "complete"], "state": {"name": "transmitting", "title": "Transmitting
+        transactions to Trading Partner"}, "trading_partner_id": "magellan_behavioral_health",
+        "id": "53c5263b56c02c6055f46d77", "transition_path": ["schedule", "generate",
+        "store", "transmit", "wait", "receive", "process", "complete"], "history":
+        [{"record_dt": "2014-07-15T13:01:47.486000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-07-15T13:02:27.258000", "name": "scheduled", "title":
+        "Scheduled for next available transmission to Trading Partner"}, {"record_dt":
+        "2014-07-15T13:02:27.375000", "name": "generating", "title": "Generating X12
+        transactions"}, {"record_dt": "2014-07-15T13:02:27.707000", "name": "stored",
+        "title": "Batch transactions stored for later processing"}]}, {"units_of_work":
+        1, "name": "claims", "parameters": {"claim": {"plan_participation": "assigned",
+        "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260"}, "subscriber": {"first_name": "John", "last_name":
+        "Doe", "gender": "male", "member_id": "W000000002", "payer_responsibility":
+        "primary", "address": {"address_lines": ["123 N MAIN ST"], "state": "SC",
+        "zipcode": "29301", "city": "SPARTANBURG"}, "birth_date": "1970-01-01"}, "correlation_id":
+        "a7a6e74b-ab0f-47ef-8793-91c0edb52fc9", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "receiver": {"organization_name": "Magellan Behavioral Health", "id": "01260",
+        "email": "x12info@pokitdok.com"}, "submitter": {"organization_name": "PokitDok,
+        Inc.", "id": "453504565", "email": "x12info@pokitdok.com"}, "billing_provider":
+        {"first_name": "Jerome", "last_name": "Aya-Ay", "npi": "1467560003", "taxonomy_code":
+        "207Q00000X", "address": {"address_lines": ["8311 WARREN H ABERNATHY HWY"],
+        "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"}, "tax_id": "123456789"},
+        "transaction_code": "chargeable"}, "remaining_transitions": ["wait", "receive",
+        "process", "complete"], "state": {"name": "transmitting", "title": "Transmitting
+        transactions to Trading Partner"}, "trading_partner_id": "magellan_behavioral_health",
+        "id": "53c5264656c02c6055f46d78", "transition_path": ["schedule", "generate",
+        "store", "transmit", "wait", "receive", "process", "complete"], "history":
+        [{"record_dt": "2014-07-15T13:01:58.285000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-07-15T13:02:27.376000", "name": "scheduled", "title":
+        "Scheduled for next available transmission to Trading Partner"}, {"record_dt":
+        "2014-07-15T13:02:27.383000", "name": "generating", "title": "Generating X12
+        transactions"}, {"record_dt": "2014-07-15T13:02:27.709000", "name": "stored",
+        "title": "Batch transactions stored for later processing"}]}, {"units_of_work":
+        1, "name": "claims", "parameters": {"claim": {"plan_participation": "assigned",
+        "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260"}, "subscriber": {"first_name": "Jimmy", "last_name":
+        "Doe", "gender": "male", "member_id": "W000000003", "payer_responsibility":
+        "primary", "address": {"address_lines": ["123 N MAIN ST"], "state": "SC",
+        "zipcode": "29301", "city": "SPARTANBURG"}, "birth_date": "1990-01-01"}, "correlation_id":
+        "1f71fb98-4f0e-4596-934c-1beb7eb10bd1", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "receiver": {"organization_name": "Magellan Behavioral Health", "id": "01260",
+        "email": "x12info@pokitdok.com"}, "submitter": {"organization_name": "PokitDok,
+        Inc.", "id": "453504565", "email": "x12info@pokitdok.com"}, "billing_provider":
+        {"first_name": "Jerome", "last_name": "Aya-Ay", "npi": "1467560003", "taxonomy_code":
+        "207Q00000X", "address": {"address_lines": ["8311 WARREN H ABERNATHY HWY"],
+        "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"}, "tax_id": "123456789"},
+        "transaction_code": "chargeable"}, "remaining_transitions": ["wait", "receive",
+        "process", "complete"], "state": {"name": "transmitting", "title": "Transmitting
+        transactions to Trading Partner"}, "trading_partner_id": "magellan_behavioral_health",
+        "id": "53c5264f56c02c6055f46d79", "transition_path": ["schedule", "generate",
+        "store", "transmit", "wait", "receive", "process", "complete"], "history":
+        [{"record_dt": "2014-07-15T13:02:07.040000", "name": "init", "title": "Initializing"},
+        {"record_dt": "2014-07-15T13:02:27.384000", "name": "scheduled", "title":
+        "Scheduled for next available transmission to Trading Partner"}, {"record_dt":
+        "2014-07-15T13:02:27.391000", "name": "generating", "title": "Generating X12
+        transactions"}, {"record_dt": "2014-07-15T13:02:27.712000", "name": "stored",
+        "title": "Batch transactions stored for later processing"}]}, {"units_of_work":
+        1, "name": "claims", "parameters": {"claim": {"plan_participation": "assigned",
+        "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260", "address": {"address_lines": ["PO BOX 2216"],
+        "state": "MO", "zipcode": "63043", "city": "Maryland Heights"}}, "subscriber":
+        {"first_name": "Jimmy", "last_name": "Doe", "gender": "male", "member_id":
+        "W000000003", "payer_responsibility": "primary", "address": {"address_lines":
+        ["123 N MAIN ST"], "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"},
+        "birth_date": "1990-01-01"}, "correlation_id": "f3526a2f-6e5d-4145-b583-30e24ed84da7",
+        "client_id": "oB7rLIqHmdoAXHRAmWtM", "receiver": {"organization_name": "Magellan
+        Behavioral Health", "id": "01260", "email": "x12info@pokitdok.com"}, "submitter":
+        {"organization_name": "PokitDok, Inc.", "id": "453504565", "email": "x12info@pokitdok.com"},
+        "billing_provider": {"first_name": "Jerome", "last_name": "Aya-Ay", "npi":
+        "1467560003", "taxonomy_code": "207Q00000X", "address": {"address_lines":
+        ["8311 WARREN H ABERNATHY HWY"], "state": "SC", "zipcode": "29301", "city":
+        "SPARTANBURG"}, "tax_id": "123456789"}, "transaction_code": "chargeable"},
+        "remaining_transitions": ["wait", "receive", "process", "complete"], "state":
+        {"name": "transmitting", "title": "Transmitting transactions to Trading Partner"},
+        "trading_partner_id": "magellan_behavioral_health", "id": "53c526e856c02c6055f46d7c",
+        "transition_path": ["schedule", "generate", "store", "transmit", "wait", "receive",
+        "process", "complete"], "history": [{"record_dt": "2014-07-15T13:04:40.204000",
+        "name": "init", "title": "Initializing"}, {"record_dt": "2014-07-15T13:04:59.529000",
+        "name": "scheduled", "title": "Scheduled for next available transmission to
+        Trading Partner"}, {"record_dt": "2014-07-15T13:04:59.637000", "name": "generating",
+        "title": "Generating X12 transactions"}, {"record_dt": "2014-07-15T13:04:59.969000",
+        "name": "stored", "title": "Batch transactions stored for later processing"}]},
+        {"units_of_work": 1, "name": "claims", "parameters": {"claim": {"plan_participation":
+        "assigned", "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260", "address": {"address_lines": ["PO BOX 2216"],
+        "state": "MO", "zipcode": "63043", "city": "Maryland Heights"}}, "subscriber":
+        {"first_name": "John", "last_name": "Doe", "gender": "male", "member_id":
+        "W000000002", "payer_responsibility": "primary", "address": {"address_lines":
+        ["123 N MAIN ST"], "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"},
+        "birth_date": "1970-01-01"}, "correlation_id": "c8dc2606-d649-4993-b26f-3f31a779d09a",
+        "client_id": "oB7rLIqHmdoAXHRAmWtM", "receiver": {"organization_name": "Magellan
+        Behavioral Health", "id": "01260", "email": "x12info@pokitdok.com"}, "submitter":
+        {"organization_name": "PokitDok, Inc.", "id": "453504565", "email": "x12info@pokitdok.com"},
+        "billing_provider": {"first_name": "Jerome", "last_name": "Aya-Ay", "npi":
+        "1467560003", "taxonomy_code": "207Q00000X", "address": {"address_lines":
+        ["8311 WARREN H ABERNATHY HWY"], "state": "SC", "zipcode": "29301", "city":
+        "SPARTANBURG"}, "tax_id": "123456789"}, "transaction_code": "chargeable"},
+        "remaining_transitions": ["wait", "receive", "process", "complete"], "state":
+        {"name": "transmitting", "title": "Transmitting transactions to Trading Partner"},
+        "trading_partner_id": "magellan_behavioral_health", "id": "53c526d456c02c6055f46d7b",
+        "transition_path": ["schedule", "generate", "store", "transmit", "wait", "receive",
+        "process", "complete"], "history": [{"record_dt": "2014-07-15T13:04:20.962000",
+        "name": "init", "title": "Initializing"}, {"record_dt": "2014-07-15T13:04:59.639000",
+        "name": "scheduled", "title": "Scheduled for next available transmission to
+        Trading Partner"}, {"record_dt": "2014-07-15T13:04:59.645000", "name": "generating",
+        "title": "Generating X12 transactions"}, {"record_dt": "2014-07-15T13:04:59.971000",
+        "name": "stored", "title": "Batch transactions stored for later processing"}]},
+        {"units_of_work": 1, "name": "claims", "parameters": {"claim": {"plan_participation":
+        "assigned", "provider_signature": true, "total_charge_amount": "60.0", "claim_frequency":
+        "original", "place_of_service": "office", "direct_payment": "y", "patient_signature_on_file":
+        true, "information_release": "informed_consent", "service_lines": [{"diagnosis_codes":
+        ["487.1"], "unit_count": "1.0", "unit_type": "units", "charge_amount": "60.0",
+        "service_date": "2014-06-01", "procedure_code": "99213"}]}, "trading_partner_id":
+        "magellan_behavioral_health", "payer": {"organization_name": "Magellan Behavioral
+        Health", "plan_id": "01260", "address": {"address_lines": ["PO BOX 2216"],
+        "state": "MO", "zipcode": "63043", "city": "Maryland Heights"}}, "subscriber":
+        {"first_name": "Jane", "last_name": "Doe", "gender": "female", "member_id":
+        "W000000001", "payer_responsibility": "primary", "address": {"address_lines":
+        ["123 N MAIN ST"], "state": "SC", "zipcode": "29301", "city": "SPARTANBURG"},
+        "birth_date": "1970-01-01"}, "correlation_id": "0133f63c-0248-4bf8-bfef-72030a9ddc5b",
+        "client_id": "oB7rLIqHmdoAXHRAmWtM", "receiver": {"organization_name": "Magellan
+        Behavioral Health", "id": "01260", "email": "x12info@pokitdok.com"}, "submitter":
+        {"organization_name": "PokitDok, Inc.", "id": "453504565", "email": "x12info@pokitdok.com"},
+        "billing_provider": {"first_name": "Jerome", "last_name": "Aya-Ay", "npi":
+        "1467560003", "taxonomy_code": "207Q00000X", "address": {"address_lines":
+        ["8311 WARREN H ABERNATHY HWY"], "state": "SC", "zipcode": "29301", "city":
+        "SPARTANBURG"}, "tax_id": "123456789"}, "transaction_code": "chargeable"},
+        "remaining_transitions": ["wait", "receive", "process", "complete"], "state":
+        {"name": "transmitting", "title": "Transmitting transactions to Trading Partner"},
+        "trading_partner_id": "magellan_behavioral_health", "id": "53c526d056c02c6055f46d7a",
+        "transition_path": ["schedule", "generate", "store", "transmit", "wait", "receive",
+        "process", "complete"], "history": [{"record_dt": "2014-07-15T13:04:16.580000",
+        "name": "init", "title": "Initializing"}, {"record_dt": "2014-07-15T13:04:59.647000",
+        "name": "scheduled", "title": "Scheduled for next available transmission to
+        Trading Partner"}, {"record_dt": "2014-07-15T13:04:59.654000", "name": "generating",
+        "title": "Generating X12 transactions"}, {"record_dt": "2014-07-15T13:04:59.973000",
+        "name": "stored", "title": "Batch transactions stored for later processing"}]}]}'}
     headers:
       charset: [utf-8]
-      content-length: ['16552']
+      content-length: ['36148']
       content-type: [text/html; charset=utf-8]
-      date: ['Tue, 08 Jul 2014 03:21:32 GMT']
+      date: ['Wed, 16 Jul 2014 03:00:03 GMT']
       mimetype: [application/json]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}

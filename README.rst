@@ -114,6 +114,23 @@ Quick start
         }
     })
 
+    #Check the status of a claim
+    pd.claims_status({
+        "patient": {
+            "birth_date": "1970-01-01",
+            "first_name": "JANE",
+            "last_name": "DOE",
+            "id": "1234567890"
+        },
+        "provider": {
+            "first_name": "Jerome",
+            "last_name": "Aya-Ay",
+            "npi": "1467560003",
+        },
+        "service_date": "2014-01-01",
+        "trading_partner_id": "MOCKPAYER"
+    })
+
     #Submit X12 files directly for processing on the platform
     pd.files('MOCKPAYER', '/x12_files/eligibility_requests_batch_20.270')
 

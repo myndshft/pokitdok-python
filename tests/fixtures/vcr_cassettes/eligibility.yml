@@ -1,25 +1,26 @@
 interactions:
 - request:
-    body: '{"trading_partner_id": "MOCKPAYER", "member": {"id": "W000000000", "birth_date":
-      "1970-01-01", "first_name": "Jane", "last_name": "Doe"}, "provider": {"first_name":
-      "JEROME", "last_name": "AYA-AY", "npi": "1467560003"}, "service_types": ["health_benefit_plan_coverage"]}'
+    body: '{"provider": {"npi": "1467560003", "last_name": "AYA-AY", "first_name":
+      "JEROME"}, "service_types": ["health_benefit_plan_coverage"], "trading_partner_id":
+      "MOCKPAYER", "member": {"id": "W000000000", "birth_date": "1970-01-01", "last_name":
+      "Doe", "first_name": "Jane"}}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Content-Length: ['270']
       Content-type: [application/json]
-      User-Agent: [python-pokitdok/0.5 python-requests/2.3.0 CPython/2.6.8 Darwin/13.1.0]
+      User-Agent: [python-pokitdok/0.5 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
     method: POST
     uri: http://localhost:5002/api/v4/eligibility/
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 2, "rate_limit_reset":
-        1404793292, "processing_time": 410, "rate_limit_cap": 1000, "credits_remaining":
-        13493, "credits_billed": 1}, "data": {"service_types": ["professional_physician_visit_office"],
-        "client_id": "HriWakiWYQuCm5IK7yPp", "payer": {"id": "MOCKPAYER", "name":
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 16, "rate_limit_reset":
+        1405482438, "processing_time": 156, "rate_limit_cap": 1000, "credits_remaining":
+        13460, "credits_billed": 1}, "data": {"service_types": ["professional_physician_visit_office"],
+        "client_id": "oB7rLIqHmdoAXHRAmWtM", "payer": {"id": "MOCKPAYER", "name":
         "MOCK PAYER INC"}, "subscriber": {"birth_date": "1970-01-01", "first_name":
         "Jane", "last_name": "Doe", "id": "W000000000", "address": {"city": "SPARTANBURG",
         "state": "SC", "zipcode": "29307", "address_lines": ["123 MAIN ST"]}}, "correlation_id":
-        "65580cab-f44a-4a9b-ad9a-6c74b952d55a", "trading_partner_id": "MOCKPAYER",
+        "0b1c3a87-339b-49d4-8ce8-2bc69820f435", "trading_partner_id": "MOCKPAYER",
         "provider": {"first_name": "JEROME", "last_name": "JEROME AYA-AY", "npi":
         "1467560003"}, "coverage": {"plan_number": "0888188", "service_types": ["professional_physician_visit_office"],
         "group_number": "088818801000013", "out_of_pocket": [{"in_plan_network": "yes",
@@ -84,9 +85,9 @@ interactions:
         true}}'}
     headers:
       charset: [utf-8]
-      content-length: ['5656']
+      content-length: ['5657']
       content-type: [text/html; charset=utf-8]
-      date: ['Tue, 08 Jul 2014 03:21:32 GMT']
+      date: ['Wed, 16 Jul 2014 03:00:03 GMT']
       mimetype: [application/json]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}
