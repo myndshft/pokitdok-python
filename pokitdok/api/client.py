@@ -183,7 +183,7 @@ class PokitDokClient(object):
 
             :param trading_partner_id: the ID used by PokitDok to uniquely identify a trading partner
 
-            :returns a json document containing the specified trading partner or, if called with no arguments, a list of
+            :returns a dictionary containing the specified trading partner or, if called with no arguments, a list of
                      available trading partners
         """
 
