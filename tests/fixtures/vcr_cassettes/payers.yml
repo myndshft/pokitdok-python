@@ -4,31 +4,33 @@ interactions:
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
-      User-Agent: [python-pokitdok/0.5 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.7.5 Darwin/13.3.0]
     method: GET
     uri: http://localhost:5002/api/v4/payers/
   response:
-    body: {string: !!python/unicode '{"meta": {"processing_time": 19, "rate_limit_amount":
-        18, "rate_limit_reset": 1405482438, "rate_limit_cap": 1000}, "data": [{"supported_transactions":
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 33, "rate_limit_reset":
+        1407189557, "application_mode": "production", "processing_time": 20, "rate_limit_cap":
+        1000, "activity_id": "53dff70d56c02c3c3439ca55"}, "data": [{"supported_transactions":
         ["837"], "payer_name": "Independence Blue Cross", "payer_key": "bcibc", "production_status":
         false, "trading_partner_id": "independence_blue_cross"}, {"supported_transactions":
         ["837"], "payer_name": "Highmark Blue Cross Blue Shield of Delaware", "payer_key":
         "bcbsd", "production_status": false, "trading_partner_id": "highmark_blue_cross_blue_shield_de"},
-        {"supported_transactions": ["837"], "payer_name": "Magellan Behavioral Health",
-        "payer_key": "mbh", "production_status": false, "trading_partner_id": "magellan_behavioral_health"},
         {"supported_transactions": ["270"], "payer_name": "Blue Cross and Blue Shield
         of Nebraska", "payer_key": "bcbsne", "production_status": true, "trading_partner_id":
         "blue_cross_blue_shield_ne"}, {"supported_transactions": [], "payer_name":
         "AARP Medicare Supplement", "payer_key": "", "production_status": false, "trading_partner_id":
-        "aarp_medicare_supplement"}, {"supported_transactions": ["270", "837"], "payer_name":
-        "Anthem Blue Cross and Blue Shield of Colorado", "payer_key": "bccoc", "production_status":
-        true, "trading_partner_id": "anthem_blue_cross_blue_shield_co"}, {"supported_transactions":
-        ["270", "837"], "payer_name": "Anthem Blue Cross and Blue Shield of Kentucky",
-        "payer_key": "bckyc", "production_status": true, "trading_partner_id": "anthem_blue_cross_blue_shield_ky"},
-        {"supported_transactions": ["270", "276", "837"], "payer_name": "Anthem Blue
-        Cross California", "payer_key": "bcca", "production_status": true, "trading_partner_id":
-        "anthem_blue_cross_ca"}, {"supported_transactions": ["270", "837"], "payer_name":
-        "Anthem Blue Cross and Blue Shield of Wisconsin", "payer_key": "bcwic", "production_status":
+        "aarp_medicare_supplement"}, {"supported_transactions": ["270", "276"], "payer_name":
+        "Blue Shield of California", "payer_key": "BSCA", "production_status": true,
+        "trading_partner_id": "blue_shield_ca"}, {"supported_transactions": ["270",
+        "837"], "payer_name": "Anthem Blue Cross and Blue Shield of Colorado", "payer_key":
+        "bccoc", "production_status": true, "trading_partner_id": "anthem_blue_cross_blue_shield_co"},
+        {"supported_transactions": ["270", "837"], "payer_name": "Anthem Blue Cross
+        and Blue Shield of Kentucky", "payer_key": "bckyc", "production_status": true,
+        "trading_partner_id": "anthem_blue_cross_blue_shield_ky"}, {"supported_transactions":
+        ["270", "276", "837"], "payer_name": "Anthem Blue Cross California", "payer_key":
+        "bcca", "production_status": true, "trading_partner_id": "anthem_blue_cross_ca"},
+        {"supported_transactions": ["270", "837"], "payer_name": "Anthem Blue Cross
+        and Blue Shield of Wisconsin", "payer_key": "bcwic", "production_status":
         true, "trading_partner_id": "anthem_blue_cross_blue_shield_wi"}, {"supported_transactions":
         ["270"], "payer_name": "Blue Cross and Blue Shield of Iowa", "payer_key":
         "bciac", "production_status": true, "trading_partner_id": "blue_cross_blue_shield_ia"},
@@ -50,10 +52,11 @@ interactions:
         true, "trading_partner_id": "anthem_blue_cross_blue_shield_nh"}, {"supported_transactions":
         ["270", "276", "837"], "payer_name": "Premera Blue Cross", "payer_key": "PREMERA",
         "production_status": true, "trading_partner_id": "premera_blue_cross"}, {"supported_transactions":
-        ["270"], "payer_name": "Blue Shield of California", "payer_key": "BSCA", "production_status":
-        true, "trading_partner_id": "blue_shield_ca"}, {"supported_transactions":
         ["270", "276"], "payer_name": "Blue Cross and Blue Shield of Kansas", "payer_key":
         "bcbsks", "production_status": true, "trading_partner_id": "blue_cross_blue_shield_ks"},
+        {"supported_transactions": ["270", "276", "834", "835", "837", "270", "271",
+        "276", "277", "278"], "payer_name": "Mock Payer for Testing", "payer_key":
+        "MOCKPAYER", "production_status": false, "trading_partner_id": "MOCKPAYER"},
         {"supported_transactions": ["270", "837"], "payer_name": "Anthem Blue Cross
         and Blue Shield of Virginia", "payer_key": "bcvac", "production_status": true,
         "trading_partner_id": "anthem_blue_cross_blue_shield_va"}, {"supported_transactions":
@@ -472,11 +475,8 @@ interactions:
         {"supported_transactions": ["834", "835", "837", "270", "271", "276", "277",
         "278"], "payer_name": "Mock Payer with eligibility inquiry rejection", "payer_key":
         "MOCKPAYER_PARSE_ERROR", "production_status": false, "trading_partner_id":
-        "MOCKPAYER_PARSE_ERROR"}, {"supported_transactions": ["834", "835", "837",
-        "270", "271", "276", "277", "278"], "payer_name": "Mock Payer for Testing",
-        "payer_key": "MOCKPAYER", "production_status": false, "trading_partner_id":
-        "MOCKPAYER"}, {"supported_transactions": ["270", "276"], "payer_name": "Oxford
-        Health Plans (United Healthcare)", "payer_key": "OXFORD", "production_status":
+        "MOCKPAYER_PARSE_ERROR"}, {"supported_transactions": ["270", "276"], "payer_name":
+        "Oxford Health Plans (United Healthcare)", "payer_key": "OXFORD", "production_status":
         true, "trading_partner_id": "oxford_health_plan_united"}, {"supported_transactions":
         ["270", "276", "837"], "payer_name": "Blue Cross and Blue Shield of Georgia",
         "payer_key": "bcbsga", "production_status": true, "trading_partner_id": "blue_cross_blue_shield_ga"},
@@ -491,12 +491,14 @@ interactions:
         "payer_key": "MVP", "production_status": true, "trading_partner_id": "mvp_health_care"},
         {"supported_transactions": ["270", "276"], "payer_name": "Fidelis Care of
         New York", "payer_key": "FIDELIS", "production_status": true, "trading_partner_id":
-        "fidelis_care_ny"}]}'}
+        "fidelis_care_ny"}, {"supported_transactions": ["837", "270"], "payer_name":
+        "Magellan Behavioral Health", "payer_key": "mbh", "production_status": false,
+        "trading_partner_id": "magellan_behavioral_health"}]}'}
     headers:
       charset: [utf-8]
-      content-length: ['39835']
+      content-length: ['39940']
       content-type: [text/html; charset=utf-8]
-      date: ['Wed, 16 Jul 2014 03:00:03 GMT']
+      date: ['Mon, 04 Aug 2014 21:11:41 GMT']
       mimetype: [application/json]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}
