@@ -179,7 +179,7 @@ class PokitDokClient(object):
 
     def trading_partners(self, trading_partner_id=None):
         """
-            Search trading partners in the PokitDok directory
+            Search trading partners in the PokitDok Platform
 
             :param trading_partner_id: the ID used by PokitDok to uniquely identify a trading partner
 
