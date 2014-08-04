@@ -183,3 +183,10 @@ class TestAPIClient(TestCase):
                 ]
             }
 
+    def test_trading_partners(self):
+        with pd_vcr.use_cassette('trading_partners.yml'):
+            trading_partner_response = self.pd.trading_partners("MOCKPAYER")
+            assert "meta" in trading_partner_response
+            assert "data" in trading_partner_response
+            assert trading_partner_response['data'].get('id') == "MOCKPAYER"
+            assert trading_partner_response['data'].get('name') == "Mock Payer for Testing"
