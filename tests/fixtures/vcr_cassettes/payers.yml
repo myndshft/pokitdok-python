@@ -4,13 +4,13 @@ interactions:
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
-      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.7.5 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
     method: GET
     uri: http://localhost:5002/api/v4/payers/
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 33, "rate_limit_reset":
-        1407189557, "application_mode": "production", "processing_time": 20, "rate_limit_cap":
-        1000, "activity_id": "53dff70d56c02c3c3439ca55"}, "data": [{"supported_transactions":
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 6, "rate_limit_reset":
+        1407263004, "application_mode": "production", "processing_time": 28, "rate_limit_cap":
+        1000, "activity_id": "53e1130d56c02c750685f40b"}, "data": [{"supported_transactions":
         ["837"], "payer_name": "Independence Blue Cross", "payer_key": "bcibc", "production_status":
         false, "trading_partner_id": "independence_blue_cross"}, {"supported_transactions":
         ["837"], "payer_name": "Highmark Blue Cross Blue Shield of Delaware", "payer_key":
@@ -496,9 +496,9 @@ interactions:
         "trading_partner_id": "magellan_behavioral_health"}]}'}
     headers:
       charset: [utf-8]
-      content-length: ['39940']
+      content-length: ['39939']
       content-type: [text/html; charset=utf-8]
-      date: ['Mon, 04 Aug 2014 21:11:41 GMT']
+      date: ['Tue, 05 Aug 2014 17:23:25 GMT']
       mimetype: [application/json]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}

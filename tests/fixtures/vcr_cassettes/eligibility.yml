@@ -1,21 +1,21 @@
 interactions:
 - request:
-    body: '{"member": {"birth_date": "1970-01-01", "first_name": "Jane", "last_name":
-      "Doe", "id": "W000000000"}, "service_types": ["health_benefit_plan_coverage"],
-      "trading_partner_id": "MOCKPAYER", "provider": {"first_name": "JEROME", "last_name":
-      "AYA-AY", "npi": "1467560003"}}'
+    body: '{"member": {"birth_date": "1970-01-01", "last_name": "Doe", "first_name":
+      "Jane", "id": "W000000000"}, "service_types": ["health_benefit_plan_coverage"],
+      "provider": {"last_name": "AYA-AY", "first_name": "JEROME", "npi": "1467560003"},
+      "trading_partner_id": "MOCKPAYER"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Content-Length: ['270']
       Content-type: [application/json]
-      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.7.5 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
     method: POST
     uri: http://localhost:5002/api/v4/eligibility/
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 31, "rate_limit_reset":
-        1407189557, "application_mode": "production", "processing_time": 438, "rate_limit_cap":
-        1000, "credits_remaining": 13495, "activity_id": "53dff70d56c02c3c3039ca55",
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 4, "rate_limit_reset":
+        1407263004, "application_mode": "production", "processing_time": 454, "rate_limit_cap":
+        1000, "credits_remaining": 13493, "activity_id": "53e1130d56c02c750285f40b",
         "credits_billed": 1}, "data": {"service_types": ["professional_physician_visit_office"],
         "client_id": "oB7rLIqHmdoAXHRAmWtM", "payer": {"id": "MOCKPAYER", "name":
         "MOCK PAYER INC"}, "summary": {"deductible": {"individual": {"in_network":
@@ -30,7 +30,7 @@ interactions:
         {"currency": "USD", "amount": "11956.09"}}}}}, "subscriber": {"birth_date":
         "1970-01-01", "first_name": "Jane", "last_name": "Doe", "id": "W000000000",
         "address": {"city": "SPARTANBURG", "state": "SC", "zipcode": "29307", "address_lines":
-        ["123 MAIN ST"]}}, "correlation_id": "ed73aa8f-49d7-438d-b965-d816bef40a17",
+        ["123 MAIN ST"]}}, "correlation_id": "dae3caae-b144-4a54-8dc0-c5158869d36d",
         "trading_partner_id": "MOCKPAYER", "provider": {"first_name": "JEROME", "last_name":
         "JEROME AYA-AY", "npi": "1467560003"}, "coverage": {"plan_number": "0888188",
         "service_types": ["professional_physician_visit_office"], "group_number":
@@ -95,9 +95,9 @@ interactions:
         true}}'}
     headers:
       charset: [utf-8]
-      content-length: ['6481']
+      content-length: ['6480']
       content-type: [text/html; charset=utf-8]
-      date: ['Mon, 04 Aug 2014 21:11:41 GMT']
+      date: ['Tue, 05 Aug 2014 17:23:25 GMT']
       mimetype: [application/json]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}

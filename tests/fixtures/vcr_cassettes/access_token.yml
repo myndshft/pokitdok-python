@@ -6,17 +6,17 @@ interactions:
       Accept-Encoding: ['gzip, deflate']
       Content-Length: ['115']
       Content-Type: [application/x-www-form-urlencoded]
-      User-Agent: [python-requests/2.3.0 CPython/2.7.5 Darwin/13.3.0]
+      User-Agent: [python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
     method: POST
     uri: http://localhost:5002/oauth2/token
   response:
-    body: {string: !!python/unicode '{"access_token": "xzMhyIWd6LgKclAoZEOpqI3RXSQIxPjWASqgdi3R",
-        "token_type": "bearer", "expires": 1407190301, "expires_in": 3600}'}
+    body: {string: !!python/unicode '{"access_token": "UWVDsu9JRSpP5Tgs0ZuQL2rg6Wni8AR6yRNlhLbL",
+        "token_type": "bearer", "expires": 1407263004, "expires_in": 3600}'}
     headers:
       cache-control: [no-store]
       content-length: ['127']
       content-type: [application/json;charset=UTF-8]
-      date: ['Mon, 04 Aug 2014 21:11:40 GMT']
+      date: ['Tue, 05 Aug 2014 17:23:24 GMT']
       pragma: [no-cache]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}

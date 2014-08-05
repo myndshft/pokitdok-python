@@ -4,13 +4,13 @@ interactions:
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
-      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.7.5 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
     method: GET
     uri: http://localhost:5002/api/v4/activities/
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 28, "rate_limit_reset":
-        1407189557, "application_mode": "production", "processing_time": 33, "rate_limit_cap":
-        1000, "result_count": 189, "activity_id": "53dff70c56c02c3c2a39ca55", "next":
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 1, "rate_limit_reset":
+        1407263004, "application_mode": "production", "processing_time": 80, "rate_limit_cap":
+        1000, "result_count": 197, "activity_id": "53e1130c56c02c74fc85f40b", "next":
         "http://localhost:5002/api/v4/activities/?offset=20"}, "data": [{"units_of_work":
         1, "name": "prices", "parameters": {"cpt_code": "87799", "zip_code": "32218"},
         "state": {"name": "completed", "title": "Completed"}, "trading_partner_id":
@@ -459,9 +459,9 @@ interactions:
         "name": "stored", "title": "Batch transactions stored for later processing"}]}]}'}
     headers:
       charset: [utf-8]
-      content-length: ['36246']
+      content-length: ['36245']
       content-type: [text/html; charset=utf-8]
-      date: ['Mon, 04 Aug 2014 21:11:40 GMT']
+      date: ['Tue, 05 Aug 2014 17:23:24 GMT']
       mimetype: [application/json]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}

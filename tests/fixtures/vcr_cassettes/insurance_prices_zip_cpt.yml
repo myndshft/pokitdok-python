@@ -4,13 +4,13 @@ interactions:
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
-      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.7.5 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
     method: GET
     uri: http://localhost:5002/api/v4/prices/insurance?cpt_code=87799&zip_code=32218
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 32, "rate_limit_reset":
-        1407189557, "application_mode": "production", "processing_time": 27, "rate_limit_cap":
-        1000, "credits_remaining": 9996, "activity_id": "53dff70d56c02c3c3239ca55",
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 5, "rate_limit_reset":
+        1407263004, "application_mode": "production", "processing_time": 98, "rate_limit_cap":
+        1000, "credits_remaining": 9995, "activity_id": "53e1130d56c02c750485f40b",
         "credits_billed": 1}, "data": {"amounts": [{"high_price": 159.75, "standard_deviation":
         36.41382675904168, "average_price": 54.5895, "payer_type": "insurance", "payment_type":
         "allowed", "low_price": 19.98, "median_price": 56.25}, {"high_price": 188.91,
@@ -23,9 +23,9 @@ interactions:
         "322"}}'}
     headers:
       charset: [utf-8]
-      content-length: ['958']
+      content-length: ['957']
       content-type: [text/html; charset=utf-8]
-      date: ['Mon, 04 Aug 2014 21:11:41 GMT']
+      date: ['Tue, 05 Aug 2014 17:23:25 GMT']
       mimetype: [application/json]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}
