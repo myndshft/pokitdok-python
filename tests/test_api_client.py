@@ -199,5 +199,5 @@ class TestAPIClient(TestCase):
             trading_partner_response = self.pd.trading_partners("MOCKPAYER")
             assert "meta" in trading_partner_response
             assert "data" in trading_partner_response
-            assert trading_partner_response['data'][0].get('id') == "MOCKPAYER"
-            assert trading_partner_response['data'][0].get('name') == "Mock Payer for Testing"
+            assert trading_partner_response['data'].get('id') == "MOCKPAYER"
+            assert trading_partner_response['data'].get('name') == "Mock Payer for Testing"

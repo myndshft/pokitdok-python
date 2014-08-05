@@ -10,9 +10,9 @@ interactions:
   response:
     body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 35, "rate_limit_reset":
         1407189557, "application_mode": "production", "processing_time": 10, "rate_limit_cap":
-        1000, "activity_id": "53dff70d56c02c3c3839ca55"}, "data": [{"is_enabled":
+        1000, "activity_id": "53dff70d56c02c3c3839ca55"}, "data": {"is_enabled":
         false, "supported_transactions": ["270", "276", "834", "835", "837", "270",
-        "271", "276", "277", "278"], "id": "MOCKPAYER", "name": "Mock Payer for Testing"}]}'}
+        "271", "276", "277", "278"], "id": "MOCKPAYER", "name": "Mock Payer for Testing"}}'}
     headers:
       charset: [utf-8]
       content-length: ['375']
