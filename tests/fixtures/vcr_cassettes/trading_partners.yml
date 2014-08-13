@@ -1,0 +1,24 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
+    method: GET
+    uri: http://localhost:5002/api/v4/tradingpartners/MOCKPAYER
+  response:
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 8, "rate_limit_reset":
+        1407263004, "application_mode": "production", "processing_time": 11, "rate_limit_cap":
+        1000, "activity_id": "53e1130d56c02c750a85f40b"}, "data": {"is_enabled": false,
+        "supported_transactions": ["270", "276", "834", "835", "837", "270", "271",
+        "276", "277", "278"], "id": "MOCKPAYER", "name": "Mock Payer for Testing"}}'}
+    headers:
+      charset: [utf-8]
+      content-length: ['372']
+      content-type: [text/html; charset=utf-8]
+      date: ['Tue, 05 Aug 2014 17:23:25 GMT']
+      mimetype: [application/json]
+      server: [Werkzeug/0.9.4 Python/2.7.3]
+    status: {code: 200, message: OK}
+version: 1

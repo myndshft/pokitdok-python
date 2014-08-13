@@ -4,17 +4,19 @@ interactions:
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
-      User-Agent: [python-pokitdok/0.5 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
     method: GET
     uri: http://localhost:5002/api/v4/activities/
   response:
-    body: {string: !!python/unicode '{"meta": {"processing_time": 22, "rate_limit_amount":
-        13, "rate_limit_reset": 1405482438, "next": "http://localhost:5002/api/v4/activities/?offset=20",
-        "rate_limit_cap": 1000}, "data": [{"units_of_work": 1, "name": "prices", "parameters":
-        {"cpt_code": "87799", "zip_code": "32218"}, "state": {"name": "completed",
-        "title": "Completed"}, "trading_partner_id": "PokitDok", "id": "53c5e8e456c02c2384314494",
-        "transition_path": ["process", "complete"], "history": [{"record_dt": "2014-07-16T02:52:20.064000",
-        "name": "init", "title": "Initializing"}, {"record_dt": "2014-07-16T02:52:20.128000",
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 1, "rate_limit_reset":
+        1407263004, "application_mode": "production", "processing_time": 80, "rate_limit_cap":
+        1000, "result_count": 197, "activity_id": "53e1130c56c02c74fc85f40b", "next":
+        "http://localhost:5002/api/v4/activities/?offset=20"}, "data": [{"units_of_work":
+        1, "name": "prices", "parameters": {"cpt_code": "87799", "zip_code": "32218"},
+        "state": {"name": "completed", "title": "Completed"}, "trading_partner_id":
+        "PokitDok", "id": "53c5e8e456c02c2384314494", "transition_path": ["process",
+        "complete"], "history": [{"record_dt": "2014-07-16T02:52:20.064000", "name":
+        "init", "title": "Initializing"}, {"record_dt": "2014-07-16T02:52:20.128000",
         "name": "processing", "title": "Processing X12 transactions"}]}, {"units_of_work":
         1, "name": "prices", "parameters": {"cpt_code": "87799", "zip_code": "32218"},
         "state": {"name": "completed", "title": "Completed"}, "trading_partner_id":
@@ -457,9 +459,9 @@ interactions:
         "name": "stored", "title": "Batch transactions stored for later processing"}]}]}'}
     headers:
       charset: [utf-8]
-      content-length: ['36148']
+      content-length: ['36245']
       content-type: [text/html; charset=utf-8]
-      date: ['Wed, 16 Jul 2014 03:00:03 GMT']
+      date: ['Tue, 05 Aug 2014 17:23:24 GMT']
       mimetype: [application/json]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}

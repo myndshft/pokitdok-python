@@ -176,3 +176,20 @@ class PokitDokClient(object):
             request_args.update(kwargs)
 
         return self.api_client.get(providers_url, params=request_args, headers=self.base_headers).json()
+
+    def trading_partners(self, trading_partner_id=None):
+        """
+            Search trading partners in the PokitDok Platform
+
+            :param trading_partner_id: the ID used by PokitDok to uniquely identify a trading partner
+
+            :returns a dictionary containing the specified trading partner or, if called with no arguments, a list of
+                     available trading partners
+        """
+
+        if trading_partner_id:
+            trading_partners_url = "{0}/tradingpartners/{1}".format(self.url_base, trading_partner_id)
+            return self.api_client.get(trading_partners_url, headers=self.base_headers).json()
+        else:
+            trading_partners_url = "{0}/tradingpartners/".format(self.url_base)
+            return self.api_client.get(trading_partners_url, headers=self.base_headers).json()

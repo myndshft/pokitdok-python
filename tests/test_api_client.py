@@ -150,36 +150,54 @@ class TestAPIClient(TestCase):
             assert "meta" in claim_status_response
             assert "data" in claim_status_response
             assert claim_status_response['data']['patient'] == {
-                'claim_level_info': {
-                    'claim_control_number': 'E1TWCYYMF00',
-                    'service_date': '2014-01-01',
-                    'service_end_date': '2014-01-01',
-                    'statuses': [
-                        {
-                            'status_category': 'Finalized/Payment-The claim/line has been paid.',
-                            'status_code': 'Processed according to contract provisions (Contract refers to provisions that exist between the Health Plan and a Provider of Health Care Services)',
-                            'status_effective_date': '2014-04-24',
-                            'total_claim_amount': {'amount': '150', 'currency': 'USD'}
-                        }
-                    ],
-                    'tracking_id': 'E1TWCYYMF'
-                },
-                'service_line_level_info': [
+                'claims': [
                     {
-                        'service_date': '2014-03-05',
-                        'service_end_date': '2014-03-05',
-                        'service_line_info': {
-                            'charge_amount': {'amount': '150', 'currency': 'USD'},
-                            'cpt_code': '99214',
-                            'payment_amount': {'amount': '125', 'currency': 'USD'}},
-                            'statuses': [
-                                {
-                                    'status_category': 'Finalized/Payment-The claim/line has been paid.',
-                                    'status_code': 'Processed according to contract provisions (Contract refers to provisions that exist between the Health Plan and a Provider of Health Care Services)',
-                                    'status_effective_date': '2014-04-24'
-                                }
-                            ]
+                        'applied_to_deductible': False,
+                        'total_claim_amount': {'currency': 'USD', 'amount': '150'},
+                        'service_end_date': '2014-01-01',
+                        'claim_control_number': 'E1TWCYYMF00',
+                        'check_number': '08608-035632423',
+                        'claim_payment_amount': {'currency': 'USD', 'amount': '125'},
+                        'adjudication_finalized_date': '2014-03-21',
+                        'tracking_id': 'E1TWCYYMF',
+                        'services': [
+                            {
+                                'cpt_code': '99214',
+                                'service_end_date': '2014-03-05',
+                                'payment_amount': {'currency': 'USD', 'amount': '125'},
+                                'charge_amount': {'currency': 'USD', 'amount': '150'},
+                                'service_date': '2014-03-05',
+                                'statuses': [
+                                    {
+                                        'status_code': 'Processed according to contract provisions (Contract refers to provisions that exist between the Health Plan and a Provider of Health Care Services)',
+                                        'status_effective_date': '2014-04-24',
+                                        'status_category': 'Finalized/Payment-The claim/line has been paid.'
+                                    }
+                                ]
+                            }
+                        ],
+                        'remittance_date': '2014-04-09',
+                        'service_date': '2014-01-01',
+                        'statuses': [
+                            {
+                                'total_claim_amount': {'currency': 'USD', 'amount': '150'},
+                                'status_category': 'Finalized/Payment-The claim/line has been paid.',
+                                'status_code': 'Processed according to contract provisions (Contract refers to provisions that exist between the Health Plan and a Provider of Health Care Services)',
+                                'claim_payment_amount': {'currency': 'USD', 'amount': '125'},
+                                'adjudication_finalized_date': '2014-03-21',
+                                'remittance_date': '2014-04-09',
+                                'check_number': '08608-035632423',
+                                'status_effective_date': '2014-04-24'
+                            }
+                        ]
                     }
                 ]
             }
 
+    def test_trading_partners(self):
+        with pd_vcr.use_cassette('trading_partners.yml'):
+            trading_partner_response = self.pd.trading_partners("MOCKPAYER")
+            assert "meta" in trading_partner_response
+            assert "data" in trading_partner_response
+            assert trading_partner_response['data'].get('id') == "MOCKPAYER"
+            assert trading_partner_response['data'].get('name') == "Mock Payer for Testing"

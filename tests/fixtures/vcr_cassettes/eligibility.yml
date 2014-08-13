@@ -1,38 +1,48 @@
 interactions:
 - request:
-    body: '{"provider": {"npi": "1467560003", "last_name": "AYA-AY", "first_name":
-      "JEROME"}, "service_types": ["health_benefit_plan_coverage"], "trading_partner_id":
-      "MOCKPAYER", "member": {"id": "W000000000", "birth_date": "1970-01-01", "last_name":
-      "Doe", "first_name": "Jane"}}'
+    body: '{"member": {"birth_date": "1970-01-01", "last_name": "Doe", "first_name":
+      "Jane", "id": "W000000000"}, "service_types": ["health_benefit_plan_coverage"],
+      "provider": {"last_name": "AYA-AY", "first_name": "JEROME", "npi": "1467560003"},
+      "trading_partner_id": "MOCKPAYER"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Content-Length: ['270']
       Content-type: [application/json]
-      User-Agent: [python-pokitdok/0.5 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
     method: POST
     uri: http://localhost:5002/api/v4/eligibility/
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 16, "rate_limit_reset":
-        1405482438, "processing_time": 156, "rate_limit_cap": 1000, "credits_remaining":
-        13460, "credits_billed": 1}, "data": {"service_types": ["professional_physician_visit_office"],
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 4, "rate_limit_reset":
+        1407263004, "application_mode": "production", "processing_time": 454, "rate_limit_cap":
+        1000, "credits_remaining": 13493, "activity_id": "53e1130d56c02c750285f40b",
+        "credits_billed": 1}, "data": {"service_types": ["professional_physician_visit_office"],
         "client_id": "oB7rLIqHmdoAXHRAmWtM", "payer": {"id": "MOCKPAYER", "name":
-        "MOCK PAYER INC"}, "subscriber": {"birth_date": "1970-01-01", "first_name":
-        "Jane", "last_name": "Doe", "id": "W000000000", "address": {"city": "SPARTANBURG",
-        "state": "SC", "zipcode": "29307", "address_lines": ["123 MAIN ST"]}}, "correlation_id":
-        "0b1c3a87-339b-49d4-8ce8-2bc69820f435", "trading_partner_id": "MOCKPAYER",
-        "provider": {"first_name": "JEROME", "last_name": "JEROME AYA-AY", "npi":
-        "1467560003"}, "coverage": {"plan_number": "0888188", "service_types": ["professional_physician_visit_office"],
-        "group_number": "088818801000013", "out_of_pocket": [{"in_plan_network": "yes",
-        "benefit_amount": {"currency": "USD", "amount": "3000"}, "coverage_level":
-        "individual"}, {"in_plan_network": "yes", "benefit_amount": {"currency": "USD",
-        "amount": "2983.57"}, "coverage_level": "individual", "time_period": "remaining"},
-        {"in_plan_network": "yes", "benefit_amount": {"currency": "USD", "amount":
-        "6000"}, "coverage_level": "family"}, {"in_plan_network": "yes", "benefit_amount":
-        {"currency": "USD", "amount": "5956.09"}, "coverage_level": "family", "time_period":
-        "remaining"}, {"in_plan_network": "no", "benefit_amount": {"currency": "USD",
-        "amount": "12500"}, "coverage_level": "individual"}, {"in_plan_network": "no",
-        "benefit_amount": {"currency": "USD", "amount": "12483.57"}, "coverage_level":
+        "MOCK PAYER INC"}, "summary": {"deductible": {"individual": {"in_network":
+        {"applied": {"currency": "USD", "amount": "16.43"}, "limit": {"currency":
+        "USD", "amount": "3000"}, "remaining": {"currency": "USD", "amount": "2983.57"}},
+        "out_of_network": {"applied": {"currency": "USD", "amount": "16.43"}, "limit":
+        {"currency": "USD", "amount": "6000"}, "remaining": {"currency": "USD", "amount":
+        "5983.57"}}}, "family": {"in_network": {"applied": {"currency": "USD", "amount":
+        "43.91"}, "limit": {"currency": "USD", "amount": "6000"}, "remaining": {"currency":
+        "USD", "amount": "5956.09"}}, "out_of_network": {"applied": {"currency": "USD",
+        "amount": "43.91"}, "limit": {"currency": "USD", "amount": "12000"}, "remaining":
+        {"currency": "USD", "amount": "11956.09"}}}}}, "subscriber": {"birth_date":
+        "1970-01-01", "first_name": "Jane", "last_name": "Doe", "id": "W000000000",
+        "address": {"city": "SPARTANBURG", "state": "SC", "zipcode": "29307", "address_lines":
+        ["123 MAIN ST"]}}, "correlation_id": "dae3caae-b144-4a54-8dc0-c5158869d36d",
+        "trading_partner_id": "MOCKPAYER", "provider": {"first_name": "JEROME", "last_name":
+        "JEROME AYA-AY", "npi": "1467560003"}, "coverage": {"plan_number": "0888188",
+        "service_types": ["professional_physician_visit_office"], "group_number":
+        "088818801000013", "out_of_pocket": [{"in_plan_network": "yes", "benefit_amount":
+        {"currency": "USD", "amount": "3000"}, "coverage_level": "individual"}, {"in_plan_network":
+        "yes", "benefit_amount": {"currency": "USD", "amount": "2983.57"}, "coverage_level":
+        "individual", "time_period": "remaining"}, {"in_plan_network": "yes", "benefit_amount":
+        {"currency": "USD", "amount": "6000"}, "coverage_level": "family"}, {"in_plan_network":
+        "yes", "benefit_amount": {"currency": "USD", "amount": "5956.09"}, "coverage_level":
+        "family", "time_period": "remaining"}, {"in_plan_network": "no", "benefit_amount":
+        {"currency": "USD", "amount": "12500"}, "coverage_level": "individual"}, {"in_plan_network":
+        "no", "benefit_amount": {"currency": "USD", "amount": "12483.57"}, "coverage_level":
         "individual", "time_period": "remaining"}, {"in_plan_network": "no", "benefit_amount":
         {"currency": "USD", "amount": "25000"}, "coverage_level": "family"}, {"in_plan_network":
         "no", "benefit_amount": {"currency": "USD", "amount": "24956.09"}, "coverage_level":
@@ -85,9 +95,9 @@ interactions:
         true}}'}
     headers:
       charset: [utf-8]
-      content-length: ['5657']
+      content-length: ['6480']
       content-type: [text/html; charset=utf-8]
-      date: ['Wed, 16 Jul 2014 03:00:03 GMT']
+      date: ['Tue, 05 Aug 2014 17:23:25 GMT']
       mimetype: [application/json]
       server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}

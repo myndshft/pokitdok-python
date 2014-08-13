@@ -143,6 +143,12 @@ Quick start
     #retrieve an index of activities
     pd.activities()
 
+    #retrieve an index of trading partners
+    pd.trading_partners()
+
+    #retrieve a specific trading_partner
+    pd.trading_partners("MOCKPAYER")
+
 
 
 See the documentation_ for detailed information on all of the PokitDok Platform APIs.
