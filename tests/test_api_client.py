@@ -61,6 +61,16 @@ class TestAPIClient(TestCase):
             for payer in payers_response['data']:
                 assert 'trading_partner_id' in payer
 
+    def test_plans(self):
+        with pd_vcr.use_cassette('plans.yml'):
+            plans_response = self.pd.plans(state='TX', plan_type='EPO')
+            assert "meta" in plans_response
+            assert "data" in plans_response
+            for plan in plans_response['data']:
+                assert plan['state'] == 'TX'
+                assert plan['plan_type'] == 'EPO'
+                assert 'trading_partner_id' in plan
+
     def test_providers_with_id(self):
         with pd_vcr.use_cassette('providers_id.yml'):
             providers_response = self.pd.providers(npi='1467560003')

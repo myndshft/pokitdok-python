@@ -152,6 +152,13 @@ class PokitDokClient(object):
         payers_url = "{0}/payers/".format(self.url_base)
         return self.api_client.get(payers_url, params=request_args, headers=self.base_headers).json()
 
+    def plans(self, **kwargs):
+        """
+            Fetch insurance plans information
+        """
+        insurance_plans_url = "{0}/plans/".format(self.url_base)
+        return self.api_client.get(insurance_plans_url, params=kwargs, headers=self.base_headers).json()
+
     def providers(self, npi=None, **kwargs):
         """
             Search health care providers in the PokitDok directory

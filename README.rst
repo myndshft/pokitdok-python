@@ -149,6 +149,9 @@ Quick start
     #retrieve a specific trading_partner
     pd.trading_partners("MOCKPAYER")
 
+    #retrieve insurance plan information.  For example, EPO plans in Texas.
+    pd.plans(state='TX', plan_type='EPO')
+
 
 
 See the documentation_ for detailed information on all of the PokitDok Platform APIs.
