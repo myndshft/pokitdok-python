@@ -4,13 +4,14 @@ interactions:
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
-      User-Agent: [python-pokitdok/0.6 python-requests/2.3.0 CPython/2.6.8 Darwin/13.3.0]
+      Connection: [keep-alive]
+      User-Agent: [python-pokitdok/0.8 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
     method: GET
     uri: http://localhost:5002/api/v4/providers/1467560003
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 7, "rate_limit_reset":
-        1407263004, "application_mode": "production", "processing_time": 132, "rate_limit_cap":
-        1000, "credits_remaining": 9995, "activity_id": "53e1130d56c02c750885f40b",
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 8, "rate_limit_reset":
+        1410982810, "application_mode": "production", "processing_time": 874, "rate_limit_cap":
+        1000, "credits_remaining": 9992, "activity_id": "5419d58c56c02c1c20a171b3",
         "credits_billed": 1}, "data": {"provider": {"first_name": "JEROME", "last_name":
         "AYA-AY", "middle_name": "BENITEZ", "uuid": "fc44d0e0-ea7f-492e-90f0-0f9148453019",
         "locations": [{"address_lines": ["8311 WARREN H ABERNATHY HWY"], "city": "SPARTANBURG",
@@ -26,8 +27,8 @@ interactions:
       charset: [utf-8]
       content-length: ['1134']
       content-type: [text/html; charset=utf-8]
-      date: ['Tue, 05 Aug 2014 17:23:25 GMT']
+      date: ['Wed, 17 Sep 2014 18:40:13 GMT']
       mimetype: [application/json]
-      server: [Werkzeug/0.9.4 Python/2.7.3]
+      server: [Werkzeug/0.9.6 Python/2.7.3]
     status: {code: 200, message: OK}
 version: 1
