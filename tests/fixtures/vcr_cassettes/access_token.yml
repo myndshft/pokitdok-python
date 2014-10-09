@@ -11,14 +11,14 @@ interactions:
     method: POST
     uri: http://localhost:5002/oauth2/token
   response:
-    body: {string: !!python/unicode '{"access_token": "OxkcJ9FguUgGjXRlKULpux29D5huGGtVwZrUCawc",
-        "token_type": "bearer", "expires": 1410982811, "expires_in": 3600}'}
+    body: {string: !!python/unicode '{"access_token": "8PAxRJ8NnCTR27WUqSa1H1lApYireNfpg5pMVQnx",
+        "token_type": "bearer", "expires": 1412865299, "expires_in": 3600}'}
     headers:
       cache-control: [no-store]
       content-length: ['127']
       content-type: [application/json;charset=UTF-8]
-      date: ['Wed, 17 Sep 2014 18:40:10 GMT']
+      date: ['Thu, 09 Oct 2014 13:34:59 GMT']
       pragma: [no-cache]
-      server: [Werkzeug/0.9.6 Python/2.7.3]
+      server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}
 version: 1

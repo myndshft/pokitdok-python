@@ -200,3 +200,23 @@ class PokitDokClient(object):
         else:
             trading_partners_url = "{0}/tradingpartners/".format(self.url_base)
             return self.api_client.get(trading_partners_url, headers=self.base_headers).json()
+
+    def referrals(self, referral_request):
+        """
+            Submit a referral request
+
+            :param referral_request: dictionary representing a referral request
+        """
+        referrals_url = "{0}/referrals/".format(self.url_base)
+        return self.api_client.post(referrals_url, data=json.dumps(referral_request),
+                                    headers=self.json_headers).json()
+
+    def authorizations(self, authorizations_request):
+        """
+            Submit an authorization request
+
+            :param authorizations_request: dictionary representing an authorization request
+        """
+        authorizations_url = "{0}/authorizations/".format(self.url_base)
+        return self.api_client.post(authorizations_url, data=json.dumps(authorizations_request),
+                                    headers=self.json_headers).json()

@@ -5,13 +5,13 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-pokitdok/0.8 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/0.9 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
     method: GET
     uri: http://localhost:5002/api/v4/payers/
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 6, "rate_limit_reset":
-        1410982810, "application_mode": "production", "processing_time": 38, "rate_limit_cap":
-        1000, "activity_id": "5419d58c56c02c1c1ca171b3"}, "data": [{"supported_transactions":
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 18, "rate_limit_reset":
+        1412865048, "application_mode": "production", "processing_time": 26, "rate_limit_cap":
+        1000, "activity_id": "54368f0456c02c37b5d776e6"}, "data": [{"supported_transactions":
         ["837"], "payer_name": "Independence Blue Cross", "payer_key": "bcibc", "production_status":
         false, "trading_partner_id": "independence_blue_cross"}, {"supported_transactions":
         ["837"], "payer_name": "Highmark Blue Cross Blue Shield of Delaware", "payer_key":
@@ -44,33 +44,27 @@ interactions:
         "trading_partner_id": "anthem_blue_cross_blue_shield_me"}, {"supported_transactions":
         ["270", "837"], "payer_name": "Anthem Blue Cross and Blue Shield of Connecticut",
         "payer_key": "bcctc", "production_status": true, "trading_partner_id": "anthem_blue_cross_blue_shield_ct"},
-        {"supported_transactions": ["270", "837", "276"], "payer_name": "Aetna", "payer_key":
-        "AETNA", "production_status": true, "trading_partner_id": "aetna"}, {"supported_transactions":
-        ["270"], "payer_name": "Blue Cross and Blue Shield of North Carolina", "payer_key":
-        "BCBSNC", "production_status": true, "trading_partner_id": "blue_cross_blue_shield_nc"},
-        {"supported_transactions": ["270", "837"], "payer_name": "Anthem Blue Cross
-        and Blue Shield of New Hampshire", "payer_key": "bcnhc", "production_status":
-        true, "trading_partner_id": "anthem_blue_cross_blue_shield_nh"}, {"supported_transactions":
-        ["270", "837", "276"], "payer_name": "Premera Blue Cross", "payer_key": "PREMERA",
-        "production_status": true, "trading_partner_id": "premera_blue_cross"}, {"supported_transactions":
-        ["270", "276"], "payer_name": "Blue Cross and Blue Shield of Kansas", "payer_key":
-        "bcbsks", "production_status": true, "trading_partner_id": "blue_cross_blue_shield_ks"},
-        {"supported_transactions": ["270", "837", "276", "834"], "payer_name": "Mock
-        Payer for Testing", "payer_key": "MOCKPAYER", "production_status": false,
-        "trading_partner_id": "MOCKPAYER"}, {"supported_transactions": ["270", "837",
-        "276"], "payer_name": "TRICARE West", "payer_key": "", "production_status":
-        false, "trading_partner_id": "tricare_west"}, {"supported_transactions": ["837"],
-        "payer_name": "Sierra Health Services", "payer_key": "shs", "production_status":
-        false, "trading_partner_id": "sierra_health_services"}, {"supported_transactions":
+        {"supported_transactions": ["270"], "payer_name": "Blue Cross and Blue Shield
+        of North Carolina", "payer_key": "BCBSNC", "production_status": true, "trading_partner_id":
+        "blue_cross_blue_shield_nc"}, {"supported_transactions": ["270", "837"], "payer_name":
+        "Anthem Blue Cross and Blue Shield of New Hampshire", "payer_key": "bcnhc",
+        "production_status": true, "trading_partner_id": "anthem_blue_cross_blue_shield_nh"},
+        {"supported_transactions": ["270", "276"], "payer_name": "Blue Cross and Blue
+        Shield of Kansas", "payer_key": "bcbsks", "production_status": true, "trading_partner_id":
+        "blue_cross_blue_shield_ks"}, {"supported_transactions": ["837"], "payer_name":
+        "Sierra Health Services", "payer_key": "shs", "production_status": false,
+        "trading_partner_id": "sierra_health_services"}, {"supported_transactions":
         ["837", "834", "835", "270", "271", "276", "277", "278"], "payer_name": "Mock
         Payer with Random I/O wait for Testing", "payer_key": "MOCKPAYER_RANDOM_WAIT",
         "production_status": false, "trading_partner_id": "MOCKPAYER_RANDOM_WAIT"},
         {"supported_transactions": ["837", "834", "835", "270", "271", "276", "277",
         "278"], "payer_name": "Mock Payer with eligibility inquiry rejection", "payer_key":
         "MOCKPAYER_REJECTION", "production_status": false, "trading_partner_id": "MOCKPAYER_REJECTION"},
-        {"supported_transactions": ["270", "837"], "payer_name": "Anthem Blue Cross
-        and Blue Shield of Virginia", "payer_key": "bcvac", "production_status": true,
-        "trading_partner_id": "anthem_blue_cross_blue_shield_va"}, {"supported_transactions":
+        {"supported_transactions": ["270", "278", "837", "276"], "payer_name": "Premera
+        Blue Cross", "payer_key": "PREMERA", "production_status": false, "trading_partner_id":
+        "premera_blue_cross"}, {"supported_transactions": ["270", "837"], "payer_name":
+        "Anthem Blue Cross and Blue Shield of Virginia", "payer_key": "bcvac", "production_status":
+        true, "trading_partner_id": "anthem_blue_cross_blue_shield_va"}, {"supported_transactions":
         ["270", "837"], "payer_name": "Anthem Blue Cross and Blue Shield of Indiana",
         "payer_key": "bcinc", "production_status": true, "trading_partner_id": "anthem_blue_cross_blue_shield_in"},
         {"supported_transactions": ["270", "837"], "payer_name": "Blue Cross and Blue
@@ -572,13 +566,20 @@ interactions:
         "MOCKPAYER_PARSE_ERROR", "production_status": false, "trading_partner_id":
         "MOCKPAYER_PARSE_ERROR"}, {"supported_transactions": ["270", "837"], "payer_name":
         "Magellan Behavioral Health", "payer_key": "mbh", "production_status": false,
-        "trading_partner_id": "magellan_behavioral_health"}]}'}
+        "trading_partner_id": "magellan_behavioral_health"}, {"supported_transactions":
+        ["270", "278", "837", "276", "834"], "payer_name": "Mock Payer for Testing",
+        "payer_key": "MOCKPAYER", "production_status": false, "trading_partner_id":
+        "MOCKPAYER"}, {"supported_transactions": ["270", "278", "837", "276"], "payer_name":
+        "TRICARE West", "payer_key": "", "production_status": false, "trading_partner_id":
+        "tricare_west"}, {"supported_transactions": ["270", "278", "837", "276"],
+        "payer_name": "Aetna", "payer_key": "AETNA", "production_status": true, "trading_partner_id":
+        "aetna"}]}'}
     headers:
       charset: [utf-8]
-      content-length: ['46451']
+      content-length: ['46481']
       content-type: [text/html; charset=utf-8]
-      date: ['Wed, 17 Sep 2014 18:40:12 GMT']
+      date: ['Thu, 09 Oct 2014 13:35:00 GMT']
       mimetype: [application/json]
-      server: [Werkzeug/0.9.6 Python/2.7.3]
+      server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}
 version: 1

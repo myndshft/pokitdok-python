@@ -1,0 +1,44 @@
+interactions:
+- request:
+    body: '{"patient": {"id": "1234567890", "birth_date": "1970-01-01", "first_name":
+      "JANE", "last_name": "DOE"}, "provider": {"first_name": "JEROME", "last_name":
+      "AYA-AY", "npi": "1467560003"}, "event": {"delivery": {"quantity_qualifier":
+      "visits", "quantity": 1}, "certification_type": "initial", "category": "health_services_review",
+      "place_of_service": "office", "diagnoses": [{"date": "2014-10-01", "code": "789.00"}],
+      "type": "diagnostic_imaging", "provider": {"npi": "1760779011", "phone": "8642341234",
+      "organization_name": "KELLY ULTRASOUND CENTER, LLC"}, "services": [{"cpt_code":
+      "76700", "measurement": "unit", "quantity": 1}]}, "trading_partner_id": "MOCKPAYER"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['666']
+      Content-type: [application/json]
+      User-Agent: [python-pokitdok/0.9 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
+    method: POST
+    uri: http://localhost:5002/api/v4/authorizations/
+  response:
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 13, "rate_limit_reset":
+        1412865048, "application_mode": "production", "processing_time": 147, "rate_limit_cap":
+        1000, "credits_remaining": 13201, "activity_id": "54368f0356c02c37a9d776e6",
+        "credits_billed": 1}, "data": {"patient": {"first_name": "JANE", "last_name":
+        "DOE", "id": "1234567890"}, "trading_partner_id": "MOCKPAYER", "payer": {"organization_name":
+        "MOCK PAYER INC", "id": "MOCKPAYER"}, "originating_company_id": "9012345678",
+        "correlation_id": "3ea74e3a-cc65-4f92-be22-2292b6dd8eca", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "provider": {"first_name": "JEROME", "last_name": "AYA-AY", "tax_id": "1467560003"},
+        "async": false, "event": {"category": "health_services_review", "diagnoses":
+        [{"date": "2005-04-30", "code": "410.90"}], "place_of_service": "office",
+        "review": {"certification_number": "AUTH0001", "second_surgical_opinion_required":
+        false, "certification_action": "certified_in_total"}, "delivery": {"quantity_qualifier":
+        "visits", "quantity": 1}, "provider": {"organization_name": "KELLY ULTRASOUND
+        CENTER, LLC", "tax_id": "1760779011"}, "certification_type": "initial", "type":
+        "diagnostic_imaging"}}}'}
+    headers:
+      charset: [utf-8]
+      content-length: ['1154']
+      content-type: [text/html; charset=utf-8]
+      date: ['Thu, 09 Oct 2014 13:34:59 GMT']
+      mimetype: [application/json]
+      server: [Werkzeug/0.9.4 Python/2.7.3]
+    status: {code: 200, message: OK}
+version: 1

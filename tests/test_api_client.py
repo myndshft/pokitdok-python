@@ -50,7 +50,6 @@ class TestAPIClient(TestCase):
             })
             assert "meta" in eligibility_response
             assert "data" in eligibility_response
-            print(len(eligibility_response['data']['coverage']['deductibles']))
             assert len(eligibility_response['data']['coverage']['deductibles']) == 8
 
     def test_payers(self):
@@ -76,7 +75,7 @@ class TestAPIClient(TestCase):
             providers_response = self.pd.providers(npi='1467560003')
             assert "meta" in providers_response
             assert "data" in providers_response
-            assert providers_response['data']['provider']['last_name'] == 'AYA-AY'
+            assert providers_response['data']['provider']['last_name'] == 'AYAAY'
 
     def test_cash_prices_zip_and_cpt(self):
         with pd_vcr.use_cassette('cash_prices_zip_cpt.yml'):
@@ -211,3 +210,96 @@ class TestAPIClient(TestCase):
             assert "data" in trading_partner_response
             assert trading_partner_response['data'].get('id') == "MOCKPAYER"
             assert trading_partner_response['data'].get('name') == "Mock Payer for Testing"
+
+    def test_referrals(self):
+        with pd_vcr.use_cassette('referrals.yml'):
+            response = self.pd.referrals({
+                "event": {
+                    "category": "specialty_care_review",
+                    "certification_type": "initial",
+                    "delivery": {
+                        "quantity": 1,
+                        "quantity_qualifier": "visits"
+                    },
+                    "diagnoses": [
+                        {
+                            "code": "384.20",
+                            "date": "2014-09-30"
+                        }
+                    ],
+                    "place_of_service": "office",
+                    "provider": {
+                        "first_name": "JOHN",
+                        "npi": "1154387751",
+                        "last_name": "FOSTER",
+                        "phone": "8645822900"
+                    },
+                    "type": "consultation"
+                },
+                "patient": {
+                    "birth_date": "1970-01-01",
+                    "first_name": "JANE",
+                    "last_name": "DOE",
+                    "id": "1234567890"
+                },
+                "provider": {
+                    "first_name": "CHRISTINA",
+                    "last_name": "BERTOLAMI",
+                    "npi": "1619131232"
+                },
+                "trading_partner_id": "MOCKPAYER"
+            })
+            assert "meta" in response
+            assert "data" in response
+            assert response['data']['event']['review']['certification_number'] == 'AUTH0001'
+            assert response['data']['event']['review']['certification_action'] == 'certified_in_total'
+
+    def test_authorizations(self):
+        with pd_vcr.use_cassette('authorizations.yml'):
+            response = self.pd.authorizations({
+                "event": {
+                    "category": "health_services_review",
+                    "certification_type": "initial",
+                    "delivery": {
+                        "quantity": 1,
+                        "quantity_qualifier": "visits"
+                    },
+                    "diagnoses": [
+                        {
+                            "code": "789.00",
+                            "date": "2014-10-01"
+                        }
+                    ],
+                    "place_of_service": "office",
+                    "provider": {
+                        "organization_name": "KELLY ULTRASOUND CENTER, LLC",
+                        "npi": "1760779011",
+                        "phone": "8642341234"
+                    },
+                    "services": [
+                        {
+                            "cpt_code": "76700",
+                            "measurement": "unit",
+                            "quantity": 1
+                        }
+                    ],
+                    "type": "diagnostic_imaging"
+                },
+                "patient": {
+                    "birth_date": "1970-01-01",
+                    "first_name": "JANE",
+                    "last_name": "DOE",
+                    "id": "1234567890"
+                },
+                "provider": {
+                    "first_name": "JEROME",
+                    "npi": "1467560003",
+                    "last_name": "AYA-AY"
+                },
+                "trading_partner_id": "MOCKPAYER"
+            })
+            assert "meta" in response
+            assert "data" in response
+            assert response['data']['event']['review']['certification_number'] == 'AUTH0001'
+            assert response['data']['event']['review']['certification_action'] == 'certified_in_total'
+
