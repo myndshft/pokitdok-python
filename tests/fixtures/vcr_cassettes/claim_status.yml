@@ -1,8 +1,8 @@
 interactions:
 - request:
-    body: '{"patient": {"birth_date": "1970-01-01", "last_name": "Doe", "first_name":
-      "Jane", "id": "W000000000"}, "provider": {"npi": "1467560003", "last_name":
-      "AYA-AY", "first_name": "JEROME"}, "service_date": "2014-01-01", "trading_partner_id":
+    body: '{"service_date": "2014-01-01", "patient": {"id": "W000000000", "birth_date":
+      "1970-01-01", "first_name": "Jane", "last_name": "Doe"}, "provider": {"first_name":
+      "JEROME", "last_name": "AYA-AY", "npi": "1467560003"}, "trading_partner_id":
       "MOCKPAYER"}'
     headers:
       Accept: ['*/*']
@@ -10,13 +10,13 @@ interactions:
       Connection: [keep-alive]
       Content-Length: ['250']
       Content-type: [application/json]
-      User-Agent: [python-pokitdok/0.8 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/0.9 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
     method: POST
     uri: http://localhost:5002/api/v4/claims/status
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 3, "rate_limit_reset":
-        1410982810, "application_mode": "production", "processing_time": 165, "rate_limit_cap":
-        1000, "credits_remaining": 13256, "activity_id": "5419d58b56c02c1c16a171b3",
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 15, "rate_limit_reset":
+        1412865048, "application_mode": "production", "processing_time": 132, "rate_limit_cap":
+        1000, "credits_remaining": 13200, "activity_id": "54368f0356c02c37afd776e6",
         "credits_billed": 1}, "data": {"patient": {"claims": [{"applied_to_deductible":
         false, "total_claim_amount": {"currency": "USD", "amount": "150"}, "service_end_date":
         "2014-01-01", "claim_control_number": "E1TWCYYMF00", "service_date": "2014-01-01",
@@ -37,15 +37,15 @@ interactions:
         "2014-04-24"}]}], "check_number": "08608-035632423", "remittance_date": "2014-04-09"}]},
         "client_id": "oB7rLIqHmdoAXHRAmWtM", "payer": {"name": "MOCK PAYER INC", "id":
         "MOCKPAYER"}, "providers": [{"first_name": "JEROME", "last_name": "AYA-AY",
-        "npi": "1467560003"}], "correlation_id": "08358678-e093-484b-92a6-b27a7375f4b1",
+        "npi": "1467560003"}], "correlation_id": "64a9dabc-69e7-4340-82e1-95811fd0191f",
         "trading_partner_id": "MOCKPAYER", "submitter": {"first_name": "JEROME", "last_name":
         "AYA-AY", "id": "1467560003"}}}'}
     headers:
       charset: [utf-8]
-      content-length: ['2059']
+      content-length: ['2060']
       content-type: [text/html; charset=utf-8]
-      date: ['Wed, 17 Sep 2014 18:40:11 GMT']
+      date: ['Thu, 09 Oct 2014 13:34:59 GMT']
       mimetype: [application/json]
-      server: [Werkzeug/0.9.6 Python/2.7.3]
+      server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}
 version: 1

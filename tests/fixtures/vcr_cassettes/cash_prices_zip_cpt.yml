@@ -5,13 +5,13 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-pokitdok/0.8 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/0.9 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
     method: GET
     uri: http://localhost:5002/api/v4/prices/cash?cpt_code=95017&zip_code=94101
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 2, "rate_limit_reset":
-        1410982810, "application_mode": "production", "processing_time": 180, "rate_limit_cap":
-        1000, "credits_remaining": 9992, "activity_id": "5419d58b56c02c1c0ea171b3",
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 14, "rate_limit_reset":
+        1412865048, "application_mode": "production", "processing_time": 25, "rate_limit_cap":
+        1000, "credits_remaining": 9984, "activity_id": "54368f0356c02c37abd776e6",
         "credits_billed": 1}, "data": [{"high_price": 424.72616491010086, "cpt_code":
         "95017", "low_price": 60.04033765355346, "average_price": 299.11868972705673,
         "geo_zip_area": "941", "standard_deviation": 85.05257902012636, "median_price":
@@ -20,8 +20,8 @@ interactions:
       charset: [utf-8]
       content-length: ['475']
       content-type: [text/html; charset=utf-8]
-      date: ['Wed, 17 Sep 2014 18:40:11 GMT']
+      date: ['Thu, 09 Oct 2014 13:34:59 GMT']
       mimetype: [application/json]
-      server: [Werkzeug/0.9.6 Python/2.7.3]
+      server: [Werkzeug/0.9.4 Python/2.7.3]
     status: {code: 200, message: OK}
 version: 1

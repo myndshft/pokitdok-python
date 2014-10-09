@@ -22,12 +22,12 @@ from setuptools import setup
 
 setup(
     name="pokitdok",
-    version="0.8",
+    version="0.9",
     license="MIT",
     author="PokitDok, Inc.",
     author_email="platform@pokitdok.com",
     url="https://platform.pokitdok.com",
-    download_url='https://github.com/pokitdok/pokitdok-python/tarball/0.8',
+    download_url='https://github.com/pokitdok/pokitdok-python/tarball/0.9',
     description="PokitDok Platform API Client",
     long_description=__doc__,
     packages=["pokitdok", "pokitdok.api"],
@@ -40,8 +40,9 @@ setup(
     tests_require=[
         "vcrpy==1.0.2"
     ],
-    test_suite = 'nose.collector',
-    keywords = ['health', 'api', 'pokitdok', 'X12', 'eligibility', 'claims', 'providers', 'prices', 'healthcare'],
+    test_suite='nose.collector',
+    keywords=['health', 'api', 'pokitdok', 'X12', 'eligibility', 'claims', 'providers', 'prices', 'healthcare',
+              'referrals', 'authorizations', 'insurance', 'plans'],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
