@@ -1,4 +1,4 @@
-|build| |version| |wheel|
+|build| |version| |wheel| |python3|
 
 PokitDok Platform API Client for Python
 =======================================
@@ -272,3 +272,6 @@ Copyright (c) 2014 PokitDok, Inc.  See LICENSE_ for details.
 
 .. |wheel| image:: https://pypip.in/wheel/pokitdok/badge.png
     :target: https://pypi.python.org/pypi/pokitdok/
+
+.. |python3| image:: https://caniusepython3.com/project/pokitdok.svg
+    :target: https://caniusepython3.com/project/pokitdok
