@@ -5,23 +5,23 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-pokitdok/0.9 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/1.0 python-requests/2.5.0 CPython/2.6.9 Darwin/14.0.0]
     method: GET
-    uri: http://localhost:5002/api/v4/prices/cash?cpt_code=95017&zip_code=94101
+    uri: http://localhost:5002/api/v4/prices/cash?zip_code=94101&cpt_code=95017
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 14, "rate_limit_reset":
-        1412865048, "application_mode": "production", "processing_time": 25, "rate_limit_cap":
-        1000, "credits_remaining": 9984, "activity_id": "54368f0356c02c37abd776e6",
-        "credits_billed": 1}, "data": [{"high_price": 424.72616491010086, "cpt_code":
-        "95017", "low_price": 60.04033765355346, "average_price": 299.11868972705673,
-        "geo_zip_area": "941", "standard_deviation": 85.05257902012636, "median_price":
-        290.34018519305926}]}'}
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 86, "rate_limit_reset":
+        1419287546, "application_mode": "production", "processing_time": 17, "rate_limit_cap":
+        1000, "credits_remaining": 999953, "activity_id": "549891440640fd74d1eb08fe",
+        "credits_billed": 1}, "data": [{"high_price": 360.31361174114414, "cpt_code":
+        "95017", "low_price": 191.62438301874772, "average_price": 252.81713105618505,
+        "geo_zip_area": "941", "standard_deviation": 34.675643655574696, "median_price":
+        239.97487499999997}]}'}
     headers:
       charset: [utf-8]
-      content-length: ['475']
+      content-length: ['479']
       content-type: [text/html; charset=utf-8]
-      date: ['Thu, 09 Oct 2014 13:34:59 GMT']
+      date: ['Mon, 22 Dec 2014 21:46:44 GMT']
       mimetype: [application/json]
-      server: [Werkzeug/0.9.4 Python/2.7.3]
+      server: [Werkzeug/0.9.4 Python/2.7.6]
     status: {code: 200, message: OK}
 version: 1

@@ -307,9 +307,9 @@ class PokitDokClient(object):
             :param appointment_uuid: The uuid of a specific appointment to be booked.
             :param appointment_request: the appointment request data
         """
-        appointments_url = "{0}/schedule/appointments/{0}".format(self.url_base, appointment_uuid)
+        appointments_url = "{0}/schedule/appointments/{1}".format(self.url_base, appointment_uuid)
         return self.api_client.put(appointments_url, data=json.dumps(appointment_request),
-                                   headers=self.base_headers).json()
+                                   headers=self.json_headers).json()
 
     update_appointment = book_appointment
 

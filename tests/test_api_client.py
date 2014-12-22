@@ -7,8 +7,8 @@ import vcr
 
 
 # Fake client id/secret for local testing
-CLIENT_ID = 'oB7rLIqHmdoAXHRAmWtM'
-CLIENT_SECRET = 'ZE8xqtUY5kYqmHIhd8lzdjqD1CPa8sRBPvmF9UuG'
+CLIENT_ID = 'F7q38MzlwOxUwTHb7jvk'
+CLIENT_SECRET = 'O8DRamKmKMLtSTPjK99eUlbfOQEc44VVmp8ARmcY'
 BASE_URL = 'http://localhost:5002'
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
@@ -75,7 +75,7 @@ class TestAPIClient(TestCase):
             providers_response = self.pd.providers(npi='1467560003')
             assert "meta" in providers_response
             assert "data" in providers_response
-            assert providers_response['data']['provider']['last_name'] == 'AYAAY'
+            assert providers_response['data']['provider']['last_name'] == 'Aya-Ay'
 
     def test_cash_prices_zip_and_cpt(self):
         with pd_vcr.use_cassette('cash_prices_zip_cpt.yml'):
@@ -84,59 +84,44 @@ class TestAPIClient(TestCase):
             assert "data" in prices_response
             assert prices_response['data'] == [
                 {
-                    'average_price': 299.11868972705673,
+                    'high_price': 360.31361174114414,
                     'cpt_code': '95017',
+                    'standard_deviation': 34.675643655574696,
+                    'average_price': 252.81713105618505,
                     'geo_zip_area': '941',
-                    'high_price': 424.72616491010086,
-                    'low_price': 60.04033765355346,
-                    'median_price': 290.34018519305926,
-                    'standard_deviation': 85.05257902012636
+                    'low_price': 191.62438301874772,
+                    'median_price': 239.97487499999997
                 }
             ]
 
     def test_insurance_prices_zip_and_cpt(self):
         with pd_vcr.use_cassette('insurance_prices_zip_cpt.yml'):
-            prices_response = self.pd.insurance_prices(zip_code='32218', cpt_code='87799')
+            prices_response = self.pd.insurance_prices(zip_code='94101', cpt_code='95017')
             assert "meta" in prices_response
             assert "data" in prices_response
             assert prices_response['data'] == {
                 'amounts': [
                     {
-                        'average_price': 54.5895,
-                        'high_price': 159.75,
-                        'low_price': 19.98,
-                        'median_price': 56.25,
+                        'high_price': 184.38,
+                        'standard_deviation': 32.65176094715261,
+                        'average_price': 129.21099999999998,
                         'payer_type': 'insurance',
                         'payment_type': 'allowed',
-                        'standard_deviation': 36.41382675904168
+                        'low_price': 112.07,
+                        'median_price': 112.27
                     },
                     {
-                        'average_price': 104.77350000000001,
-                        'high_price': 188.91,
-                        'low_price': 88.02,
-                        'median_price': 97.02,
+                        'high_price': 343.79,
+                        'standard_deviation': 47.486112986324756,
+                        'average_price': 189.23299999999998,
                         'payer_type': 'insurance',
                         'payment_type': 'submitted',
-                        'standard_deviation': 26.57623445180863
-                    },
-                    {
-                        'average_price': 82.336343612,
-                        'payer_type': 'medicare',
-                        'payment_type': 'allowed'
-                    },
-                    {
-                        'average_price': 100.28768722,
-                        'payer_type': 'medicare',
-                        'payment_type': 'submitted'
-                    },
-                    {
-                        'average_price': 57.623480175999994,
-                        'payer_type': 'medicare',
-                        'payment_type': 'paid'
+                        'low_price': 154.41,
+                        'median_price': 191.61
                     }
                 ],
-                'cpt_code': '87799',
-                'geo_zip_area': '322'
+                'cpt_code': '95017',
+                'geo_zip_area': '941'
             }
 
     def test_claim_status(self):
@@ -205,11 +190,11 @@ class TestAPIClient(TestCase):
 
     def test_trading_partners(self):
         with pd_vcr.use_cassette('trading_partners.yml'):
-            trading_partner_response = self.pd.trading_partners("MOCKPAYER")
+            trading_partner_response = self.pd.trading_partners("aetna")
             assert "meta" in trading_partner_response
             assert "data" in trading_partner_response
-            assert trading_partner_response['data'].get('id') == "MOCKPAYER"
-            assert trading_partner_response['data'].get('name') == "Mock Payer for Testing"
+            assert trading_partner_response['data'].get('id') == "aetna"
+            assert trading_partner_response['data'].get('name') == "Aetna"
 
     def test_referrals(self):
         with pd_vcr.use_cassette('referrals.yml'):
@@ -303,3 +288,38 @@ class TestAPIClient(TestCase):
             assert response['data']['event']['review']['certification_number'] == 'AUTH0001'
             assert response['data']['event']['review']['certification_action'] == 'certified_in_total'
 
+    def test_schedulers(self):
+        with pd_vcr.use_cassette('schedulers.yml'):
+            response = self.pd.schedulers()
+            assert "meta" in response
+            assert "data" in response
+
+    def test_appointments(self):
+        with pd_vcr.use_cassette('appointments.yml'):
+            response = self.pd.appointments()
+            assert "meta" in response
+            assert "data" in response
+
+    def test_appointment_types(self):
+        with pd_vcr.use_cassette('appointment_types.yml'):
+            response = self.pd.appointment_types()
+            assert "meta" in response
+            assert "data" in response
+
+    def test_book_appointment(self):
+        with pd_vcr.use_cassette('book_appointment.yml'):
+            invalid_appointment_uuid = '0f4a6409-670c-4054-9f4a-1045766aaa79'
+            response = self.pd.book_appointment(invalid_appointment_uuid, {
+                "patient": {
+                    "_uuid": "500ef469-2767-4901-b705-425e9b6f7f83",
+                    "email": "john@johndoe.com",
+                    "phone": "800-555-1212",
+                    "birth_date": "1970-01-01",
+                    "first_name": "John",
+                    "last_name": "Doe",
+                    "member_id": "M000001"
+                },
+                "description": "Welcome to M0d3rN Healthcare"
+            })
+            assert "meta" in response
+            assert "data" in response

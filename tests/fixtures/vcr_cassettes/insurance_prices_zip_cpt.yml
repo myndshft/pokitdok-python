@@ -5,29 +5,25 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-pokitdok/0.9 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/1.0 python-requests/2.5.0 CPython/2.6.9 Darwin/14.0.0]
     method: GET
-    uri: http://localhost:5002/api/v4/prices/insurance?cpt_code=87799&zip_code=32218
+    uri: http://localhost:5002/api/v4/prices/insurance?zip_code=94101&cpt_code=95017
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 17, "rate_limit_reset":
-        1412865048, "application_mode": "production", "processing_time": 25, "rate_limit_cap":
-        1000, "credits_remaining": 9985, "activity_id": "54368f0456c02c37b3d776e6",
-        "credits_billed": 1}, "data": {"amounts": [{"high_price": 159.75, "standard_deviation":
-        36.41382675904168, "average_price": 54.5895, "payer_type": "insurance", "payment_type":
-        "allowed", "low_price": 19.98, "median_price": 56.25}, {"high_price": 188.91,
-        "standard_deviation": 26.57623445180863, "average_price": 104.77350000000001,
-        "payer_type": "insurance", "payment_type": "submitted", "low_price": 88.02,
-        "median_price": 97.02}, {"average_price": 82.336343612, "payer_type": "medicare",
-        "payment_type": "allowed"}, {"average_price": 100.28768722, "payer_type":
-        "medicare", "payment_type": "submitted"}, {"average_price": 57.623480175999994,
-        "payer_type": "medicare", "payment_type": "paid"}], "cpt_code": "87799", "geo_zip_area":
-        "322"}}'}
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 89, "rate_limit_reset":
+        1419287546, "application_mode": "production", "processing_time": 19, "rate_limit_cap":
+        1000, "credits_remaining": 999952, "activity_id": "549891440640fd74d1eb0905",
+        "credits_billed": 1}, "data": {"amounts": [{"high_price": 184.38, "standard_deviation":
+        32.65176094715261, "average_price": 129.21099999999998, "payer_type": "insurance",
+        "payment_type": "allowed", "low_price": 112.07, "median_price": 112.27}, {"high_price":
+        343.79, "standard_deviation": 47.486112986324756, "average_price": 189.23299999999998,
+        "payer_type": "insurance", "payment_type": "submitted", "low_price": 154.41,
+        "median_price": 191.61}], "cpt_code": "95017", "geo_zip_area": "941"}}'}
     headers:
       charset: [utf-8]
-      content-length: ['958']
+      content-length: ['713']
       content-type: [text/html; charset=utf-8]
-      date: ['Thu, 09 Oct 2014 13:35:00 GMT']
+      date: ['Mon, 22 Dec 2014 21:46:44 GMT']
       mimetype: [application/json]
-      server: [Werkzeug/0.9.4 Python/2.7.3]
+      server: [Werkzeug/0.9.4 Python/2.7.6]
     status: {code: 200, message: OK}
 version: 1
