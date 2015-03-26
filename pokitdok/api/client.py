@@ -148,6 +148,25 @@ class PokitDokClient(object):
         return self.api_client.post(claims_status_url, data=json.dumps(claims_status_request),
                                     headers=self.json_headers).json()
 
+    def mpc(self, code=None, **kwargs):
+        """
+            Access clinical and consumer friendly information related to medical procedures
+
+            :param code: A specific procedure code that should be used to retrieve information
+
+            Keyword arguments that may be used to refine a medical procedure search:
+
+            :param name: Search medical procedure information by consumer friendly name
+            :param description: A partial or full description to be used to locate medical procedure information
+        """
+
+        mpc_url = "{0}/mpc/{1}".format(self.url_base, code if code else '')
+        request_args = {}
+        if code is None:
+            request_args.update(kwargs)
+
+        return self.api_client.get(mpc_url, params=request_args, headers=self.base_headers).json()
+
     def eligibility(self, eligibility_request):
         """
             Submit an eligibility request
