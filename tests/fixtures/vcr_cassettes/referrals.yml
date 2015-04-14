@@ -1,30 +1,30 @@
 interactions:
 - request:
-    body: '{"patient": {"id": "1234567890", "birth_date": "1970-01-01", "first_name":
-      "JANE", "last_name": "DOE"}, "provider": {"first_name": "CHRISTINA", "last_name":
-      "BERTOLAMI", "npi": "1619131232"}, "event": {"delivery": {"quantity_qualifier":
-      "visits", "quantity": 1}, "type": "consultation", "place_of_service": "office",
-      "provider": {"first_name": "JOHN", "last_name": "FOSTER", "phone": "8645822900",
-      "npi": "1154387751"}, "certification_type": "initial", "category": "specialty_care_review",
-      "diagnoses": [{"date": "2014-09-30", "code": "384.20"}]}, "trading_partner_id":
-      "MOCKPAYER"}'
+    body: '{"event": {"certification_type": "initial", "diagnoses": [{"code": "384.20",
+      "date": "2014-09-30"}], "category": "specialty_care_review", "place_of_service":
+      "office", "provider": {"last_name": "FOSTER", "phone": "8645822900", "first_name":
+      "JOHN", "npi": "1154387751"}, "delivery": {"quantity": 1, "quantity_qualifier":
+      "visits"}, "type": "consultation"}, "trading_partner_id": "MOCKPAYER", "provider":
+      {"last_name": "BERTOLAMI", "first_name": "CHRISTINA", "npi": "1619131232"},
+      "patient": {"last_name": "DOE", "id": "1234567890", "first_name": "JANE", "birth_date":
+      "1970-01-01"}}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['582']
       Content-type: [application/json]
-      User-Agent: [python-pokitdok/0.9 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/1.0 python-requests/2.5.0 CPython/2.6.9 Darwin/14.0.0]
     method: POST
     uri: http://localhost:5002/api/v4/referrals/
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 21, "rate_limit_reset":
-        1412865048, "application_mode": "production", "processing_time": 131, "rate_limit_cap":
-        1000, "credits_remaining": 13197, "activity_id": "54368f0456c02c37bbd776e6",
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 93, "rate_limit_reset":
+        1419287546, "application_mode": "production", "processing_time": 59, "rate_limit_cap":
+        1000, "credits_remaining": 78, "activity_id": "549891450640fd74d1eb0909",
         "credits_billed": 1}, "data": {"patient": {"first_name": "JANE", "last_name":
         "DOE", "id": "1234567890"}, "trading_partner_id": "MOCKPAYER", "payer": {"organization_name":
         "MOCK PAYER INC", "id": "MOCKPAYER"}, "originating_company_id": "9012345678",
-        "correlation_id": "4210ed79-007a-4f24-8a51-cd85ffbf2856", "client_id": "oB7rLIqHmdoAXHRAmWtM",
+        "correlation_id": "6220dbc7-2524-479f-a1b6-f62d42de05f1", "client_id": "F7q38MzlwOxUwTHb7jvk",
         "provider": {"first_name": "CHRISTINA", "last_name": "BERTOLAMI", "tax_id":
         "1619131232"}, "async": false, "event": {"category": "specialty_care_review",
         "diagnoses": [{"date": "2005-04-30", "code": "410.90"}], "place_of_service":
@@ -32,13 +32,13 @@ interactions:
         false, "certification_action": "certified_in_total"}, "delivery": {"quantity_qualifier":
         "visits", "quantity": 1}, "provider": {"first_name": "JOHN", "last_name":
         "FOSTER", "tax_id": "1154387751"}, "certification_type": "initial", "type":
-        "consultation"}}}'}
+        "consultation"}, "valid_request": true}}'}
     headers:
       charset: [utf-8]
-      content-length: ['1145']
+      content-length: ['1164']
       content-type: [text/html; charset=utf-8]
-      date: ['Thu, 09 Oct 2014 13:35:00 GMT']
+      date: ['Mon, 22 Dec 2014 21:46:45 GMT']
       mimetype: [application/json]
-      server: [Werkzeug/0.9.4 Python/2.7.3]
+      server: [Werkzeug/0.9.4 Python/2.7.6]
     status: {code: 200, message: OK}
 version: 1

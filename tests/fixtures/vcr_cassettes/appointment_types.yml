@@ -1,0 +1,24 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-pokitdok/1.0 python-requests/2.5.0 CPython/2.6.9 Darwin/14.0.0]
+    method: GET
+    uri: http://localhost:5002/api/v4/schedule/appointmenttypes/
+  response:
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 82, "rate_limit_reset":
+        1419287546, "application_mode": "production", "processing_time": 12, "rate_limit_cap":
+        1000, "credits_remaining": 999954, "activity_id": "549891440640fd74d1eb08f8",
+        "credits_billed": 1}, "data": []}'}
+    headers:
+      charset: [utf-8]
+      content-length: ['253']
+      content-type: [text/html; charset=utf-8]
+      date: ['Mon, 22 Dec 2014 21:46:44 GMT']
+      mimetype: [application/json]
+      server: [Werkzeug/0.9.4 Python/2.7.6]
+    status: {code: 200, message: OK}
+version: 1

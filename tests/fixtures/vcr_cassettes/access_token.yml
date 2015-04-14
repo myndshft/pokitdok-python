@@ -1,24 +1,24 @@
 interactions:
 - request:
-    body: client_secret=ZE8xqtUY5kYqmHIhd8lzdjqD1CPa8sRBPvmF9UuG&client_id=oB7rLIqHmdoAXHRAmWtM&grant_type=client_credentials
+    body: client_id=F7q38MzlwOxUwTHb7jvk&grant_type=client_credentials&client_secret=O8DRamKmKMLtSTPjK99eUlbfOQEc44VVmp8ARmcY
     headers:
       Accept: [!!python/unicode application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['115']
       Content-Type: [application/x-www-form-urlencoded]
-      User-Agent: [python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
+      User-Agent: [python-requests/2.5.0 CPython/2.6.9 Darwin/14.0.0]
     method: POST
     uri: http://localhost:5002/oauth2/token
   response:
-    body: {string: !!python/unicode '{"access_token": "8PAxRJ8NnCTR27WUqSa1H1lApYireNfpg5pMVQnx",
-        "token_type": "bearer", "expires": 1412865299, "expires_in": 3600}'}
+    body: {string: !!python/unicode '{"access_token": "s6Ump7AfYQodkUakGclQA6LZgWrvFZxLT2rVqjP8",
+        "token_type": "bearer", "expires": 1419288404, "expires_in": 3600}'}
     headers:
       cache-control: [no-store]
       content-length: ['127']
       content-type: [application/json;charset=UTF-8]
-      date: ['Thu, 09 Oct 2014 13:34:59 GMT']
+      date: ['Mon, 22 Dec 2014 21:46:43 GMT']
       pragma: [no-cache]
-      server: [Werkzeug/0.9.4 Python/2.7.3]
+      server: [Werkzeug/0.9.4 Python/2.7.6]
     status: {code: 200, message: OK}
 version: 1

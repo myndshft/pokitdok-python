@@ -1,0 +1,28 @@
+interactions:
+- request:
+    body: '{"description": "Welcome to M0d3rN Healthcare", "patient": {"phone": "800-555-1212",
+      "last_name": "Doe", "email": "john@johndoe.com", "birth_date": "1970-01-01",
+      "member_id": "M000001", "first_name": "John", "_uuid": "500ef469-2767-4901-b705-425e9b6f7f83"}}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['257']
+      Content-type: [application/json]
+      User-Agent: [python-pokitdok/1.0 python-requests/2.5.0 CPython/2.6.9 Darwin/14.0.0]
+    method: PUT
+    uri: http://localhost:5002/api/v4/schedule/appointments/0f4a6409-670c-4054-9f4a-1045766aaa79
+  response:
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 85, "rate_limit_reset":
+        1419287546, "application_mode": "production", "processing_time": 10, "rate_limit_cap":
+        1000, "activity_id": "549891440640fd74d1eb08fd"}, "data": {"errors": {"scope":
+        "''user_schedule'' scope required to access this API"}}}'}
+    headers:
+      charset: [utf-8]
+      content-length: ['275']
+      content-type: [text/html; charset=utf-8]
+      date: ['Mon, 22 Dec 2014 21:46:44 GMT']
+      mimetype: [application/json]
+      server: [Werkzeug/0.9.4 Python/2.7.6]
+    status: {code: 403, message: FORBIDDEN}
+version: 1

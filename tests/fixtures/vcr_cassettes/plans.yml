@@ -5,13 +5,13 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-pokitdok/0.9 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/1.0 python-requests/2.5.0 CPython/2.6.9 Darwin/14.0.0]
     method: GET
     uri: http://localhost:5002/api/v4/plans/?state=TX&plan_type=EPO
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 19, "rate_limit_reset":
-        1412865048, "application_mode": "production", "processing_time": 33, "rate_limit_cap":
-        1000, "credits_remaining": 13198, "result_count": 6, "activity_id": "54368f0456c02c37b7d776e6",
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 91, "rate_limit_reset":
+        1419287546, "application_mode": "production", "processing_time": 861, "rate_limit_cap":
+        1000, "credits_remaining": 999951, "result_count": 6, "activity_id": "549891440640fd74d1eb0907",
         "credits_billed": 1}, "data": [{"premiums": [{"age": 21, "cost": 145.57, "adults":
         1, "children": 0}, {"age": 27, "cost": 152.56, "adults": 1, "children": 0},
         {"age": 30, "cost": 165.23, "adults": 1, "children": 0}, {"age": 40, "cost":
@@ -206,10 +206,10 @@ interactions:
         2500/3500 Plan", "benefits_summary_url": "http://apps.humana.com/marketing/documents.asp?file=2105194"}]}'}
     headers:
       charset: [utf-8]
-      content-length: ['15159']
+      content-length: ['15161']
       content-type: [text/html; charset=utf-8]
-      date: ['Thu, 09 Oct 2014 13:35:00 GMT']
+      date: ['Mon, 22 Dec 2014 21:46:45 GMT']
       mimetype: [application/json]
-      server: [Werkzeug/0.9.4 Python/2.7.3]
+      server: [Werkzeug/0.9.4 Python/2.7.6]
     status: {code: 200, message: OK}
 version: 1

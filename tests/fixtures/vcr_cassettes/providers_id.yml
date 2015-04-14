@@ -5,40 +5,52 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-pokitdok/0.9 python-requests/2.4.1 CPython/2.6.8 Darwin/13.3.0]
+      User-Agent: [python-pokitdok/1.0 python-requests/2.5.0 CPython/2.6.9 Darwin/14.0.0]
     method: GET
     uri: http://localhost:5002/api/v4/providers/1467560003
   response:
-    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 20, "rate_limit_reset":
-        1412865048, "application_mode": "production", "processing_time": 28, "rate_limit_cap":
-        1000, "credits_remaining": 9990, "activity_id": "54368f0456c02c37b9d776e6",
-        "credits_billed": 1}, "data": {"provider": {"first_name": "JEROME", "last_name":
-        "AYAAY", "middle_name": "BENITEZ", "uuid": "fc44d0e0-ea7f-492e-90f0-0f9148453019",
+    body: {string: !!python/unicode '{"meta": {"rate_limit_amount": 92, "rate_limit_reset":
+        1419287546, "application_mode": "production", "processing_time": 18, "rate_limit_cap":
+        1000, "credits_remaining": 999950, "activity_id": "549891450640fd74d1eb0908",
+        "credits_billed": 1}, "data": {"provider": {"first_name": "Jerome", "last_name":
+        "Aya-Ay", "middle_name": "BENITEZ", "uuid": "fc44d0e0-ea7f-492e-90f0-0f9148453019",
         "degree": "MD", "gender": "Male", "residencies": [{"city": "SPARTANBURG",
         "to_year": "2007", "institution_name": "SPARTANBURG REGIONAL HEALTHCARE SYSTEM",
         "specialty": "FAMILY MEDICINE", "from_year": "2004"}], "licensures": [{"status":
-        "inactive", "expiration_date": "2005-12-31T00:00:00", "state": "SC", "type":
-        "resident", "as_of_date": "2011-07-19T00:00:00"}, {"status": "inactive", "expiration_date":
-        "2005-12-31T00:00:00", "state": "SC", "type": "resident", "as_of_date": "2011-07-19T00:00:00"},
-        {"status": "active", "expiration_date": "2015-06-30T00:00:00", "state": "SC",
-        "type": "resident", "as_of_date": "2014-03-03T00:00:00"}], "specialty": ["Family
+        "inactive", "expiration_date": "2005-12-31T00:00:00", "number": "TL27210",
+        "as_of_date": "2011-07-19T00:00:00", "state": "SC", "type": "resident"}, {"status":
+        "active", "expiration_date": "2015-06-30T00:00:00", "number": "27210", "as_of_date":
+        "2014-09-15T00:00:00", "state": "SC", "type": "resident"}, {"status": "inactive",
+        "expiration_date": "2005-12-31T00:00:00", "number": "LL27210", "as_of_date":
+        "2011-07-19T00:00:00", "state": "SC", "type": "resident"}], "specialty": ["Family
         Practice", "Family Medicine"], "specialty_primary": ["Family Practice", "Family
-        Medicine"], "locations": [{"address_lines": ["408 Litchfield Dr"], "city":
-        "Moore", "zipcode": "29369", "phone": "8036280004", "state": "SC", "geo_location":
-        [-81.97699, 34.8981], "role": ["mailing"]}, {"address_lines": ["8311 Warren
-        H Abernathy Hwy"], "city": "Spartanburg", "zipcode": "29301", "phone": "8036280004",
-        "state": "SC", "geo_location": [-82.014564, 34.93627], "role": ["practice"]}],
-        "phone": "8036280004", "board_certifications": ["Family Medicine"], "birth_date":
-        "1972", "npi": "1467560003", "licenses": [{"state": "SC", "role": "preferred",
-        "year": "2004-01-01T00:00:00"}, {"state": "SC", "role": "alternate", "year":
-        "2004-01-01T00:00:00"}], "education": {"medical_school": "JC EDWARDS SCHOOL
-        MEDICAL MARSHALL U HUNTINGTON WV 2575", "graduation_year": "2004-01-01T00:00:00"}}}}'}
+        Medicine"], "locations": [{"address_lines": ["175 Cambridge St", "Suite 400"],
+        "city": "Boston", "zipcode": "02114-2743", "phone": "6176430824", "state":
+        "MA", "geo_location": [0.0, 0.0], "role": ["mailing"]}, {"address_lines":
+        ["1120 N Pleasantburg Dr", "Ste 301"], "city": "Greenville", "zipcode": "29607",
+        "phone": "8642524808", "state": "SC", "geo_location": [-82.35771299999999,
+        34.870267], "role": ["practice"]}, {"address_lines": ["1703 John B White Sr
+        Blvd", "Unit A"], "city": "Spartanburg", "zipcode": "29301", "phone": "8646417229",
+        "state": "SC", "geo_location": [-81.98262799999999, 34.922586], "role": ["practice"]}],
+        "verified": true, "phone": "8036280004", "board_certifications": ["Family
+        Medicine"], "birth_date": "1972", "npi": "1467560003", "licenses": [{"state":
+        "SC", "role": "preferred", "year": "2004-01-01T00:00:00"}, {"state": "SC",
+        "role": "alternate", "year": "2004-01-01T00:00:00"}], "education": {"medical_school":
+        "JC EDWARDS SCHOOL MEDICAL MARSHALL U HUNTINGTON WV 2575", "graduation_year":
+        "2004-01-01T00:00:00"}, "small_image_url": "https://d2sc6ykmuixlzf.cloudfront.net/pda0233f41447f472dab57393b0cbf5bb7-29ef4cc83c4372854a573b302b259b2c-thumbnail.jpeg",
+        "description": "Dr. Jerome Aya-Ay was raised in the small rural town of Grantsville,
+        West Virginia. He graduated from the University of Notre Dame with a bachelor''s
+        degree in Biology.  After studying for a Masters in Biomedical Sciences at
+        Marshall University, he continued on to graduate from Marshall University
+        School of Medicine in Huntington, WV with a medical degree. Dr. Aya-Ay completed
+        his residency in Family Medicine at Spartanburg Regional Medical Center where
+        he was awarded the Family Medicine..."}}}'}
     headers:
       charset: [utf-8]
-      content-length: ['1918']
+      content-length: ['2890']
       content-type: [text/html; charset=utf-8]
-      date: ['Thu, 09 Oct 2014 13:35:00 GMT']
+      date: ['Mon, 22 Dec 2014 21:46:45 GMT']
       mimetype: [application/json]
-      server: [Werkzeug/0.9.4 Python/2.7.3]
+      server: [Werkzeug/0.9.4 Python/2.7.6]
     status: {code: 200, message: OK}
 version: 1
