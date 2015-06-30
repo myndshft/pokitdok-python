@@ -129,6 +129,15 @@ class PokitDokClient(object):
         cash_prices_url = "{0}/prices/cash".format(self.url_base)
         return self.api_client.get(cash_prices_url, params=kwargs, headers=self.base_headers).json()
 
+    def ccd(self, ccd_request):
+        """
+            Submit a continuity of care document (CCD) request
+
+            :param ccd_request: dictionary representing a CCD request
+        """
+        ccd_url = "{0}/ccd/".format(self.url_base)
+        return self.api_client.post(ccd_url, data=json.dumps(ccd_request), headers=self.json_headers).json()
+
     def claims(self, claims_request):
         """
             Submit a claims request
