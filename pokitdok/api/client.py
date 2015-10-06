@@ -176,6 +176,28 @@ class PokitDokClient(object):
 
         return self.api_client.get(mpc_url, params=request_args, headers=self.base_headers).json()
 
+    def icd_convert(self, code):
+        """
+            Locate the appropriate diagnosis mapping for the specified ICD-9 code
+
+            :param code: A diagnosis code that should be used to retrieve information
+        """
+
+        icd_convert_url = "{0}/icd/convert/{1}".format(self.url_base, code)
+        return self.api_client.get(icd_convert_url, headers=self.base_headers).json()
+
+    def claims_convert(self, x12_claims_file):
+        """
+            Submit a raw X12 837 file to convert to a claims API request and map any ICD-9 codes to ICD-10
+
+            :param x12_claims_file: the path to a X12 claims file to be submitted to the platform for processing
+        """
+        claims_convert_url = "{0}/claims/convert".format(self.url_base)
+        return self.api_client.post(claims_convert_url,
+                                    headers=self.base_headers,
+                                    files={'file': (os.path.split(x12_claims_file)[-1], open(x12_claims_file, 'rb'),
+                                                    'application/EDI-X12')}).json()
+
     def eligibility(self, eligibility_request):
         """
             Submit an eligibility request

@@ -234,6 +234,12 @@ Quick start
     #retrieve insurance plan information.  For example, EPO plans in Texas.
     pd.plans(state='TX', plan_type='EPO')
 
+    #lookup a diagnosis mapping for the specified ICD-9 code
+    pd.icd_convert('250.12')
+
+    #convert existing claims in a X12 837 file to claims request JSON.  ICD-9 codes are converted to ICD-10
+    pd.claims_convert('/path/to/my_claims.837')
+
 
 
 See the documentation_ for detailed information on all of the PokitDok Platform APIs.
