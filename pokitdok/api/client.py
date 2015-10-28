@@ -218,6 +218,45 @@ class PokitDokClient(object):
         return self.api_client.post(enrollment_url, data=json.dumps(enrollment_request),
                                     headers=self.json_headers).json()
 
+    def enrollment_snapshot(self, trading_partner_id, x12_file):
+        """
+            Submit a X12 834 file to the platform to establish the enrollment information within it
+            as the current membership enrollment snapshot for a trading partner
+
+            :param trading_partner_id: the trading partner associated with the enrollment snapshot
+            :param x12_file: the path to a X12 834 file that contains the current membership enrollment information
+        """
+        enrollment_snapshot_url = "{0}/enrollment/snapshot".format(self.url_base)
+        return self.api_client.post(enrollment_snapshot_url,
+                                    headers=self.base_headers,
+                                    data={'trading_partner_id': trading_partner_id},
+                                    files={'file': (os.path.split(x12_file)[-1], open(x12_file, 'rb'),
+                                                    'application/EDI-X12')}).json()
+
+    def enrollment_snapshots(self, snapshot_id=None, **kwargs):
+        """
+            List enrollment snapshots that are stored for the client application
+        """
+        enrollment_snapshots_url = "{0}/enrollment/snapshot{1}".format(self.url_base,
+                                                                       '/{}'.format(snapshot_id) if snapshot_id else '')
+        request_args = {}
+        if snapshot_id is None:
+            request_args.update(kwargs)
+
+        return self.api_client.get(enrollment_snapshots_url, params=request_args, headers=self.base_headers).json()
+
+    def enrollment_snapshot_data(self, snapshot_id, **kwargs):
+        """
+            List enrollment request objects that make up the specified enrollment snapshot
+
+            :param snapshot_id: the enrollment snapshot id for the enrollment data
+        """
+        enrollment_snapshot_data_url = "{0}/enrollment/snapshot/{1}/data".format(self.url_base, snapshot_id)
+        request_args = {}
+        request_args.update(kwargs)
+
+        return self.api_client.get(enrollment_snapshot_data_url, params=request_args, headers=self.base_headers).json()
+
     def files(self, trading_partner_id, x12_file):
         """
             Submit a raw X12 file to the platform for processing
