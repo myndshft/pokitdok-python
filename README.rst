@@ -321,6 +321,70 @@ Quick start
         "trading_partner_id": "MOCKPAYER",
     })
 
+    # create an identity resource
+    pd.create_identity({
+        "prefix": "Mr.",
+        "first_name": "Oscar",
+        "middle_name": "Harold",
+        "last_name": "Whitmire",
+        "suffix": "IV",
+        "birth_date": "2000-05-01",
+        "gender": "male",
+        "email": "oscar@pokitdok.com",
+        "phone": "555-555-5555",
+        "secondary_phone": "333-333-4444",
+        "address": {
+            "address_lines": ["1400 Anyhoo Avenue"],
+            "city": "Springfield",
+            "state": "IL",
+            "zipcode": "90210"
+        },
+        "identifiers": [
+            {
+                "location": [-121.93831, 37.53901],
+                "provider_uuid": "1917f12b-fb6a-4016-93bc-adeb83204c83",
+                "system_uuid": "967d207f-b024-41cc-8cac-89575a1f6fef",
+                "value": "W90100-IG-88"
+
+            }
+        ]
+    })
+
+    # update an identity resource
+    pd.update_identity("881bc095-2068-43cb-9783-cce630364122", {
+        "prefix": "Mr.",
+        "first_name": "Oscar",
+        "middle_name": "Harold",
+        "last_name": "Whitmire",
+        "suffix": "IV",
+        "birth_date": "2000-05-01",
+        "gender": "male",
+        "email": "oscar.whitmire@pokitdok.com",
+        "phone": "555-555-5555",
+        "secondary_phone": "333-333-4444",
+        "address": {
+            "address_lines": ["1400 Anyhoo Avenue"],
+            "city": "Springfield",
+            "state": "IL",
+            "zipcode": "90210"
+        },
+        "identifiers": [
+            {
+                "location": [-121.93831, 37.53901],
+                "provider_uuid": "1917f12b-fb6a-4016-93bc-adeb83204c83",
+                "system_uuid": "967d207f-b024-41cc-8cac-89575a1f6fef",
+                "value": "W90100-IG-88"
+
+            }
+        ]
+    })
+
+    # query for a single identity resource using uuid
+    pd.identity("881bc095-2068-43cb-9783-cce630364122")
+
+    # query for identity resources using fields
+    pd.identity(first_name='Oscar', last_name='Whitmire', gender='male')
+
 
 See the documentation_ for detailed information on all of the PokitDok Platform APIs.
 The Quick Start Guide is also available as an IPython_ notebook_.
