@@ -5,7 +5,6 @@ import pokitdok
 from unittest import TestCase
 import vcr
 
-
 # Fake client id/secret for local testing
 CLIENT_ID = 'F7q38MzlwOxUwTHb7jvk'
 CLIENT_SECRET = 'O8DRamKmKMLtSTPjK99eUlbfOQEc44VVmp8ARmcY'
@@ -321,5 +320,88 @@ class TestAPIClient(TestCase):
                 },
                 "description": "Welcome to M0d3rN Healthcare"
             })
+            assert "meta" in response
+            assert "data" in response
+
+    def test_identity_get_uuid(self):
+        with pd_vcr.use_cassette('identity-uuid.yml'):
+            identity_uuid = '881bc095-2068-43cb-9783-cce630364122'
+            response = self.pd.identity(identity_uuid)
+            assert "meta" in response
+            assert "data" in response
+
+    def test_identity_get_params(self):
+        with pd_vcr.use_cassette('identity-params.yml'):
+            params = {
+                "first_name": "Peg",
+                "last_name": "PokitDok",
+                "gender": "female",
+                "prefix": "Ms."
+            }
+            response = self.pd.identity(**params)
+            assert "meta" in response
+            assert "data" in response
+
+    def test_create_identity(self):
+        with pd_vcr.use_cassette('create-identity.yml'):
+            identity_resource = {
+                "prefix": "Ms",
+                "first_name": "Peg",
+                "last_name": "PokitDok",
+                "gender": "female",
+                "birth_date": "1991-05-19",
+                "email": "peggy@pokitdok.com",
+                "address": {
+                    "address_lines": ["1542 Anywhere Avenue"],
+                    "city": "Charleston",
+                    "state": "SC",
+                    "zipcode": "29407"
+                },
+                "identifiers": [
+                    {
+                        "location": [
+                                        -80.0406,
+                                        32.8986
+                                    ],
+                        "provider_uuid": "74850f65-6bb7-48e1-9fcb-bc98c8dda2ba",
+                        "system_uuid": "967d207f-b024-41cc-8cac-89575a1f6fef",
+                        "value": "W90100-IG-88"
+                    }
+                ]
+            }
+            response = self.pd.create_identity(identity_resource)
+            assert "meta" in response
+            assert "data" in response
+
+    def test_update_identity(self):
+        with pd_vcr.use_cassette('update-identity.yml'):
+            identity_resource = {
+                "prefix": "Ms",
+                "first_name": "Peg",
+                "last_name": "PokitDok",
+                "gender": "female",
+                "birth_date": "1991-05-19",
+                "email": "peggy@pokitdok.com",
+                "address": {
+                    "address_lines": ["1542 Anywhere Avenue"],
+                    "city": "Charleston",
+                    "state": "SC",
+                    "zipcode": "29407"
+                },
+                "identifiers": [
+                    {
+                        "location": [
+                                        -80.0406,
+                                        32.8986
+                                    ],
+                        "provider_uuid": "74850f65-6bb7-48e1-9fcb-bc98c8dda2ba",
+                        "system_uuid": "967d207f-b024-41cc-8cac-89575a1f6fef",
+                        "value": "W90100-IG-88"
+                    }
+                ]
+            }
+
+            identity_uuid = '881bc095-2068-43cb-9783-cce630364122'
+            response = self.pd.update_identity(identity_uuid, identity_resource)
             assert "meta" in response
             assert "data" in response

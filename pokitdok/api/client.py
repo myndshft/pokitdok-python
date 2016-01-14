@@ -410,3 +410,35 @@ class PokitDokClient(object):
         appointments_url = "{0}/schedule/appointments/{1}".format(self.url_base, appointment_uuid)
         return self.api_client.delete(appointments_url, headers=self.base_headers).json()
 
+    def create_identity(self, identity_request):
+        """
+            Creates an identity resource.
+            :param identity_request: The dictionary containing the identity request data.
+            :returns: The new identity resource.
+        """
+        identity_url = "{0}/identity/".format(self.url_base)
+        return self.api_client.post(identity_url, data=json.dumps(identity_request), headers=self.json_headers).json()
+
+    def update_identity(self, identity_uuid, identity_request):
+        """
+           Updates an existing identity resource.
+           :param identity_uuid: The identity resource's uuid.
+           :param identity_request: The updated identity resource.
+           :returns: The updated identity resource.
+        """
+        identity_url = "{0}/identity/{1}".format(self.url_base, identity_uuid)
+        return self.api_client.put(identity_url, data=json.dumps(identity_request), headers=self.json_headers).json()
+
+    def identity(self, identity_uuid=None, **kwargs):
+        """
+            Queries for an existing identity resource by uuid or for multiple resources using parameters.
+            :uuid: The identity resource uuid. Used to execute an exact match query by uuid.
+            :kwargs: Additional query parameters using resource fields such as first_name, last_name, email, etc.
+            :returns: zero or one result if uuid is used. Zero or more results if kwargs are used.
+        """
+        identity_url = "{0}/identity".format(self.url_base)
+
+        if identity_uuid:
+            identity_url += "/{0}".format(identity_uuid)
+
+        return self.api_client.get(identity_url, params=kwargs, headers=self.base_headers).json()
