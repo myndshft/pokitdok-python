@@ -441,4 +441,4 @@ class PokitDokClient(object):
         if identity_uuid:
             identity_url += "/{0}".format(identity_uuid)
 
-        return self.api_client.get(identity_url, params=kwargs, headers=self.json_headers).json()
+        return self.api_client.get(identity_url, params=kwargs, headers=self.base_headers).json()
