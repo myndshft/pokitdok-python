@@ -1,24 +1,27 @@
 interactions:
 - request:
-    body: client_id=F7q38MzlwOxUwTHb7jvk&grant_type=client_credentials&client_secret=O8DRamKmKMLtSTPjK99eUlbfOQEc44VVmp8ARmcY
+    body: !!binary |
+      Y2xpZW50X2lkPTQzWjF1M05sUFd6WUZacDZuQWh0JmNsaWVudF9zZWNyZXQ9R3ZSUDFwWFYyUk1G
+      YXJHcVhEc3dlT2g2b29lOGhGNkZkbUJHTnh6ZiZncmFudF90eXBlPWNsaWVudF9jcmVkZW50aWFs
+      cw==
     headers:
-      Accept: [!!python/unicode application/json]
+      Accept: [application/json]
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['115']
       Content-Type: [application/x-www-form-urlencoded]
-      User-Agent: [python-requests/2.5.0 CPython/2.6.9 Darwin/14.0.0]
+      User-Agent: [python-requests/2.9.1]
     method: POST
     uri: http://localhost:5002/oauth2/token
   response:
-    body: {string: !!python/unicode '{"access_token": "s6Ump7AfYQodkUakGclQA6LZgWrvFZxLT2rVqjP8",
-        "token_type": "bearer", "expires": 1419288404, "expires_in": 3600}'}
+    body: {string: '{"access_token": "mi1WyqLvYCPMnGRtgLhOKD4ADCFSG7tkKPQpZ2dg", "token_type":
+        "bearer", "expires": 1454358854, "expires_in": 3600}'}
     headers:
-      cache-control: [no-store]
-      content-length: ['127']
-      content-type: [application/json;charset=UTF-8]
-      date: ['Mon, 22 Dec 2014 21:46:43 GMT']
-      pragma: [no-cache]
-      server: [Werkzeug/0.9.4 Python/2.7.6]
+      Cache-Control: [no-store]
+      Content-Length: ['127']
+      Content-Type: [application/json;charset=UTF-8]
+      Date: ['Mon, 01 Feb 2016 19:34:13 GMT']
+      Pragma: [no-cache]
+      Server: [Werkzeug/0.9.4 Python/2.7.6]
     status: {code: 200, message: OK}
 version: 1

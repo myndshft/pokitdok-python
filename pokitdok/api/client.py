@@ -434,7 +434,8 @@ class PokitDokClient(object):
             Queries for an existing identity resource by uuid or for multiple resources using parameters.
             :uuid: The identity resource uuid. Used to execute an exact match query by uuid.
             :kwargs: Additional query parameters using resource fields such as first_name, last_name, email, etc.
-            :returns: zero or one result if uuid is used. Zero or more results if kwargs are used.
+            :returns: list containing the search results. A search by uuid returns an empty list or a list containing
+            a single identity record.
         """
         identity_url = "{0}/identity".format(self.url_base)
 
