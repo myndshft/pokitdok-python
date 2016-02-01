@@ -7,7 +7,7 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-pokitdok/1.3 python-requests/2.9.1]
     method: GET
-    uri: http://localhost:5002/api/v4/identity?gender=female&last_name=PokitDok&prefix=Ms.&first_name=Peg
+    uri: http://localhost:5002/api/v4/identity?prefix=Ms.&gender=female&first_name=Peg&last_name=PokitDok
   response:
     body: {string: '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 
@@ -15,13 +15,13 @@ interactions:
 
         <h1>Redirecting...</h1>
 
-        <p>You should be redirected automatically to target URL: <a href="http://localhost:5002/api/v4/identity/?gender=female&amp;last_name=PokitDok&amp;prefix=Ms.&amp;first_name=Peg">http://localhost:5002/api/v4/identity/?gender=female&amp;last_name=PokitDok&amp;prefix=Ms.&amp;first_name=Peg</a>.  If
+        <p>You should be redirected automatically to target URL: <a href="http://localhost:5002/api/v4/identity/?prefix=Ms.&amp;gender=female&amp;first_name=Peg&amp;last_name=PokitDok">http://localhost:5002/api/v4/identity/?prefix=Ms.&amp;gender=female&amp;first_name=Peg&amp;last_name=PokitDok</a>.  If
         not click the link.'}
     headers:
       Content-Length: ['425']
       Content-Type: [text/html; charset=utf-8]
-      Date: ['Thu, 14 Jan 2016 01:22:14 GMT']
-      Location: ['http://localhost:5002/api/v4/identity/?gender=female&last_name=PokitDok&prefix=Ms.&first_name=Peg']
+      Date: ['Mon, 01 Feb 2016 19:34:13 GMT']
+      Location: ['http://localhost:5002/api/v4/identity/?prefix=Ms.&gender=female&first_name=Peg&last_name=PokitDok']
       Server: [Werkzeug/0.9.4 Python/2.7.6]
     status: {code: 301, message: MOVED PERMANENTLY}
 - request:
@@ -32,27 +32,26 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-pokitdok/1.3 python-requests/2.9.1]
     method: GET
-    uri: http://localhost:5002/api/v4/identity/?gender=female&last_name=PokitDok&prefix=Ms.&first_name=Peg
+    uri: http://localhost:5002/api/v4/identity/?prefix=Ms.&gender=female&first_name=Peg&last_name=PokitDok
   response:
-    body: {string: '{"meta": {"rate_limit_amount": 1, "rate_limit_reset": 1452738134,
-        "application_mode": "test", "processing_time": 9, "rate_limit_cap": 1000000000,
-        "credits_remaining": -1, "activity_id": "5696f8460640fd7d215962b3", "credits_billed":
-        1}, "data": [{"first_name": "Peg", "last_name": "PokitDok", "middle_name":
-        "Harold", "app_name": "Platform Test App", "gender": "female", "member_id":
-        "W2000-05-01-001", "update_datetime": "2016-01-14T01:21:54.168813", "identifiers":
-        [{"system_uuid": "967d207f-b024-41cc-8cac-89575a1f6fef", "value": "W90100-IG-88",
-        "update_datetime": "2016-01-14T01:21:54.168325", "provider_uuid": "74850f65-6bb7-48e1-9fcb-bc98c8dda2ba",
-        "insert_datetime": "2016-01-14T01:21:54.168299", "location": [80.0406, 32.8986]}],
-        "phone": "555-555-5555", "prefix": "Ms.", "ssn": "333-22-4444", "suffix":
-        "IV", "client_id": "43Z1u3NlPWzYFZp6nAht", "address": {"address_lines": ["1400
-        Anyhoo Avenue"], "state": "IL", "zipcode": "90210", "city": "Springfield"},
-        "birth_date": "2000-05-01", "uuid": "4d04d8dc-3d0b-4ea1-8add-4dbc9619e1af",
-        "insert_datetime": "2016-01-14T01:21:54.168775", "email": "oscar-the-dog@pokitdok.com",
-        "secondary_phone": "555-552-5555"}]}'}
+    body: {string: '{"meta": {"rate_limit_amount": 3, "rate_limit_reset": 1454358766,
+        "application_mode": "test", "processing_time": 7, "rate_limit_cap": 1000000000,
+        "credits_remaining": -3, "activity_id": "56afb3350640fd609b2decbb", "credits_billed":
+        1}, "data": [{"update_datetime": "2016-02-01T19:23:41.409945", "first_name":
+        "Peg", "last_name": "PokitDok", "middle_name": "Harold", "app_name": "Platform
+        Test App", "gender": "female", "member_id": "W2000-05-01-001", "app_id": "43Z1u3NlPWzYFZp6nAht",
+        "identifiers": [{"system_uuid": "967d207f-b024-41cc-8cac-89575a1f6fef", "value":
+        "W90100-IG-88", "update_datetime": "2016-02-01T19:23:41.409358", "provider_uuid":
+        "74850f65-6bb7-48e1-9fcb-bc98c8dda2ba", "insert_datetime": "2016-02-01T19:23:41.409335",
+        "location": [80.0406, 32.8986]}], "phone": "555-555-5555", "prefix": "Ms.",
+        "ssn": "333-22-4444", "suffix": "IV", "insert_datetime": "2016-02-01T19:23:41.409906",
+        "address": {"address_lines": ["1400 Anyhoo Avenue"], "state": "IL", "zipcode":
+        "90210", "city": "Springfield"}, "birth_date": "2000-05-01", "uuid": "4d04d8dc-3d0b-4ea1-8add-4dbc9619e1af",
+        "email": "oscar-the-dog@pokitdok.com", "secondary_phone": "555-552-5555"}]}'}
     headers:
-      Content-Length: ['1166']
+      Content-Length: ['1163']
       Content-Type: [text/html; charset=utf-8]
-      Date: ['Thu, 14 Jan 2016 01:22:14 GMT']
+      Date: ['Mon, 01 Feb 2016 19:34:13 GMT']
       Server: [Werkzeug/0.9.4 Python/2.7.6]
       charset: [utf-8]
       mimetype: [application/json]
