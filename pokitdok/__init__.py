@@ -9,7 +9,7 @@
 from __future__ import absolute_import
 
 __title__ = 'pokitdok'
-__version__ = '1.3'
+__version__ = '1.4.2'
 __author__ = 'PokitDok, Inc.'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2014-2015 PokitDok, Inc.'
