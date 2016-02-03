@@ -424,7 +424,7 @@ class PokitDokClient(object):
             :returns: list containing the search results. A search by uuid returns an empty list or a list containing
             a single identity record.
         """
-        path = "/identity{0}".format('/{}'.format(identity_uuid) if identity_uuid else '')
+        path = "/identity{0}".format('/{0}'.format(identity_uuid) if identity_uuid else '')
         return self.get(path, **kwargs)
 
     def pharmacy_plans(self, **kwargs):
