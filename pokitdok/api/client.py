@@ -101,6 +101,52 @@ class PokitDokClient(object):
                                                      client_secret=self.client_secret, scope=self.scope)
         return self.token
 
+    def request(self, path, method='get', data=None, files=None, **kwargs):
+        """
+        General method for submitting an API request
+
+        :param path: the API request path
+        :param method: the http request method that should be used
+        :param data: dictionary of request data that should be used for post/put requests
+        :param files: dictionary of file information when the API accepts file uploads as input
+        :param kwargs: optional keyword arguments to be relayed along as request parameters
+        :return:
+        """
+        if data and not files:
+            headers = self.json_headers
+            request_data = json.dumps(data)
+        else:
+            headers = self.base_headers
+            request_data = data
+
+        request_url = "{0}{1}".format(self.url_base, path)
+        request_method = getattr(self.api_client, method)
+        return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
+
+    def get(self, path, **kwargs):
+        """
+            Convenience method for submitting a GET API request via the `request` method
+        """
+        return self.request(path, method='get', **kwargs)
+
+    def put(self, path, **kwargs):
+        """
+            Convenience method for submitting a PUT API request via the `request` method
+        """
+        return self.request(path, method='put', **kwargs)
+
+    def post(self, path, **kwargs):
+        """
+            Convenience method for submitting a POST API request via the `request` method
+        """
+        return self.request(path, method='post', **kwargs)
+
+    def delete(self, path, **kwargs):
+        """
+            Convenience method for submitting a DELETE API request via the `request` method
+        """
+        return self.request(path, method='delete', **kwargs)
+
     def activities(self, activity_id=None, **kwargs):
         """
             Fetch platform activity information
@@ -115,19 +161,14 @@ class PokitDokClient(object):
                               child activities that are the result of a batch operation.
 
         """
-        activities_url = "{0}/activities/{1}".format(self.url_base, activity_id if activity_id else '')
-        request_args = {}
-        if activity_id is None:
-            request_args.update(kwargs)
-
-        return self.api_client.get(activities_url, params=request_args, headers=self.base_headers).json()
+        path = "/activities/{0}".format(activity_id if activity_id else '')
+        return self.get(path, **kwargs)
 
     def cash_prices(self, **kwargs):
         """
             Fetch cash price information
         """
-        cash_prices_url = "{0}/prices/cash".format(self.url_base)
-        return self.api_client.get(cash_prices_url, params=kwargs, headers=self.base_headers).json()
+        return self.get('/prices/cash', **kwargs)
 
     def ccd(self, ccd_request):
         """
@@ -135,8 +176,7 @@ class PokitDokClient(object):
 
             :param ccd_request: dictionary representing a CCD request
         """
-        ccd_url = "{0}/ccd/".format(self.url_base)
-        return self.api_client.post(ccd_url, data=json.dumps(ccd_request), headers=self.json_headers).json()
+        return self.post('/ccd/', data=ccd_request)
 
     def claims(self, claims_request):
         """
@@ -144,8 +184,7 @@ class PokitDokClient(object):
 
             :param claims_request: dictionary representing a claims request
         """
-        claims_url = "{0}/claims/".format(self.url_base)
-        return self.api_client.post(claims_url, data=json.dumps(claims_request), headers=self.json_headers).json()
+        return self.post('/claims/', data=claims_request)
 
     def claims_status(self, claims_status_request):
         """
@@ -153,9 +192,7 @@ class PokitDokClient(object):
 
             :param claims_status_request: dictionary representing a claims status request
         """
-        claims_status_url = "{0}/claims/status".format(self.url_base)
-        return self.api_client.post(claims_status_url, data=json.dumps(claims_status_request),
-                                    headers=self.json_headers).json()
+        return self.post('/claims/status', data=claims_status_request)
 
     def mpc(self, code=None, **kwargs):
         """
@@ -168,13 +205,8 @@ class PokitDokClient(object):
             :param name: Search medical procedure information by consumer friendly name
             :param description: A partial or full description to be used to locate medical procedure information
         """
-
-        mpc_url = "{0}/mpc/{1}".format(self.url_base, code if code else '')
-        request_args = {}
-        if code is None:
-            request_args.update(kwargs)
-
-        return self.api_client.get(mpc_url, params=request_args, headers=self.base_headers).json()
+        mpc_path = "/mpc/{0}".format(code if code else '')
+        return self.get(mpc_path, **kwargs)
 
     def icd_convert(self, code):
         """
@@ -182,9 +214,7 @@ class PokitDokClient(object):
 
             :param code: A diagnosis code that should be used to retrieve information
         """
-
-        icd_convert_url = "{0}/icd/convert/{1}".format(self.url_base, code)
-        return self.api_client.get(icd_convert_url, headers=self.base_headers).json()
+        return self.get("/icd/convert/{0}".format(code))
 
     def claims_convert(self, x12_claims_file):
         """
@@ -192,11 +222,9 @@ class PokitDokClient(object):
 
             :param x12_claims_file: the path to a X12 claims file to be submitted to the platform for processing
         """
-        claims_convert_url = "{0}/claims/convert".format(self.url_base)
-        return self.api_client.post(claims_convert_url,
-                                    headers=self.base_headers,
-                                    files={'file': (os.path.split(x12_claims_file)[-1], open(x12_claims_file, 'rb'),
-                                                    'application/EDI-X12')}).json()
+        return self.post('/claims/convert', files={
+            'file': (os.path.split(x12_claims_file)[-1], open(x12_claims_file, 'rb'), 'application/EDI-X12')
+        })
 
     def eligibility(self, eligibility_request):
         """
@@ -204,9 +232,7 @@ class PokitDokClient(object):
 
             :param eligibility_request: dictionary representing an eligibility request
         """
-        eligibility_url = "{0}/eligibility/".format(self.url_base)
-        return self.api_client.post(eligibility_url, data=json.dumps(eligibility_request),
-                                    headers=self.json_headers).json()
+        return self.post('/eligibility/', data=eligibility_request)
 
     def enrollment(self, enrollment_request):
         """
@@ -214,9 +240,7 @@ class PokitDokClient(object):
 
             :param enrollment_request: dictionary representing an enrollment request
         """
-        enrollment_url = "{0}/enrollment/".format(self.url_base)
-        return self.api_client.post(enrollment_url, data=json.dumps(enrollment_request),
-                                    headers=self.json_headers).json()
+        return self.post('/enrollment/', data=enrollment_request)
 
     def enrollment_snapshot(self, trading_partner_id, x12_file):
         """
@@ -226,24 +250,17 @@ class PokitDokClient(object):
             :param trading_partner_id: the trading partner associated with the enrollment snapshot
             :param x12_file: the path to a X12 834 file that contains the current membership enrollment information
         """
-        enrollment_snapshot_url = "{0}/enrollment/snapshot".format(self.url_base)
-        return self.api_client.post(enrollment_snapshot_url,
-                                    headers=self.base_headers,
-                                    data={'trading_partner_id': trading_partner_id},
-                                    files={'file': (os.path.split(x12_file)[-1], open(x12_file, 'rb'),
-                                                    'application/EDI-X12')}).json()
+        return self.post('/enrollment/snapshot', data={'trading_partner_id': trading_partner_id},
+                         files={
+                             'file': (os.path.split(x12_file)[-1], open(x12_file, 'rb'), 'application/EDI-X12')
+                         })
 
     def enrollment_snapshots(self, snapshot_id=None, **kwargs):
         """
             List enrollment snapshots that are stored for the client application
         """
-        enrollment_snapshots_url = "{0}/enrollment/snapshot{1}".format(self.url_base,
-                                                                       '/{}'.format(snapshot_id) if snapshot_id else '')
-        request_args = {}
-        if snapshot_id is None:
-            request_args.update(kwargs)
-
-        return self.api_client.get(enrollment_snapshots_url, params=request_args, headers=self.base_headers).json()
+        path = "/enrollment/snapshot{0}".format('/{}'.format(snapshot_id) if snapshot_id else '')
+        return self.get(path, **kwargs)
 
     def enrollment_snapshot_data(self, snapshot_id, **kwargs):
         """
@@ -251,11 +268,8 @@ class PokitDokClient(object):
 
             :param snapshot_id: the enrollment snapshot id for the enrollment data
         """
-        enrollment_snapshot_data_url = "{0}/enrollment/snapshot/{1}/data".format(self.url_base, snapshot_id)
-        request_args = {}
-        request_args.update(kwargs)
-
-        return self.api_client.get(enrollment_snapshot_data_url, params=request_args, headers=self.base_headers).json()
+        path = "/enrollment/snapshot/{0}/data".format(snapshot_id)
+        return self.get(path, **kwargs)
 
     def files(self, trading_partner_id, x12_file):
         """
@@ -264,37 +278,29 @@ class PokitDokClient(object):
             :param trading_partner_id: the trading partner that should receive the X12 file information
             :param x12_file: the path to a X12 file to be submitted to the platform for processing
         """
-        files_url = "{0}/files/".format(self.url_base)
-        return self.api_client.post(files_url,
-                                    headers=self.base_headers,
-                                    data={'trading_partner_id': trading_partner_id},
-                                    files={'file': (os.path.split(x12_file)[-1], open(x12_file, 'rb'),
-                                                    'application/EDI-X12')}).json()
+        return self.post('/files/', data={'trading_partner_id': trading_partner_id},
+                         files={
+                             'file': (os.path.split(x12_file)[-1], open(x12_file, 'rb'), 'application/EDI-X12')
+                         })
 
     def insurance_prices(self, **kwargs):
         """
             Fetch insurance price information
         """
-        insurance_prices_url = "{0}/prices/insurance".format(self.url_base)
-        return self.api_client.get(insurance_prices_url, params=kwargs, headers=self.base_headers).json()
+        return self.get('/prices/insurance', **kwargs)
 
     def payers(self, **kwargs):
         """
             Fetch payer information for supported trading partners
 
         """
-        request_args = {}
-        request_args.update(kwargs)
-
-        payers_url = "{0}/payers/".format(self.url_base)
-        return self.api_client.get(payers_url, params=request_args, headers=self.base_headers).json()
+        return self.get('/payers/',  **kwargs)
 
     def plans(self, **kwargs):
         """
             Fetch insurance plans information
         """
-        insurance_plans_url = "{0}/plans/".format(self.url_base)
-        return self.api_client.get(insurance_plans_url, params=kwargs, headers=self.base_headers).json()
+        return self.get('/plans/', **kwargs)
 
     def providers(self, npi=None, **kwargs):
         """
@@ -313,13 +319,8 @@ class PokitDokClient(object):
             :param limit: The number of provider results that should be included in search results
 
         """
-
-        providers_url = "{0}/providers/{1}".format(self.url_base, npi if npi else '')
-        request_args = {}
-        if npi is None:
-            request_args.update(kwargs)
-
-        return self.api_client.get(providers_url, params=request_args, headers=self.base_headers).json()
+        path = "/providers/{0}".format(npi if npi else '')
+        return self.get(path, **kwargs)
 
     def trading_partners(self, trading_partner_id=None):
         """
@@ -330,65 +331,53 @@ class PokitDokClient(object):
             :returns a dictionary containing the specified trading partner or, if called with no arguments, a list of
                      available trading partners
         """
-        trading_partners_url = "{0}/tradingpartners/{1}".format(self.url_base,
-                                                                trading_partner_id if trading_partner_id else '')
-        return self.api_client.get(trading_partners_url, headers=self.base_headers).json()
+        path = "/tradingpartners/{0}".format(trading_partner_id if trading_partner_id else '')
+        return self.get(path)
 
     def referrals(self, referral_request):
         """
             Submit a referral request
             :param referral_request: dictionary representing a referral request
         """
-        referrals_url = "{0}/referrals/".format(self.url_base)
-        return self.api_client.post(referrals_url, data=json.dumps(referral_request),
-                                    headers=self.json_headers).json()
+        return self.post('/referrals/', data=referral_request)
 
     def authorizations(self, authorizations_request):
         """
             Submit an authorization request
             :param authorizations_request: dictionary representing an authorization request
         """
-        authorizations_url = "{0}/authorizations/".format(self.url_base)
-        return self.api_client.post(authorizations_url, data=json.dumps(authorizations_request),
-                                    headers=self.json_headers).json()
+        return self.post('/authorizations/', data=authorizations_request)
 
     def schedulers(self, scheduler_uuid=None):
         """
             Get information about supported scheduling systems or fetch data about a specific scheduling system
             :param scheduler_uuid: The uuid of a specific scheduling system.
         """
-        schedulers_url = "{0}/schedule/schedulers/{1}".format(self.url_base, scheduler_uuid if scheduler_uuid else '')
-        return self.api_client.get(schedulers_url, headers=self.base_headers).json()
+        path = "/schedule/schedulers/{0}".format(scheduler_uuid if scheduler_uuid else '')
+        return self.get(path)
 
     def appointment_types(self, appointment_type_uuid=None):
         """
             Get information about appointment types or fetch data about a specific appointment type
             :param appointment_type_uuid: The uuid of a specific appointment type.
         """
-        appointment_types_url = "{0}/schedule/appointmenttypes/{1}".format(self.url_base,
-                                                                           appointment_type_uuid if appointment_type_uuid else '')
-        return self.api_client.get(appointment_types_url, headers=self.base_headers).json()
+        path = "/schedule/appointmenttypes/{0}".format(appointment_type_uuid if appointment_type_uuid else '')
+        return self.get(path)
 
     def schedule_slots(self, slots_request):
         """
             Submit an open slot for a provider's schedule
             :param slots_request: dictionary representing a slots request
         """
-        slots_url = "{0}/schedule/slots/".format(self.url_base)
-        return self.api_client.post(slots_url, data=json.dumps(slots_request),
-                                    headers=self.json_headers).json()
+        return self.post("/schedule/slots/", data=slots_request)
 
     def appointments(self, appointment_uuid=None, **kwargs):
         """
             Query for open appointment slots or retrieve information for a specific appointment
             :param appointment_uuid: The uuid of a specific appointment.
         """
-        request_args = {}
-        appointments_url = "{0}/schedule/appointments/{1}".format(self.url_base,
-                                                                  appointment_uuid if appointment_uuid else '')
-        if appointment_uuid is None:
-            request_args.update(kwargs)
-        return self.api_client.get(appointments_url, params=request_args, headers=self.base_headers).json()
+        path = "/schedule/appointments/{0}".format(appointment_uuid if appointment_uuid else '')
+        return self.get(path, **kwargs)
 
     def book_appointment(self, appointment_uuid, appointment_request):
         """
@@ -396,9 +385,8 @@ class PokitDokClient(object):
             :param appointment_uuid: The uuid of a specific appointment to be booked.
             :param appointment_request: the appointment request data
         """
-        appointments_url = "{0}/schedule/appointments/{1}".format(self.url_base, appointment_uuid)
-        return self.api_client.put(appointments_url, data=json.dumps(appointment_request),
-                                   headers=self.json_headers).json()
+        path = "/schedule/appointments/{0}".format(appointment_uuid)
+        return self.put(path, data=appointment_request)
 
     update_appointment = book_appointment
 
@@ -407,8 +395,8 @@ class PokitDokClient(object):
             Cancel an appointment
             :param appointment_uuid: The uuid of a specific appointment.
         """
-        appointments_url = "{0}/schedule/appointments/{1}".format(self.url_base, appointment_uuid)
-        return self.api_client.delete(appointments_url, headers=self.base_headers).json()
+        path = "/schedule/appointments/{0}".format(appointment_uuid)
+        return self.delete(path)
 
     def create_identity(self, identity_request):
         """
@@ -416,8 +404,7 @@ class PokitDokClient(object):
             :param identity_request: The dictionary containing the identity request data.
             :returns: The new identity resource.
         """
-        identity_url = "{0}/identity/".format(self.url_base)
-        return self.api_client.post(identity_url, data=json.dumps(identity_request), headers=self.json_headers).json()
+        return self.post('/identity/', data=identity_request)
 
     def update_identity(self, identity_uuid, identity_request):
         """
@@ -426,8 +413,8 @@ class PokitDokClient(object):
            :param identity_request: The updated identity resource.
            :returns: The updated identity resource.
         """
-        identity_url = "{0}/identity/{1}".format(self.url_base, identity_uuid)
-        return self.api_client.put(identity_url, data=json.dumps(identity_request), headers=self.json_headers).json()
+        path = "/identity/{0}".format(identity_uuid)
+        return self.put(path, data=identity_request)
 
     def identity(self, identity_uuid=None, **kwargs):
         """
@@ -437,9 +424,24 @@ class PokitDokClient(object):
             :returns: list containing the search results. A search by uuid returns an empty list or a list containing
             a single identity record.
         """
-        identity_url = "{0}/identity".format(self.url_base)
+        path = "/identity{0}".format('/{}'.format(identity_uuid) if identity_uuid else '')
+        return self.get(path, **kwargs)
 
-        if identity_uuid:
-            identity_url += "/{0}".format(identity_uuid)
+    def pharmacy_plans(self, **kwargs):
+        """
+            Search drug plan information by trading partner and various plan identifiers
 
-        return self.api_client.get(identity_url, params=kwargs, headers=self.base_headers).json()
+            :param kwargs: pharmacy plans API request parameters
+            :return: drug plan information if a match is found
+        """
+        return self.get('/pharmacy/plans', **kwargs)
+
+    def pharmacy_formulary(self, **kwargs):
+        """
+            Search drug plan formulary information to determine if a drug is covered by the specified
+            drug plan.
+
+            :param kwargs: pharmacy formulary API request parameters
+            :return: formulary information if a match is found
+        """
+        return self.get('/pharmacy/formulary', **kwargs)
