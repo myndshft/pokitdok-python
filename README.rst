@@ -16,11 +16,15 @@ Install from PyPI_ using pip_
 Resources
 ---------
 
-Report issues_ on GitHub
+See the documentation_ for detailed information on all of the PokitDok Platform APIs.
+
+Report API client issues_ on GitHub
 
 
 Quick start
 -----------
+
+The Quick Start Guide is also available as a Jupyter_ notebook_.
 
 .. code-block:: python
 
@@ -47,7 +51,7 @@ Quick start
     pd.providers(zipcode='29307', radius='10mi')
     pd.providers(zipcode='29307', radius='10mi', specialty='RHEUMATOLOGY')
 
-    #submit a v4 eligibility request
+    #submit an eligibility request
     pd.eligibility({
         "member": {
             "birth_date": "1970-01-01",
@@ -64,7 +68,7 @@ Quick start
         "trading_partner_id": "MOCKPAYER"
     })
 
-    #submit a v4 claims request
+    #submit a claims request
     pd.claims({
         "transaction_code": "chargeable",
         "trading_partner_id": "MOCKPAYER",
@@ -234,6 +238,10 @@ Quick start
     #retrieve insurance plan information.  For example, EPO plans in Texas.
     pd.plans(state='TX', plan_type='EPO')
 
+    #look up medical procedure code information
+    pd.mpc(code='99213')
+    pd.mpc(name='office')
+
     #lookup a diagnosis mapping for the specified ICD-9 code
     pd.icd_convert('250.12')
 
@@ -267,7 +275,7 @@ Quick start
             "benefit_status": "Active",
             "benefits": [
                 {
-                    "begin_date": " 2015-01-01",
+                    "begin_date": "2015-01-01",
                     "benefit_type": "Health",
                     "coordination_of_benefits": [
                         {
@@ -386,8 +394,54 @@ Quick start
     pd.identity(first_name='Oscar', last_name='Whitmire', gender='male')
 
 
-See the documentation_ for detailed information on all of the PokitDok Platform APIs.
-The Quick Start Guide is also available as an IPython_ notebook_.
+Making Requests
+---------------
+
+The client offers a few options for making API requests.
+High level functions are available for each of the APIs for convenience.
+If your application would prefer to interact with the APIs at a lower level,
+you may elect to use the general purpose request method or one of the http method aliases built around it.
+
+.. code-block:: python
+
+    # a low level "request" method is available that allows you to have more control over the construction of the API request
+    pd.request('/activities', method='get')
+
+    pd.request('/eligibility/', method='post', data={
+        "member": {
+            "birth_date": "1970-01-01",
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "id": "W000000000"
+        },
+        "trading_partner_id": "MOCKPAYER"
+    })
+
+    # Convenience methods are available for the commonly used http methods built around the request method
+    pd.get('/activities')
+
+    pd.post('/eligibility/', data={
+        "member": {
+            "birth_date": "1970-01-01",
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "id": "W000000000"
+        },
+        "trading_partner_id": "MOCKPAYER"
+    })
+
+    # higher level functions are also available to access the APIs
+    pd.activities()
+
+    pd.eligibility({
+        "member": {
+            "birth_date": "1970-01-01",
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "id": "W000000000"
+        },
+        "trading_partner_id": "MOCKPAYER"
+    })
 
 
 Authentication and Authorization
@@ -459,6 +513,7 @@ This library aims to support and is tested against these Python versions:
 * 2.6.9
 * 2.7.6
 * 3.4.0
+* 3.5.0
 * PyPy
 
 You may have luck with other interpreters - let us know how it goes.
@@ -473,7 +528,7 @@ Copyright (c) 2014 PokitDok, Inc.  See LICENSE_ for details.
 .. _PyPI: https://pypi.python.org/pypi
 .. _pip: https://pypi.python.org/pypi/pip
 .. _LICENSE: LICENSE.txt
-.. _IPython: http://ipython.org/
+.. _Jupyter: http://jupyter.org/
 .. _notebook: notebooks/PlatformQuickStartDemo.ipynb
 
 .. |version| image:: https://badge.fury.io/py/pokitdok.svg
