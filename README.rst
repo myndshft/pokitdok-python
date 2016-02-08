@@ -238,6 +238,10 @@ The Quick Start Guide is also available as a Jupyter_ notebook_.
     #retrieve insurance plan information.  For example, EPO plans in Texas.
     pd.plans(state='TX', plan_type='EPO')
 
+    #look up medical procedure code information
+    pd.mpc(code='99213')
+    pd.mpc(name='office')
+
     #lookup a diagnosis mapping for the specified ICD-9 code
     pd.icd_convert('250.12')
 
