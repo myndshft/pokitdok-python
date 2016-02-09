@@ -171,7 +171,7 @@ License
 
 Copyright (c) 2014 PokitDok, Inc.  See LICENSE_ for details.
 
-.. _documentation: https://platform.pokitdok.com
+.. _documentation: https://platform.pokitdok.com/documentation/v4/?python#
 .. _issues: https://github.com/pokitdok/pokitdok-python/issues
 .. _PyPI: https://pypi.python.org/pypi
 .. _pip: https://pypi.python.org/pypi/pip
