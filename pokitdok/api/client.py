@@ -436,10 +436,10 @@ class PokitDokClient(object):
             :param historical_version: The historical version id. Used to return a historical identity record
             :return: history result (list)
         """
-        identity_url = "{0}/identity/{1}".format(self.url_base, str(identity_uuid))
+        identity_url = "{0}/identity/{1}/history".format(self.url_base, str(identity_uuid))
 
         if historical_version is not None:
-            identity_url = "{0}/history/{1}".format(identity_url, historical_version)
+            identity_url = "{0}/{1}".format(identity_url, historical_version)
 
         return self.api_client.get(identity_url, headers=self.base_headers).json()
 

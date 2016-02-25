@@ -22,7 +22,7 @@ from setuptools import setup
 
 setup(
     name="pokitdok",
-    version="1.5",
+    version="1.6",
     license="MIT",
     author="PokitDok, Inc.",
     author_email="platform@pokitdok.com",
