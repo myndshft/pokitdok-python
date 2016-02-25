@@ -27,7 +27,7 @@ setup(
     author="PokitDok, Inc.",
     author_email="platform@pokitdok.com",
     url="https://platform.pokitdok.com",
-    download_url='https://github.com/pokitdok/pokitdok-python/tarball/1.5',
+    download_url='https://github.com/pokitdok/pokitdok-python/tarball/1.6',
     description="PokitDok Platform API Client",
     long_description=__doc__,
     packages=["pokitdok", "pokitdok.api"],
