@@ -259,7 +259,7 @@ class PokitDokClient(object):
         """
             List enrollment snapshots that are stored for the client application
         """
-        path = "/enrollment/snapshot{0}".format('/{}'.format(snapshot_id) if snapshot_id else '')
+        path = "/enrollment/snapshot{0}".format('/{0}'.format(snapshot_id) if snapshot_id else '')
         return self.get(path, **kwargs)
 
     def enrollment_snapshot_data(self, snapshot_id, **kwargs):

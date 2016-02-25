@@ -1,12 +1,13 @@
 from __future__ import absolute_import
 
 import pokitdok
-import nose.tools
-from httmock import urlmatch, HTTMock, response, all_requests
+from httmock import urlmatch, HTTMock, response
 import datetime
 import json
 import tests
 import copy
+from unittest import TestCase
+import requests
 
 
 class TestAPIClient(object):
@@ -14,18 +15,26 @@ class TestAPIClient(object):
     Validates that PokitDok API client requests are well formed.
     Httmock (https://pypi.python.org/pypi/httmock/) is used to provide mock HTTP responses.
     """
+    ASSERTION_EQ_MSG = 'Expected {} != Actual {}'
+    BASE_HEADERS = {
+        'User-Agent': 'python-pokitdok/{0} {1}'.format(pokitdok.__version__, requests.utils.default_user_agent())
+    }
     BASE_URL = 'https://platform.pokitdok.com/v4/api'
     CLIENT_ID = 'F7q38MzlwOxUwTHb7jvk'
     CLIENT_SECRET = 'O8DRamKmKMLtSTPjK99eUlbfOQEc44VVmp8ARmcY'
+    JSON_HEADERS = {
+        'User-Agent': 'python-pokitdok/{0} {1}'.format(pokitdok.__version__, requests.utils.default_user_agent()),
+        'Content-type': 'application/json',
+    }
     MATCH_NETWORK_LOCATION = r'(.*\.)?pokitdok\.com'
     MATCH_OAUTH2_PATH = r'[/]oauth2[/]token'
     TEST_REQUEST_PATH = '/endpoint'
 
     def __init__(self):
         """
-            Defines test case attributes
-            - pd_client: The PokitDok API client instance
-            - current_request: The generated requests request object for the current test
+            Defines instance attributes used in test cases
+            - pd_client = PokitDok API client instance
+            - current_request = The requests request object for the current test case request
         """
         self.pd_client = None
         self.current_request = None
@@ -84,8 +93,9 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_oauth2_token):
             self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET)
-            nose.tools.assert_is_not_none(self.pd_client.api_client)
-            nose.tools.assert_is_not_none(self.pd_client.api_client.token)
+
+        assert self.pd_client.api_client is not None
+        assert self.pd_client.api_client.token is not None
 
     def test_request_post(self):
         """
@@ -94,8 +104,14 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             self.pd_client.request(self.TEST_REQUEST_PATH, method='post', data={'param': 'value'})
-            nose.tools.assert_dict_contains_subset(self.pd_client.json_headers, self.current_request.headers)
-            nose.tools.assert_equal(self.current_request.method, 'POST')
+
+        for k, v in self.JSON_HEADERS.items():
+            assert k in self.current_request.headers
+
+            actual_value = self.current_request.headers[k]
+            assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
+
+        assert 'POST' == self.current_request.method
 
     def test_request_get(self):
         """
@@ -104,8 +120,14 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             self.pd_client.request(self.TEST_REQUEST_PATH, method='get')
-            nose.tools.assert_dict_contains_subset(self.pd_client.base_headers, self.current_request.headers)
-            nose.tools.assert_equal(self.current_request.method, 'GET')
+
+        for k, v in self.BASE_HEADERS.items():
+            assert k in self.current_request.headers
+
+            actual_value = self.current_request.headers[k]
+            assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
+
+        assert 'GET' == self.current_request.method
 
     def test_get(self):
         """
@@ -114,8 +136,14 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             self.pd_client.get(self.TEST_REQUEST_PATH)
-            nose.tools.assert_dict_contains_subset(self.pd_client.base_headers, self.current_request.headers)
-            nose.tools.assert_equal(self.current_request.method, 'GET')
+
+        for k, v in self.BASE_HEADERS.items():
+            assert k in self.current_request.headers
+
+            actual_value = self.current_request.headers[k]
+            assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
+
+        assert 'GET' == self.current_request.method
 
     def test_post(self):
         """
@@ -124,8 +152,14 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             self.pd_client.post(self.TEST_REQUEST_PATH, data={'field': 'value'})
-            nose.tools.assert_dict_contains_subset(self.pd_client.json_headers, self.current_request.headers)
-            nose.tools.assert_equal(self.current_request.method, 'POST')
+
+        for k, v in self.JSON_HEADERS.items():
+            assert k in self.current_request.headers
+
+            actual_value = self.current_request.headers[k]
+            assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
+
+        assert 'POST' == self.current_request.method
 
     def test_put(self):
         """
@@ -135,8 +169,14 @@ class TestAPIClient(object):
         with HTTMock(self.mock_api_response):
             url = '{0}/{1}'.format(self.TEST_REQUEST_PATH, 123456)
             self.pd_client.put(url, data={'first_name': 'Oscar', 'last_name': 'Whitmire'})
-            nose.tools.assert_dict_contains_subset(self.pd_client.json_headers, self.current_request.headers)
-            nose.tools.assert_equal(self.current_request.method, 'PUT')
+
+        for k, v in self.JSON_HEADERS.items():
+            assert k in self.current_request.headers
+
+            actual_value = self.current_request.headers[k]
+            assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
+
+        assert 'PUT' == self.current_request.method
 
     def test_delete(self):
         """
@@ -146,8 +186,14 @@ class TestAPIClient(object):
         with HTTMock(self.mock_api_response):
             url = '{0}/{1}'.format(self.TEST_REQUEST_PATH, 123456)
             self.pd_client.delete(url)
-            nose.tools.assert_dict_contains_subset(self.pd_client.base_headers, self.current_request.headers)
-            nose.tools.assert_equal(self.current_request.method, 'DELETE')
+
+        for k, v in self.BASE_HEADERS.items():
+            assert k in self.current_request.headers
+
+            actual_value = self.current_request.headers[k]
+            assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
+
+        assert 'DELETE' == self.current_request.method
 
     def test_activities(self):
         """
@@ -155,7 +201,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.activities()
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None
 
     def test_activities_with_activity_id(self):
         """
@@ -163,7 +209,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.activities('activity_id')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_cash_prices(self):
         """
@@ -171,7 +217,7 @@ class TestAPIClient(object):
 \        """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.cash_prices(zip_code='94101', cpt_code='95017')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_ccd(self):
         """
@@ -180,7 +226,7 @@ class TestAPIClient(object):
         with HTTMock(self.mock_api_response):
             ccd_request = {'trading_partner_id': 'MOCKPAYER'}
             mocked_response = self.pd_client.ccd(ccd_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_claims(self):
         """
@@ -188,7 +234,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.claims(tests.claim_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_claims_status(self):
         """
@@ -196,7 +242,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.claims_status(tests.claim_status_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None
 
     def test_mpc_code_lookup(self):
         """
@@ -204,7 +250,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.mpc(code='99213')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None
 
     def test_mpc_query(self):
         """
@@ -212,7 +258,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.mpc(name='office')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_icd_convert(self):
         """
@@ -220,7 +266,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.icd_convert(code='250.12')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_claims_convert(self):
         """
@@ -228,7 +274,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.icd_convert(tests.claims_convert_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_eligibility(self):
         """
@@ -236,7 +282,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.eligibility(tests.eligibility_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_enrollment(self):
         """
@@ -244,7 +290,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.enrollment(tests.enrollment_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_enrollment_snapshot(self):
         """
@@ -252,7 +298,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.enrollment_snapshot(**tests.enrollment_snapshot_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_enrollment_snapshots(self):
         """
@@ -260,7 +306,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.enrollment_snapshots(snapshot_id='12345')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_enrollment_snapshot_data(self):
         """
@@ -268,7 +314,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.enrollment_snapshot_data(snapshot_id='12345')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_files(self):
         """
@@ -276,7 +322,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.files(**tests.files_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_insurance_prices(self):
         """
@@ -284,7 +330,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.insurance_prices(cpt_code='87799', zip_code='32218')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_payers(self):
         """
@@ -292,7 +338,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.payers()
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_plans(self):
         """
@@ -300,7 +346,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.plans()
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_plans_by_state_type(self):
         """
@@ -308,7 +354,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.plans(state='SC', type='PPO')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_providers_npi(self):
         """
@@ -316,7 +362,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.providers(npi='1467560003')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_providers_search(self):
         """
@@ -326,7 +372,7 @@ class TestAPIClient(object):
             mocked_response = self.pd_client.providers(zipcode='29307',
                                                        specialty='rheumatology',
                                                        radius='20mi')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_trading_partners(self):
         """
@@ -334,7 +380,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.trading_partners()
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_trading_partners_trading_partner_id(self):
         """
@@ -342,7 +388,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.trading_partners(trading_partner_id='MOCKPAYER')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_referrals(self):
         """
@@ -350,7 +396,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.referrals(tests.referrals_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_authorizations(self):
         """
@@ -358,7 +404,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.authorizations(tests.authorization_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_schedulers(self):
         """
@@ -366,7 +412,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.schedulers()
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_schedulers_with_scheduler_uuid(self):
         """
@@ -374,7 +420,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.schedulers(scheduler_uuid='967d207f-b024-41cc-8cac-89575a1f6fef')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_appointment_types(self):
         """
@@ -382,15 +428,16 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.appointment_types()
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_appointment_types_with_appointment_type_uuid(self):
         """
             Tests PokitDok.schedulers lookup for a specific resource
         """
         with HTTMock(self.mock_api_response):
-            mocked_response = self.pd_client.appointment_types(appointment_type_uuid='ef987693-0a19-447f-814d-f8f3abbf4860')
-            nose.tools.assert_is_not_none(mocked_response)
+            mocked_response = self.pd_client.appointment_types(
+                appointment_type_uuid='ef987693-0a19-447f-814d-f8f3abbf4860')
+        assert mocked_response is not None 
 
     def test_schedule_slots(self):
         """
@@ -399,7 +446,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.schedule_slots(tests.slot_create_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_appointments_with_appointment_uuid(self):
         """
@@ -407,7 +454,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.appointments(appointment_uuid='ef987691-0a19-447f-814d-f8f3abbf4859')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_appointments_with_search(self):
         """
@@ -420,7 +467,7 @@ class TestAPIClient(object):
                 'end_date': datetime.date(2016, month=1, day=20),
             }
             mocked_response = self.pd_client.appointments(**search_criteria)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_book_appointment(self):
         """
@@ -429,7 +476,7 @@ class TestAPIClient(object):
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.book_appointment('ef987691-0a19-447f-814d-f8f3abbf4859',
                                                               tests.appointment_book_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_cancel_appointment(self):
         """
@@ -437,7 +484,7 @@ class TestAPIClient(object):
 \        """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.cancel_appointment(appointment_uuid='ef987691-0a19-447f-814d-f8f3abbf4859')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_create_identity(self):
         """
@@ -445,7 +492,7 @@ class TestAPIClient(object):
 \        """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.create_identity(tests.identity_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_identity_with_uuid(self):
         """
@@ -453,7 +500,7 @@ class TestAPIClient(object):
 \        """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.identity(identity_uuid='881bc095-2068-43cb-9783-cce63036412')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_identity_search(self):
         """
@@ -461,7 +508,7 @@ class TestAPIClient(object):
 \        """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.identity(first_name='Oscar', last_name='Whitmire')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_update_identity(self):
         """
@@ -473,16 +520,15 @@ class TestAPIClient(object):
 
             mocked_response = self.pd_client.update_identity(identity_uuid='881bc095-2068-43cb-9783-cce63036412',
                                                              identity_request=updated_request)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_identity_history_with_uuid(self):
         """
             Tests PokitDok.identity_history lookup to return a change summary for a specific resource
         """
         with HTTMock(self.mock_api_response):
-
             mocked_response = self.pd_client.identity_history(identity_uuid='881bc095-2068-43cb-9783-cce63036412')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_identity_history_with_uuid_version(self):
         """
@@ -491,7 +537,7 @@ class TestAPIClient(object):
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.identity_history(identity_uuid='881bc095-2068-43cb-9783-cce63036412',
                                                               historical_version=1)
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_pharmacy_plans(self):
         """
@@ -499,7 +545,7 @@ class TestAPIClient(object):
         """
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.pharmacy_plans(trading_partner_id='MOCKPAYER', plan_number='S5820003')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
 
     def test_pharmacy_formulary(self):
         """
@@ -508,4 +554,4 @@ class TestAPIClient(object):
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.pharmacy_formulary(trading_partner_id='MOCKPAYER', plan_number='S5820003',
                                                                 ndc='59310-579-22')
-            nose.tools.assert_is_not_none(mocked_response)
+        assert mocked_response is not None 
