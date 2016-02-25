@@ -427,6 +427,22 @@ class PokitDokClient(object):
         path = "/identity{0}".format('/{0}'.format(identity_uuid) if identity_uuid else '')
         return self.get(path, **kwargs)
 
+    def identity_history(self, identity_uuid, historical_version=None):
+        """
+            Queries for an identity record's history.
+            Returns a history summary including the insert date and version number or a specific record version, if
+            the historical_version argument is provided.
+            :param identity_uuid: The identity resource's uuid.
+            :param historical_version: The historical version id. Used to return a historical identity record
+            :return: history result (list)
+        """
+        identity_url = "{0}/identity/{1}".format(self.url_base, str(identity_uuid))
+
+        if historical_version is not None:
+            identity_url = "{0}/history/{1}".format(identity_url, historical_version)
+
+        return self.api_client.get(identity_url, headers=self.base_headers).json()
+
     def pharmacy_plans(self, **kwargs):
         """
             Search drug plan information by trading partner and various plan identifiers

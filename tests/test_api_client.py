@@ -1,407 +1,149 @@
 from __future__ import absolute_import
 
-import os
 import pokitdok
-from unittest import TestCase
-import vcr
-
-# Fake client id/secret for local testing
-CLIENT_ID = 'F7q38MzlwOxUwTHb7jvk'
-CLIENT_SECRET = 'O8DRamKmKMLtSTPjK99eUlbfOQEc44VVmp8ARmcY'
-BASE_URL = 'http://localhost:5002'
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-
-pd_vcr = vcr.VCR(
-    cassette_library_dir='tests/fixtures/vcr_cassettes',
-    record_mode='once',
-    filter_headers=['authorization']
-)
+import nose.tools
+from httmock import urlmatch, HTTMock, response, all_requests
+import datetime
+import json
+import requests
 
 
-class TestAPIClient(TestCase):
+class TestAPIClient(object):
+    """
+    Validates that PokitDok API client requests are well formed.
+    Httmock (https://pypi.python.org/pypi/httmock/) is used to provide mock HTTP responses.
+    """
+    BASE_URL = 'https://platform.pokitdok.com/v4/api'
+    CLIENT_ID = 'F7q38MzlwOxUwTHb7jvk'
+    CLIENT_SECRET = 'O8DRamKmKMLtSTPjK99eUlbfOQEc44VVmp8ARmcY'
+    MATCH_NETWORK_LOCATION = r'(.*\.)?pokitdok\.com'
+    MATCH_OAUTH2_PATH = r'[/]oauth2[/]token'
+    TEST_REQUEST_PATH = '/endpoint'
+
+    def __init__(self):
+        """
+            Defines test case attributes
+            - pd_client: The PokitDok API client instance
+            - current_request: The generated requests request object for the current test
+        """
+        self.pd_client = None
+        self.current_request = None
+
+    @urlmatch(netloc=MATCH_NETWORK_LOCATION, path=MATCH_OAUTH2_PATH, method='POST')
+    def mock_oauth2_token(self, url, request):
+        """
+            Returns a mocked OAuth2 token response
+            :param url: The request url
+            :param request: The requests request object
+            :return: mocked OAuth2 token response
+        """
+        headers = {
+            'Server': 'nginx',
+            'Date': datetime.datetime.utcnow(),
+            'Content-type': 'application/json;charset=UTF-8',
+            'Connection': 'keep-alive',
+            'Pragma': 'no-cache',
+            'Cache-Control': 'no-store'
+        }
+
+        content = {
+            'access_token': 's8KYRJGTO0rWMy0zz1CCSCwsSesDyDlbNdZoRqVR',
+            'token_type': 'bearer',
+            'expires': 1393350569,
+            'expires_in': 3600
+        }
+
+        headers['Content-Length'] = len(json.dumps(content))
+
+        return response(status_code=200, content=content, headers=headers, request=request)
+
+    @urlmatch(netloc=MATCH_NETWORK_LOCATION)
+    def mock_api_response(self, url, request):
+        """
+            Processes an incoming API request and returns a mocked response.
+            The incoming API request is cached and made available to tests.
+            :param url: The request url
+            :param request: The requests request object
+            :return: 200 status code response with an empty content body {}
+        """
+        self.current_request = request
+        return response(status_code=200, content={}, request=request)
+
     def setUp(self):
-        with pd_vcr.use_cassette('access_token.yml'):
-            self.pd = pokitdok.api.connect(CLIENT_ID, CLIENT_SECRET, base=BASE_URL)
-            assert isinstance(self.pd, pokitdok.api.PokitDokClient)
+        """
+            Creates a new PokitDok client instance
+        """
+        with HTTMock(self.mock_oauth2_token):
+            self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET)
 
-    def test_activities(self):
-        with pd_vcr.use_cassette('activities.yml'):
-            activities_response = self.pd.activities()
-            assert "meta" in activities_response
-            assert "data" in activities_response
+    def test_connect(self):
+        """
+            Tests pokitdok.api.connect (PokitDok.__init__())
+            Validates that the API client is instantiated and has an access token.
+        """
+        with HTTMock(self.mock_oauth2_token):
+            self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET)
+            nose.tools.assert_is_not_none(self.pd_client.api_client)
+            nose.tools.assert_is_not_none(self.pd_client.api_client.token)
 
-    def test_eligibility(self):
-        with pd_vcr.use_cassette('eligibility.yml'):
-            eligibility_response = self.pd.eligibility({
-                "member": {
-                    "birth_date": "1970-01-01",
-                    "first_name": "Jane",
-                    "last_name": "Doe",
-                    "id": "W000000000"
-                },
-                "provider": {
-                    "first_name": "JEROME",
-                    "last_name": "AYA-AY",
-                    "npi": "1467560003"
-                },
-                "service_types": ["health_benefit_plan_coverage"],
-                "trading_partner_id": "MOCKPAYER"
-            })
-            assert "meta" in eligibility_response
-            assert "data" in eligibility_response
-            assert len(eligibility_response['data']['coverage']['deductibles']) == 8
+    def test_request_post(self):
+        """
+            Tests the PokitDok.request convenience method with a POST request.
+            Validates that the requests request is configured correctly and has the appropriate headers.
+        """
+        with HTTMock(self.mock_api_response):
+            self.pd_client.request(self.TEST_REQUEST_PATH, method='post', data={'param': 'value'})
+            nose.tools.assert_dict_contains_subset(self.pd_client.json_headers, self.current_request.headers)
+            nose.tools.assert_equal(self.current_request.method, 'POST')
 
-    def test_payers(self):
-        with pd_vcr.use_cassette('payers.yml'):
-            payers_response = self.pd.payers()
-            assert "meta" in payers_response
-            assert "data" in payers_response
-            for payer in payers_response['data']:
-                assert 'trading_partner_id' in payer
+    def test_request_get(self):
+        """
+            Tests the PokitDok.request convenience method with a GET request.
+            Validates that the requests request is configured correctly and has the appropriate headers.
+        """
+        with HTTMock(self.mock_api_response):
+            self.pd_client.request(self.TEST_REQUEST_PATH, method='get')
+            nose.tools.assert_dict_contains_subset(self.pd_client.base_headers, self.current_request.headers)
+            nose.tools.assert_equal(self.current_request.method, 'GET')
 
-    def test_plans(self):
-        with pd_vcr.use_cassette('plans.yml'):
-            plans_response = self.pd.plans(state='TX', plan_type='EPO')
-            assert "meta" in plans_response
-            assert "data" in plans_response
-            for plan in plans_response['data']:
-                assert plan['state'] == 'TX'
-                assert plan['plan_type'] == 'EPO'
-                assert 'trading_partner_id' in plan
+    def test_get(self):
+        """
+            Tests the PokitDok.get convenience method.
+            Validates that the requests request is configured correctly and has the appropriate headers.
+        """
+        with HTTMock(self.mock_api_response):
+            self.pd_client.get(self.TEST_REQUEST_PATH)
+            nose.tools.assert_dict_contains_subset(self.pd_client.base_headers, self.current_request.headers)
+            nose.tools.assert_equal(self.current_request.method, 'GET')
 
-    def test_providers_with_id(self):
-        with pd_vcr.use_cassette('providers_id.yml'):
-            providers_response = self.pd.providers(npi='1467560003')
-            assert "meta" in providers_response
-            assert "data" in providers_response
-            assert providers_response['data']['provider']['last_name'] == 'Aya-Ay'
+    def test_post(self):
+        """
+            Tests the PokitDok.post convenience method.
+            Validates that the requests request is configured correctly and has the appropriate headers.
+        """
+        with HTTMock(self.mock_api_response):
+            self.pd_client.post(self.TEST_REQUEST_PATH, data={'field': 'value'})
+            nose.tools.assert_dict_contains_subset(self.pd_client.json_headers, self.current_request.headers)
+            nose.tools.assert_equal(self.current_request.method, 'POST')
 
-    def test_cash_prices_zip_and_cpt(self):
-        with pd_vcr.use_cassette('cash_prices_zip_cpt.yml'):
-            prices_response = self.pd.cash_prices(zip_code='94101', cpt_code='95017')
-            assert "meta" in prices_response
-            assert "data" in prices_response
-            assert prices_response['data'] == [
-                {
-                    'high_price': 360.31361174114414,
-                    'cpt_code': '95017',
-                    'standard_deviation': 34.675643655574696,
-                    'average_price': 252.81713105618505,
-                    'geo_zip_area': '941',
-                    'low_price': 191.62438301874772,
-                    'median_price': 239.97487499999997
-                }
-            ]
+    def test_put(self):
+        """
+            Tests the PokitDok.put convenience method.
+            Validates that the requests request is configured correctly and has the appropriate headers.
+        """
+        with HTTMock(self.mock_api_response):
+            url = '{0}/{1}'.format(self.TEST_REQUEST_PATH, 123456)
+            self.pd_client.put(url, data={'first_name': 'Oscar', 'last_name': 'Whitmire'})
+            nose.tools.assert_dict_contains_subset(self.pd_client.json_headers, self.current_request.headers)
+            nose.tools.assert_equal(self.current_request.method, 'PUT')
 
-    def test_insurance_prices_zip_and_cpt(self):
-        with pd_vcr.use_cassette('insurance_prices_zip_cpt.yml'):
-            prices_response = self.pd.insurance_prices(zip_code='94101', cpt_code='95017')
-            assert "meta" in prices_response
-            assert "data" in prices_response
-            assert prices_response['data'] == {
-                'amounts': [
-                    {
-                        'high_price': 184.38,
-                        'standard_deviation': 32.65176094715261,
-                        'average_price': 129.21099999999998,
-                        'payer_type': 'insurance',
-                        'payment_type': 'allowed',
-                        'low_price': 112.07,
-                        'median_price': 112.27
-                    },
-                    {
-                        'high_price': 343.79,
-                        'standard_deviation': 47.486112986324756,
-                        'average_price': 189.23299999999998,
-                        'payer_type': 'insurance',
-                        'payment_type': 'submitted',
-                        'low_price': 154.41,
-                        'median_price': 191.61
-                    }
-                ],
-                'cpt_code': '95017',
-                'geo_zip_area': '941'
-            }
-
-    def test_claim_status(self):
-        with pd_vcr.use_cassette('claim_status.yml'):
-            claim_status_response = self.pd.claims_status({
-                "patient": {
-                    "birth_date": "1970-01-01",
-                    "first_name": "Jane",
-                    "last_name": "Doe",
-                    "id": "W000000000"
-                },
-                "provider": {
-                    "first_name": "JEROME",
-                    "last_name": "AYA-AY",
-                    "npi": "1467560003"
-                },
-                "service_date": "2014-01-01",
-                "trading_partner_id": "MOCKPAYER"
-            })
-            assert "meta" in claim_status_response
-            assert "data" in claim_status_response
-            assert claim_status_response['data']['patient'] == {
-                'claims': [
-                    {
-                        'applied_to_deductible': False,
-                        'total_claim_amount': {'currency': 'USD', 'amount': '150'},
-                        'service_end_date': '2014-01-01',
-                        'claim_control_number': 'E1TWCYYMF00',
-                        'check_number': '08608-035632423',
-                        'claim_payment_amount': {'currency': 'USD', 'amount': '125'},
-                        'adjudication_finalized_date': '2014-03-21',
-                        'tracking_id': 'E1TWCYYMF',
-                        'services': [
-                            {
-                                'cpt_code': '99214',
-                                'service_end_date': '2014-03-05',
-                                'payment_amount': {'currency': 'USD', 'amount': '125'},
-                                'charge_amount': {'currency': 'USD', 'amount': '150'},
-                                'service_date': '2014-03-05',
-                                'statuses': [
-                                    {
-                                        'status_code': 'Processed according to contract provisions (Contract refers to provisions that exist between the Health Plan and a Provider of Health Care Services)',
-                                        'status_effective_date': '2014-04-24',
-                                        'status_category': 'Finalized/Payment-The claim/line has been paid.'
-                                    }
-                                ]
-                            }
-                        ],
-                        'remittance_date': '2014-04-09',
-                        'service_date': '2014-01-01',
-                        'statuses': [
-                            {
-                                'total_claim_amount': {'currency': 'USD', 'amount': '150'},
-                                'status_category': 'Finalized/Payment-The claim/line has been paid.',
-                                'status_code': 'Processed according to contract provisions (Contract refers to provisions that exist between the Health Plan and a Provider of Health Care Services)',
-                                'claim_payment_amount': {'currency': 'USD', 'amount': '125'},
-                                'adjudication_finalized_date': '2014-03-21',
-                                'remittance_date': '2014-04-09',
-                                'check_number': '08608-035632423',
-                                'status_effective_date': '2014-04-24'
-                            }
-                        ]
-                    }
-                ]
-            }
-
-    def test_trading_partners(self):
-        with pd_vcr.use_cassette('trading_partners.yml'):
-            trading_partner_response = self.pd.trading_partners("aetna")
-            assert "meta" in trading_partner_response
-            assert "data" in trading_partner_response
-            assert trading_partner_response['data'].get('id') == "aetna"
-            assert trading_partner_response['data'].get('name') == "Aetna"
-
-    def test_referrals(self):
-        with pd_vcr.use_cassette('referrals.yml'):
-            response = self.pd.referrals({
-                "event": {
-                    "category": "specialty_care_review",
-                    "certification_type": "initial",
-                    "delivery": {
-                        "quantity": 1,
-                        "quantity_qualifier": "visits"
-                    },
-                    "diagnoses": [
-                        {
-                            "code": "384.20",
-                            "date": "2014-09-30"
-                        }
-                    ],
-                    "place_of_service": "office",
-                    "provider": {
-                        "first_name": "JOHN",
-                        "npi": "1154387751",
-                        "last_name": "FOSTER",
-                        "phone": "8645822900"
-                    },
-                    "type": "consultation"
-                },
-                "patient": {
-                    "birth_date": "1970-01-01",
-                    "first_name": "JANE",
-                    "last_name": "DOE",
-                    "id": "1234567890"
-                },
-                "provider": {
-                    "first_name": "CHRISTINA",
-                    "last_name": "BERTOLAMI",
-                    "npi": "1619131232"
-                },
-                "trading_partner_id": "MOCKPAYER"
-            })
-            assert "meta" in response
-            assert "data" in response
-            assert response['data']['event']['review']['certification_number'] == 'AUTH0001'
-            assert response['data']['event']['review']['certification_action'] == 'certified_in_total'
-
-    def test_authorizations(self):
-        with pd_vcr.use_cassette('authorizations.yml'):
-            response = self.pd.authorizations({
-                "event": {
-                    "category": "health_services_review",
-                    "certification_type": "initial",
-                    "delivery": {
-                        "quantity": 1,
-                        "quantity_qualifier": "visits"
-                    },
-                    "diagnoses": [
-                        {
-                            "code": "789.00",
-                            "date": "2014-10-01"
-                        }
-                    ],
-                    "place_of_service": "office",
-                    "provider": {
-                        "organization_name": "KELLY ULTRASOUND CENTER, LLC",
-                        "npi": "1760779011",
-                        "phone": "8642341234"
-                    },
-                    "services": [
-                        {
-                            "cpt_code": "76700",
-                            "measurement": "unit",
-                            "quantity": 1
-                        }
-                    ],
-                    "type": "diagnostic_imaging"
-                },
-                "patient": {
-                    "birth_date": "1970-01-01",
-                    "first_name": "JANE",
-                    "last_name": "DOE",
-                    "id": "1234567890"
-                },
-                "provider": {
-                    "first_name": "JEROME",
-                    "npi": "1467560003",
-                    "last_name": "AYA-AY"
-                },
-                "trading_partner_id": "MOCKPAYER"
-            })
-            assert "meta" in response
-            assert "data" in response
-            assert response['data']['event']['review']['certification_number'] == 'AUTH0001'
-            assert response['data']['event']['review']['certification_action'] == 'certified_in_total'
-
-    def test_schedulers(self):
-        with pd_vcr.use_cassette('schedulers.yml'):
-            response = self.pd.schedulers()
-            assert "meta" in response
-            assert "data" in response
-
-    def test_appointments(self):
-        with pd_vcr.use_cassette('appointments.yml'):
-            response = self.pd.appointments()
-            assert "meta" in response
-            assert "data" in response
-
-    def test_appointment_types(self):
-        with pd_vcr.use_cassette('appointment_types.yml'):
-            response = self.pd.appointment_types()
-            assert "meta" in response
-            assert "data" in response
-
-    def test_book_appointment(self):
-        with pd_vcr.use_cassette('book_appointment.yml'):
-            invalid_appointment_uuid = '0f4a6409-670c-4054-9f4a-1045766aaa79'
-            response = self.pd.book_appointment(invalid_appointment_uuid, {
-                "patient": {
-                    "_uuid": "500ef469-2767-4901-b705-425e9b6f7f83",
-                    "email": "john@johndoe.com",
-                    "phone": "800-555-1212",
-                    "birth_date": "1970-01-01",
-                    "first_name": "John",
-                    "last_name": "Doe",
-                    "member_id": "M000001"
-                },
-                "description": "Welcome to M0d3rN Healthcare"
-            })
-            assert "meta" in response
-            assert "data" in response
-
-    def test_identity_get_uuid(self):
-        with pd_vcr.use_cassette('identity-uuid.yml'):
-            identity_uuid = '881bc095-2068-43cb-9783-cce630364122'
-            response = self.pd.identity(identity_uuid)
-            assert "meta" in response
-            assert "data" in response
-
-    def test_identity_get_params(self):
-        with pd_vcr.use_cassette('identity-params.yml'):
-            params = {
-                "first_name": "Peg",
-                "last_name": "PokitDok",
-                "gender": "female",
-                "prefix": "Ms."
-            }
-            response = self.pd.identity(**params)
-            assert "meta" in response
-            assert "data" in response
-
-    def test_create_identity(self):
-        with pd_vcr.use_cassette('create-identity.yml'):
-            identity_resource = {
-                "prefix": "Ms",
-                "first_name": "Peg",
-                "last_name": "PokitDok",
-                "gender": "female",
-                "birth_date": "1991-05-19",
-                "email": "peggy@pokitdok.com",
-                "address": {
-                    "address_lines": ["1542 Anywhere Avenue"],
-                    "city": "Charleston",
-                    "state": "SC",
-                    "zipcode": "29407"
-                },
-                "identifiers": [
-                    {
-                        "location": [
-                                        -80.0406,
-                                        32.8986
-                                    ],
-                        "provider_uuid": "74850f65-6bb7-48e1-9fcb-bc98c8dda2ba",
-                        "system_uuid": "967d207f-b024-41cc-8cac-89575a1f6fef",
-                        "value": "W90100-IG-88"
-                    }
-                ]
-            }
-            response = self.pd.create_identity(identity_resource)
-            assert "meta" in response
-            assert "data" in response
-
-    def test_update_identity(self):
-        with pd_vcr.use_cassette('update-identity.yml'):
-            identity_resource = {
-                "prefix": "Ms",
-                "first_name": "Peg",
-                "last_name": "PokitDok",
-                "gender": "female",
-                "birth_date": "1991-05-19",
-                "email": "peggy@pokitdok.com",
-                "address": {
-                    "address_lines": ["1542 Anywhere Avenue"],
-                    "city": "Charleston",
-                    "state": "SC",
-                    "zipcode": "29407"
-                },
-                "identifiers": [
-                    {
-                        "location": [
-                                        -80.0406,
-                                        32.8986
-                                    ],
-                        "provider_uuid": "74850f65-6bb7-48e1-9fcb-bc98c8dda2ba",
-                        "system_uuid": "967d207f-b024-41cc-8cac-89575a1f6fef",
-                        "value": "W90100-IG-88"
-                    }
-                ]
-            }
-
-            identity_uuid = '881bc095-2068-43cb-9783-cce630364122'
-            response = self.pd.update_identity(identity_uuid, identity_resource)
-            assert "meta" in response
-            assert "data" in response
+    def test_delete(self):
+        """
+            Tests the PokitDok.delete convenience method.
+            Validates that the requests request is configured correctly and has the appropriate headers.
+        """
+        with HTTMock(self.mock_api_response):
+            url = '{0}/{1}'.format(self.TEST_REQUEST_PATH, 123456)
+            self.pd_client.delete(url)
+            nose.tools.assert_dict_contains_subset(self.pd_client.base_headers, self.current_request.headers)
+            nose.tools.assert_equal(self.current_request.method, 'DELETE')
