@@ -1,407 +1,557 @@
 from __future__ import absolute_import
 
-import os
 import pokitdok
+from httmock import urlmatch, HTTMock, response
+import datetime
+import json
+import tests
+import copy
 from unittest import TestCase
-import vcr
-
-# Fake client id/secret for local testing
-CLIENT_ID = 'F7q38MzlwOxUwTHb7jvk'
-CLIENT_SECRET = 'O8DRamKmKMLtSTPjK99eUlbfOQEc44VVmp8ARmcY'
-BASE_URL = 'http://localhost:5002'
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-
-pd_vcr = vcr.VCR(
-    cassette_library_dir='tests/fixtures/vcr_cassettes',
-    record_mode='once',
-    filter_headers=['authorization']
-)
+import requests
 
 
-class TestAPIClient(TestCase):
+class TestAPIClient(object):
+    """
+    Validates that PokitDok API client requests are well formed.
+    Httmock (https://pypi.python.org/pypi/httmock/) is used to provide mock HTTP responses.
+    """
+    ASSERTION_EQ_MSG = 'Expected {} != Actual {}'
+    BASE_HEADERS = {
+        'User-Agent': 'python-pokitdok/{0} {1}'.format(pokitdok.__version__, requests.utils.default_user_agent())
+    }
+    BASE_URL = 'https://platform.pokitdok.com/v4/api'
+    CLIENT_ID = 'F7q38MzlwOxUwTHb7jvk'
+    CLIENT_SECRET = 'O8DRamKmKMLtSTPjK99eUlbfOQEc44VVmp8ARmcY'
+    JSON_HEADERS = {
+        'User-Agent': 'python-pokitdok/{0} {1}'.format(pokitdok.__version__, requests.utils.default_user_agent()),
+        'Content-type': 'application/json',
+    }
+    MATCH_NETWORK_LOCATION = r'(.*\.)?pokitdok\.com'
+    MATCH_OAUTH2_PATH = r'[/]oauth2[/]token'
+    TEST_REQUEST_PATH = '/endpoint'
+
+    def __init__(self):
+        """
+            Defines instance attributes used in test cases
+            - pd_client = PokitDok API client instance
+            - current_request = The requests request object for the current test case request
+        """
+        self.pd_client = None
+        self.current_request = None
+
+    @urlmatch(netloc=MATCH_NETWORK_LOCATION, path=MATCH_OAUTH2_PATH, method='POST')
+    def mock_oauth2_token(self, url, request):
+        """
+            Returns a mocked OAuth2 token response
+            :param url: The request url
+            :param request: The requests request object
+            :return: mocked OAuth2 token response
+        """
+        headers = {
+            'Server': 'nginx',
+            'Date': datetime.datetime.utcnow(),
+            'Content-type': 'application/json;charset=UTF-8',
+            'Connection': 'keep-alive',
+            'Pragma': 'no-cache',
+            'Cache-Control': 'no-store'
+        }
+
+        content = {
+            'access_token': 's8KYRJGTO0rWMy0zz1CCSCwsSesDyDlbNdZoRqVR',
+            'token_type': 'bearer',
+            'expires': 1393350569,
+            'expires_in': 3600
+        }
+
+        headers['Content-Length'] = len(json.dumps(content))
+
+        return response(status_code=200, content=content, headers=headers, request=request)
+
+    @urlmatch(netloc=MATCH_NETWORK_LOCATION)
+    def mock_api_response(self, url, request):
+        """
+            Processes an incoming API request and returns a mocked response.
+            The incoming API request is cached and made available to tests.
+            :param url: The request url
+            :param request: The requests request object
+            :return: 200 status code response with an empty content body {}
+        """
+        self.current_request = request
+        return response(status_code=200, content={}, request=request)
+
     def setUp(self):
-        with pd_vcr.use_cassette('access_token.yml'):
-            self.pd = pokitdok.api.connect(CLIENT_ID, CLIENT_SECRET, base=BASE_URL)
-            assert isinstance(self.pd, pokitdok.api.PokitDokClient)
+        """
+            Creates a new PokitDok client instance
+        """
+        with HTTMock(self.mock_oauth2_token):
+            self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET)
+
+    def test_connect(self):
+        """
+            Tests pokitdok.api.connect (PokitDok.__init__())
+            Validates that the API client is instantiated and has an access token.
+        """
+        with HTTMock(self.mock_oauth2_token):
+            self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET)
+
+        assert self.pd_client.api_client is not None
+        assert self.pd_client.api_client.token is not None
+
+    def test_request_post(self):
+        """
+            Tests the PokitDok.request convenience method with a POST request.
+            Validates that the requests request is configured correctly and has the appropriate headers.
+        """
+        with HTTMock(self.mock_api_response):
+            self.pd_client.request(self.TEST_REQUEST_PATH, method='post', data={'param': 'value'})
+
+        for k, v in self.JSON_HEADERS.items():
+            assert k in self.current_request.headers
+
+            actual_value = self.current_request.headers[k]
+            assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
+
+        assert 'POST' == self.current_request.method
+
+    def test_request_get(self):
+        """
+            Tests the PokitDok.request convenience method with a GET request.
+            Validates that the requests request is configured correctly and has the appropriate headers.
+        """
+        with HTTMock(self.mock_api_response):
+            self.pd_client.request(self.TEST_REQUEST_PATH, method='get')
+
+        for k, v in self.BASE_HEADERS.items():
+            assert k in self.current_request.headers
+
+            actual_value = self.current_request.headers[k]
+            assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
+
+        assert 'GET' == self.current_request.method
+
+    def test_get(self):
+        """
+            Tests the PokitDok.get convenience method.
+            Validates that the requests request is configured correctly and has the appropriate headers.
+        """
+        with HTTMock(self.mock_api_response):
+            self.pd_client.get(self.TEST_REQUEST_PATH)
+
+        for k, v in self.BASE_HEADERS.items():
+            assert k in self.current_request.headers
+
+            actual_value = self.current_request.headers[k]
+            assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
+
+        assert 'GET' == self.current_request.method
+
+    def test_post(self):
+        """
+            Tests the PokitDok.post convenience method.
+            Validates that the requests request is configured correctly and has the appropriate headers.
+        """
+        with HTTMock(self.mock_api_response):
+            self.pd_client.post(self.TEST_REQUEST_PATH, data={'field': 'value'})
+
+        for k, v in self.JSON_HEADERS.items():
+            assert k in self.current_request.headers
+
+            actual_value = self.current_request.headers[k]
+            assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
+
+        assert 'POST' == self.current_request.method
+
+    def test_put(self):
+        """
+            Tests the PokitDok.put convenience method.
+            Validates that the requests request is configured correctly and has the appropriate headers.
+        """
+        with HTTMock(self.mock_api_response):
+            url = '{0}/{1}'.format(self.TEST_REQUEST_PATH, 123456)
+            self.pd_client.put(url, data={'first_name': 'Oscar', 'last_name': 'Whitmire'})
+
+        for k, v in self.JSON_HEADERS.items():
+            assert k in self.current_request.headers
+
+            actual_value = self.current_request.headers[k]
+            assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
+
+        assert 'PUT' == self.current_request.method
+
+    def test_delete(self):
+        """
+            Tests the PokitDok.delete convenience method.
+            Validates that the requests request is configured correctly and has the appropriate headers.
+        """
+        with HTTMock(self.mock_api_response):
+            url = '{0}/{1}'.format(self.TEST_REQUEST_PATH, 123456)
+            self.pd_client.delete(url)
+
+        for k, v in self.BASE_HEADERS.items():
+            assert k in self.current_request.headers
+
+            actual_value = self.current_request.headers[k]
+            assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
+
+        assert 'DELETE' == self.current_request.method
 
     def test_activities(self):
-        with pd_vcr.use_cassette('activities.yml'):
-            activities_response = self.pd.activities()
-            assert "meta" in activities_response
-            assert "data" in activities_response
+        """
+            Tests PokitDok.activities.
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.activities()
+        assert mocked_response is not None
+
+    def test_activities_with_activity_id(self):
+        """
+            Tests PokitDok.activities with a specific activity id
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.activities('activity_id')
+        assert mocked_response is not None 
+
+    def test_cash_prices(self):
+        """
+            Tests PokitDok.cash_prices
+\        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.cash_prices(zip_code='94101', cpt_code='95017')
+        assert mocked_response is not None 
+
+    def test_ccd(self):
+        """
+            Tests PokitDok.ccd
+\        """
+        with HTTMock(self.mock_api_response):
+            ccd_request = {'trading_partner_id': 'MOCKPAYER'}
+            mocked_response = self.pd_client.ccd(ccd_request)
+        assert mocked_response is not None 
+
+    def test_claims(self):
+        """
+            Tests PokitDok.claims
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.claims(tests.claim_request)
+        assert mocked_response is not None 
+
+    def test_claims_status(self):
+        """
+            Tests PokitDok.claims_status
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.claims_status(tests.claim_status_request)
+        assert mocked_response is not None
+
+    def test_mpc_code_lookup(self):
+        """
+            Tests PokitDok.mpc (medical procedure code) lookup for a specific code
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.mpc(code='99213')
+        assert mocked_response is not None
+
+    def test_mpc_query(self):
+        """
+            Tests PokitDok.mpc (medical procedure code) query
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.mpc(name='office')
+        assert mocked_response is not None 
+
+    def test_icd_convert(self):
+        """
+            Tests PokitDok.icd_convert
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.icd_convert(code='250.12')
+        assert mocked_response is not None 
+
+    def test_claims_convert(self):
+        """
+            Tests PokitDok.claims_convert
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.icd_convert(tests.claims_convert_request)
+        assert mocked_response is not None 
 
     def test_eligibility(self):
-        with pd_vcr.use_cassette('eligibility.yml'):
-            eligibility_response = self.pd.eligibility({
-                "member": {
-                    "birth_date": "1970-01-01",
-                    "first_name": "Jane",
-                    "last_name": "Doe",
-                    "id": "W000000000"
-                },
-                "provider": {
-                    "first_name": "JEROME",
-                    "last_name": "AYA-AY",
-                    "npi": "1467560003"
-                },
-                "service_types": ["health_benefit_plan_coverage"],
-                "trading_partner_id": "MOCKPAYER"
-            })
-            assert "meta" in eligibility_response
-            assert "data" in eligibility_response
-            assert len(eligibility_response['data']['coverage']['deductibles']) == 8
+        """
+            Tests PokitDok.eligibility
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.eligibility(tests.eligibility_request)
+        assert mocked_response is not None 
+
+    def test_enrollment(self):
+        """
+            Tests PokitDok.enrollment
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.enrollment(tests.enrollment_request)
+        assert mocked_response is not None 
+
+    def test_enrollment_snapshot(self):
+        """
+            Tests PokitDok.enrollment_snapshot
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.enrollment_snapshot(**tests.enrollment_snapshot_request)
+        assert mocked_response is not None 
+
+    def test_enrollment_snapshots(self):
+        """
+            Tests PokitDok.enrollment_snapshots
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.enrollment_snapshots(snapshot_id='12345')
+        assert mocked_response is not None 
+
+    def test_enrollment_snapshot_data(self):
+        """
+            Tests PokitDok.enrollment_snapshot_data
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.enrollment_snapshot_data(snapshot_id='12345')
+        assert mocked_response is not None 
+
+    def test_files(self):
+        """
+            Tests PokitDok.files
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.files(**tests.files_request)
+        assert mocked_response is not None 
+
+    def test_insurance_prices(self):
+        """
+            Tests PokitDok.insurance_prices
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.insurance_prices(cpt_code='87799', zip_code='32218')
+        assert mocked_response is not None 
 
     def test_payers(self):
-        with pd_vcr.use_cassette('payers.yml'):
-            payers_response = self.pd.payers()
-            assert "meta" in payers_response
-            assert "data" in payers_response
-            for payer in payers_response['data']:
-                assert 'trading_partner_id' in payer
+        """
+            Tests PokitDok.payers
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.payers()
+        assert mocked_response is not None 
 
     def test_plans(self):
-        with pd_vcr.use_cassette('plans.yml'):
-            plans_response = self.pd.plans(state='TX', plan_type='EPO')
-            assert "meta" in plans_response
-            assert "data" in plans_response
-            for plan in plans_response['data']:
-                assert plan['state'] == 'TX'
-                assert plan['plan_type'] == 'EPO'
-                assert 'trading_partner_id' in plan
+        """
+            Tests PokitDok.plans
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.plans()
+        assert mocked_response is not None 
 
-    def test_providers_with_id(self):
-        with pd_vcr.use_cassette('providers_id.yml'):
-            providers_response = self.pd.providers(npi='1467560003')
-            assert "meta" in providers_response
-            assert "data" in providers_response
-            assert providers_response['data']['provider']['last_name'] == 'Aya-Ay'
+    def test_plans_by_state_type(self):
+        """
+            Tests PokitDok.plans lookup with state and plan type criteria
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.plans(state='SC', type='PPO')
+        assert mocked_response is not None 
 
-    def test_cash_prices_zip_and_cpt(self):
-        with pd_vcr.use_cassette('cash_prices_zip_cpt.yml'):
-            prices_response = self.pd.cash_prices(zip_code='94101', cpt_code='95017')
-            assert "meta" in prices_response
-            assert "data" in prices_response
-            assert prices_response['data'] == [
-                {
-                    'high_price': 360.31361174114414,
-                    'cpt_code': '95017',
-                    'standard_deviation': 34.675643655574696,
-                    'average_price': 252.81713105618505,
-                    'geo_zip_area': '941',
-                    'low_price': 191.62438301874772,
-                    'median_price': 239.97487499999997
-                }
-            ]
+    def test_providers_npi(self):
+        """
+            Tests PokitDok.providers lookup by NPI
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.providers(npi='1467560003')
+        assert mocked_response is not None 
 
-    def test_insurance_prices_zip_and_cpt(self):
-        with pd_vcr.use_cassette('insurance_prices_zip_cpt.yml'):
-            prices_response = self.pd.insurance_prices(zip_code='94101', cpt_code='95017')
-            assert "meta" in prices_response
-            assert "data" in prices_response
-            assert prices_response['data'] == {
-                'amounts': [
-                    {
-                        'high_price': 184.38,
-                        'standard_deviation': 32.65176094715261,
-                        'average_price': 129.21099999999998,
-                        'payer_type': 'insurance',
-                        'payment_type': 'allowed',
-                        'low_price': 112.07,
-                        'median_price': 112.27
-                    },
-                    {
-                        'high_price': 343.79,
-                        'standard_deviation': 47.486112986324756,
-                        'average_price': 189.23299999999998,
-                        'payer_type': 'insurance',
-                        'payment_type': 'submitted',
-                        'low_price': 154.41,
-                        'median_price': 191.61
-                    }
-                ],
-                'cpt_code': '95017',
-                'geo_zip_area': '941'
-            }
-
-    def test_claim_status(self):
-        with pd_vcr.use_cassette('claim_status.yml'):
-            claim_status_response = self.pd.claims_status({
-                "patient": {
-                    "birth_date": "1970-01-01",
-                    "first_name": "Jane",
-                    "last_name": "Doe",
-                    "id": "W000000000"
-                },
-                "provider": {
-                    "first_name": "JEROME",
-                    "last_name": "AYA-AY",
-                    "npi": "1467560003"
-                },
-                "service_date": "2014-01-01",
-                "trading_partner_id": "MOCKPAYER"
-            })
-            assert "meta" in claim_status_response
-            assert "data" in claim_status_response
-            assert claim_status_response['data']['patient'] == {
-                'claims': [
-                    {
-                        'applied_to_deductible': False,
-                        'total_claim_amount': {'currency': 'USD', 'amount': '150'},
-                        'service_end_date': '2014-01-01',
-                        'claim_control_number': 'E1TWCYYMF00',
-                        'check_number': '08608-035632423',
-                        'claim_payment_amount': {'currency': 'USD', 'amount': '125'},
-                        'adjudication_finalized_date': '2014-03-21',
-                        'tracking_id': 'E1TWCYYMF',
-                        'services': [
-                            {
-                                'cpt_code': '99214',
-                                'service_end_date': '2014-03-05',
-                                'payment_amount': {'currency': 'USD', 'amount': '125'},
-                                'charge_amount': {'currency': 'USD', 'amount': '150'},
-                                'service_date': '2014-03-05',
-                                'statuses': [
-                                    {
-                                        'status_code': 'Processed according to contract provisions (Contract refers to provisions that exist between the Health Plan and a Provider of Health Care Services)',
-                                        'status_effective_date': '2014-04-24',
-                                        'status_category': 'Finalized/Payment-The claim/line has been paid.'
-                                    }
-                                ]
-                            }
-                        ],
-                        'remittance_date': '2014-04-09',
-                        'service_date': '2014-01-01',
-                        'statuses': [
-                            {
-                                'total_claim_amount': {'currency': 'USD', 'amount': '150'},
-                                'status_category': 'Finalized/Payment-The claim/line has been paid.',
-                                'status_code': 'Processed according to contract provisions (Contract refers to provisions that exist between the Health Plan and a Provider of Health Care Services)',
-                                'claim_payment_amount': {'currency': 'USD', 'amount': '125'},
-                                'adjudication_finalized_date': '2014-03-21',
-                                'remittance_date': '2014-04-09',
-                                'check_number': '08608-035632423',
-                                'status_effective_date': '2014-04-24'
-                            }
-                        ]
-                    }
-                ]
-            }
+    def test_providers_search(self):
+        """
+            Tests PokitDok.providers search by zipcode, specialty, and radius
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.providers(zipcode='29307',
+                                                       specialty='rheumatology',
+                                                       radius='20mi')
+        assert mocked_response is not None 
 
     def test_trading_partners(self):
-        with pd_vcr.use_cassette('trading_partners.yml'):
-            trading_partner_response = self.pd.trading_partners("aetna")
-            assert "meta" in trading_partner_response
-            assert "data" in trading_partner_response
-            assert trading_partner_response['data'].get('id') == "aetna"
-            assert trading_partner_response['data'].get('name') == "Aetna"
+        """
+            Tests PokitDok.trading_partners
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.trading_partners()
+        assert mocked_response is not None 
+
+    def test_trading_partners_trading_partner_id(self):
+        """
+            Tests PokitDok.trading_partners lookup by trading_partner_id
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.trading_partners(trading_partner_id='MOCKPAYER')
+        assert mocked_response is not None 
 
     def test_referrals(self):
-        with pd_vcr.use_cassette('referrals.yml'):
-            response = self.pd.referrals({
-                "event": {
-                    "category": "specialty_care_review",
-                    "certification_type": "initial",
-                    "delivery": {
-                        "quantity": 1,
-                        "quantity_qualifier": "visits"
-                    },
-                    "diagnoses": [
-                        {
-                            "code": "384.20",
-                            "date": "2014-09-30"
-                        }
-                    ],
-                    "place_of_service": "office",
-                    "provider": {
-                        "first_name": "JOHN",
-                        "npi": "1154387751",
-                        "last_name": "FOSTER",
-                        "phone": "8645822900"
-                    },
-                    "type": "consultation"
-                },
-                "patient": {
-                    "birth_date": "1970-01-01",
-                    "first_name": "JANE",
-                    "last_name": "DOE",
-                    "id": "1234567890"
-                },
-                "provider": {
-                    "first_name": "CHRISTINA",
-                    "last_name": "BERTOLAMI",
-                    "npi": "1619131232"
-                },
-                "trading_partner_id": "MOCKPAYER"
-            })
-            assert "meta" in response
-            assert "data" in response
-            assert response['data']['event']['review']['certification_number'] == 'AUTH0001'
-            assert response['data']['event']['review']['certification_action'] == 'certified_in_total'
+        """
+            Tests PokitDok.referrals
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.referrals(tests.referrals_request)
+        assert mocked_response is not None 
 
     def test_authorizations(self):
-        with pd_vcr.use_cassette('authorizations.yml'):
-            response = self.pd.authorizations({
-                "event": {
-                    "category": "health_services_review",
-                    "certification_type": "initial",
-                    "delivery": {
-                        "quantity": 1,
-                        "quantity_qualifier": "visits"
-                    },
-                    "diagnoses": [
-                        {
-                            "code": "789.00",
-                            "date": "2014-10-01"
-                        }
-                    ],
-                    "place_of_service": "office",
-                    "provider": {
-                        "organization_name": "KELLY ULTRASOUND CENTER, LLC",
-                        "npi": "1760779011",
-                        "phone": "8642341234"
-                    },
-                    "services": [
-                        {
-                            "cpt_code": "76700",
-                            "measurement": "unit",
-                            "quantity": 1
-                        }
-                    ],
-                    "type": "diagnostic_imaging"
-                },
-                "patient": {
-                    "birth_date": "1970-01-01",
-                    "first_name": "JANE",
-                    "last_name": "DOE",
-                    "id": "1234567890"
-                },
-                "provider": {
-                    "first_name": "JEROME",
-                    "npi": "1467560003",
-                    "last_name": "AYA-AY"
-                },
-                "trading_partner_id": "MOCKPAYER"
-            })
-            assert "meta" in response
-            assert "data" in response
-            assert response['data']['event']['review']['certification_number'] == 'AUTH0001'
-            assert response['data']['event']['review']['certification_action'] == 'certified_in_total'
+        """
+            Tests PokitDok.authorizations
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.authorizations(tests.authorization_request)
+        assert mocked_response is not None 
 
     def test_schedulers(self):
-        with pd_vcr.use_cassette('schedulers.yml'):
-            response = self.pd.schedulers()
-            assert "meta" in response
-            assert "data" in response
+        """
+            Tests PokitDok.schedulers
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.schedulers()
+        assert mocked_response is not None 
 
-    def test_appointments(self):
-        with pd_vcr.use_cassette('appointments.yml'):
-            response = self.pd.appointments()
-            assert "meta" in response
-            assert "data" in response
+    def test_schedulers_with_scheduler_uuid(self):
+        """
+            Tests PokitDok.schedulers lookup for a specific resource
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.schedulers(scheduler_uuid='967d207f-b024-41cc-8cac-89575a1f6fef')
+        assert mocked_response is not None 
 
     def test_appointment_types(self):
-        with pd_vcr.use_cassette('appointment_types.yml'):
-            response = self.pd.appointment_types()
-            assert "meta" in response
-            assert "data" in response
+        """
+            Tests PokitDok.appointment_types
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.appointment_types()
+        assert mocked_response is not None 
+
+    def test_appointment_types_with_appointment_type_uuid(self):
+        """
+            Tests PokitDok.schedulers lookup for a specific resource
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.appointment_types(
+                appointment_type_uuid='ef987693-0a19-447f-814d-f8f3abbf4860')
+        assert mocked_response is not None 
+
+    def test_schedule_slots(self):
+        """
+            Tests PokitDok.schedule_slots
+        :return:
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.schedule_slots(tests.slot_create_request)
+        assert mocked_response is not None 
+
+    def test_appointments_with_appointment_uuid(self):
+        """
+            Tests PokitDok.appointments lookup for a specific resource
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.appointments(appointment_uuid='ef987691-0a19-447f-814d-f8f3abbf4859')
+        assert mocked_response is not None 
+
+    def test_appointments_with_search(self):
+        """
+            Tests PokitDok.appointments lookup using search criteria: appointment_type, start_date, and end_date
+        """
+        with HTTMock(self.mock_api_response):
+            search_criteria = {
+                'appointment_type': 'AT1',
+                'start_date': datetime.date(2016, month=1, day=15),
+                'end_date': datetime.date(2016, month=1, day=20),
+            }
+            mocked_response = self.pd_client.appointments(**search_criteria)
+        assert mocked_response is not None 
 
     def test_book_appointment(self):
-        with pd_vcr.use_cassette('book_appointment.yml'):
-            invalid_appointment_uuid = '0f4a6409-670c-4054-9f4a-1045766aaa79'
-            response = self.pd.book_appointment(invalid_appointment_uuid, {
-                "patient": {
-                    "_uuid": "500ef469-2767-4901-b705-425e9b6f7f83",
-                    "email": "john@johndoe.com",
-                    "phone": "800-555-1212",
-                    "birth_date": "1970-01-01",
-                    "first_name": "John",
-                    "last_name": "Doe",
-                    "member_id": "M000001"
-                },
-                "description": "Welcome to M0d3rN Healthcare"
-            })
-            assert "meta" in response
-            assert "data" in response
+        """
+            Tests PokitDok.book_appointment
+\        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.book_appointment('ef987691-0a19-447f-814d-f8f3abbf4859',
+                                                              tests.appointment_book_request)
+        assert mocked_response is not None 
 
-    def test_identity_get_uuid(self):
-        with pd_vcr.use_cassette('identity-uuid.yml'):
-            identity_uuid = '881bc095-2068-43cb-9783-cce630364122'
-            response = self.pd.identity(identity_uuid)
-            assert "meta" in response
-            assert "data" in response
-
-    def test_identity_get_params(self):
-        with pd_vcr.use_cassette('identity-params.yml'):
-            params = {
-                "first_name": "Peg",
-                "last_name": "PokitDok",
-                "gender": "female",
-                "prefix": "Ms."
-            }
-            response = self.pd.identity(**params)
-            assert "meta" in response
-            assert "data" in response
+    def test_cancel_appointment(self):
+        """
+            Tests PokitDok.cancel_appointment
+\        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.cancel_appointment(appointment_uuid='ef987691-0a19-447f-814d-f8f3abbf4859')
+        assert mocked_response is not None 
 
     def test_create_identity(self):
-        with pd_vcr.use_cassette('create-identity.yml'):
-            identity_resource = {
-                "prefix": "Ms",
-                "first_name": "Peg",
-                "last_name": "PokitDok",
-                "gender": "female",
-                "birth_date": "1991-05-19",
-                "email": "peggy@pokitdok.com",
-                "address": {
-                    "address_lines": ["1542 Anywhere Avenue"],
-                    "city": "Charleston",
-                    "state": "SC",
-                    "zipcode": "29407"
-                },
-                "identifiers": [
-                    {
-                        "location": [
-                                        -80.0406,
-                                        32.8986
-                                    ],
-                        "provider_uuid": "74850f65-6bb7-48e1-9fcb-bc98c8dda2ba",
-                        "system_uuid": "967d207f-b024-41cc-8cac-89575a1f6fef",
-                        "value": "W90100-IG-88"
-                    }
-                ]
-            }
-            response = self.pd.create_identity(identity_resource)
-            assert "meta" in response
-            assert "data" in response
+        """
+            Tests PokitDok.create_identity
+\        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.create_identity(tests.identity_request)
+        assert mocked_response is not None 
+
+    def test_identity_with_uuid(self):
+        """
+            Tests PokitDok.identity lookup for a specific resource
+\        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.identity(identity_uuid='881bc095-2068-43cb-9783-cce63036412')
+        assert mocked_response is not None 
+
+    def test_identity_search(self):
+        """
+            Tests PokitDok.identity with search criteria of first_name and last_name
+\        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.identity(first_name='Oscar', last_name='Whitmire')
+        assert mocked_response is not None 
 
     def test_update_identity(self):
-        with pd_vcr.use_cassette('update-identity.yml'):
-            identity_resource = {
-                "prefix": "Ms",
-                "first_name": "Peg",
-                "last_name": "PokitDok",
-                "gender": "female",
-                "birth_date": "1991-05-19",
-                "email": "peggy@pokitdok.com",
-                "address": {
-                    "address_lines": ["1542 Anywhere Avenue"],
-                    "city": "Charleston",
-                    "state": "SC",
-                    "zipcode": "29407"
-                },
-                "identifiers": [
-                    {
-                        "location": [
-                                        -80.0406,
-                                        32.8986
-                                    ],
-                        "provider_uuid": "74850f65-6bb7-48e1-9fcb-bc98c8dda2ba",
-                        "system_uuid": "967d207f-b024-41cc-8cac-89575a1f6fef",
-                        "value": "W90100-IG-88"
-                    }
-                ]
-            }
+        """
+            Tests PokitDok.create_identity
+\        """
+        with HTTMock(self.mock_api_response):
+            updated_request = copy.deepcopy(tests.identity_request)
+            updated_request['email'] = 'oscar@yahoo.com'
 
-            identity_uuid = '881bc095-2068-43cb-9783-cce630364122'
-            response = self.pd.update_identity(identity_uuid, identity_resource)
-            assert "meta" in response
-            assert "data" in response
+            mocked_response = self.pd_client.update_identity(identity_uuid='881bc095-2068-43cb-9783-cce63036412',
+                                                             identity_request=updated_request)
+        assert mocked_response is not None 
+
+    def test_identity_history_with_uuid(self):
+        """
+            Tests PokitDok.identity_history lookup to return a change summary for a specific resource
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.identity_history(identity_uuid='881bc095-2068-43cb-9783-cce63036412')
+        assert mocked_response is not None 
+
+    def test_identity_history_with_uuid_version(self):
+        """
+            Tests PokitDok.identity_history lookup for a version of a specific resource
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.identity_history(identity_uuid='881bc095-2068-43cb-9783-cce63036412',
+                                                              historical_version=1)
+        assert mocked_response is not None 
+
+    def test_pharmacy_plans(self):
+        """
+            Tests PokitDok.pharmacy_plans
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.pharmacy_plans(trading_partner_id='MOCKPAYER', plan_number='S5820003')
+        assert mocked_response is not None 
+
+    def test_pharmacy_formulary(self):
+        """
+            Tests PokitDok.pharmacy_formulary
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.pharmacy_formulary(trading_partner_id='MOCKPAYER', plan_number='S5820003',
+                                                                ndc='59310-579-22')
+        assert mocked_response is not None 

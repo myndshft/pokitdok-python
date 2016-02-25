@@ -22,12 +22,12 @@ from setuptools import setup
 
 setup(
     name="pokitdok",
-    version="1.5",
+    version="1.6",
     license="MIT",
     author="PokitDok, Inc.",
     author_email="platform@pokitdok.com",
     url="https://platform.pokitdok.com",
-    download_url='https://github.com/pokitdok/pokitdok-python/tarball/1.5',
+    download_url='https://github.com/pokitdok/pokitdok-python/tarball/1.6',
     description="PokitDok Platform API Client",
     long_description=__doc__,
     packages=["pokitdok", "pokitdok.api"],
@@ -38,7 +38,7 @@ setup(
         "requests>=2.3.0", "oauthlib<0.7.0", "requests-oauthlib==0.4.1"
     ],
     tests_require=[
-        "vcrpy==1.0.2"
+        "httmock==1.2.4", "nose==1.3.7"
     ],
     test_suite='nose.collector',
     keywords=['health', 'api', 'pokitdok', 'X12', 'eligibility', 'claims', 'providers', 'prices', 'healthcare',
