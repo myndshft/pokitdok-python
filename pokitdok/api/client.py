@@ -311,12 +311,20 @@ class PokitDokClient(object):
 
             Keyword arguments that may be used to refine a providers search:
 
-            :param zipcode: A zip code that should be searched in/around for providers
+            :param address_lines: Any or all of number, street name, apartment, suite number 
+            :param zipcode: Zip code to search in
+            :param city: City to search in
+            :param state: State to search in
             :param radius: A value representing the search distance from a geographic center point
-                           May be expressed in miles like: 10mi
+                           May be expressed in miles like: 10mi.  zipcode or city and state must
+                           be provided to enable distance sorting with specified radius
             :param first_name: The first name of a provider to include in the search criteria
             :param last_name: The last name of a provider to include in the search criteria
+            :param organization_name: The organization_name of a provider.  Do not pass first_name 
+                                      or last_name with this argument
             :param limit: The number of provider results that should be included in search results
+            :param sort: Accepted values include 'distance' (default) or 'rank'.  'distance' sort 
+                         requires city & state or zipcode parameters otherwise sort will be 'rank'.
 
         """
         path = "/providers/{0}".format(npi if npi else '')
