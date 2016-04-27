@@ -469,3 +469,24 @@ class PokitDokClient(object):
             :return: formulary information if a match is found
         """
         return self.get('/pharmacy/formulary', **kwargs)
+
+    def pharmacy_drug_cost(self, **kwargs):
+        """
+            Obtain drug cost estimates for a specific drug plan.
+
+            :param kwargs: pharmacy drug cost API request parameters
+            :return: cost estimates for all matching drugs
+        """
+        return self.get('/pharmacy/drug/cost', **kwargs)
+
+    def pharmacy_network(self, npi=None, **kwargs):
+        """
+            Search for in-network pharmacies
+
+            :param npi: The National Provider Identifier for a pharmacy
+            :param kwargs: pharmacy network API request parameters
+            :return: If an NPI is included in the request, details about the pharmacy are returned.
+            Otherwise, a list of in-network pharmacies is returned.
+        """
+        path = "/pharmacy/network/{0}".format(npi) if npi else '/pharmacy/network'
+        return self.get(path, **kwargs)
