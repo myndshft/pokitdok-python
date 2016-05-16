@@ -556,15 +556,6 @@ class TestAPIClient(object):
                                                                 ndc='59310-579-22')
         assert mocked_response is not None 
 
-    def test_pharmacy_drug_cost(self):
-        """
-            Tests PokitDok.pharmacy_drug_cost
-        """
-        with HTTMock(self.mock_api_response):
-            mocked_response = self.pd_client.pharmacy_drug_cost(trading_partner_id='MOCKPAYER', plan_number='S5820003',
-                                                                ndc='59310-579-22')
-        assert mocked_response is not None
-
     def test_pharmacy_network_by_npi(self):
         """
             Tests PokitDok.pharmacy_network by NPI

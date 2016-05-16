@@ -470,15 +470,6 @@ class PokitDokClient(object):
         """
         return self.get('/pharmacy/formulary', **kwargs)
 
-    def pharmacy_drug_cost(self, **kwargs):
-        """
-            Obtain drug cost estimates for a specific drug plan.
-
-            :param kwargs: pharmacy drug cost API request parameters
-            :return: cost estimates for all matching drugs
-        """
-        return self.get('/pharmacy/drug/cost', **kwargs)
-
     def pharmacy_network(self, npi=None, **kwargs):
         """
             Search for in-network pharmacies
