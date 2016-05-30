@@ -23,7 +23,8 @@ class PokitDokClient(object):
         to handle common API operations
     """
     def __init__(self, client_id, client_secret, base="https://platform.pokitdok.com", version="v4",
-                 redirect_uri=None, scope=None, auto_refresh=False, token_refresh_callback=None, code=None):
+                 redirect_uri=None, scope=None, auto_refresh=False, token_refresh_callback=None, code=None,
+                 token=None):
         """
             Initialize a new PokitDok API Client
 
@@ -38,6 +39,9 @@ class PokitDokClient(object):
                                  refreshed when they expire.
             :param token_refresh_callback: a function that should be called when token information is refreshed.
             :param code: code value received from an authorization code grant
+            :param token: The current API access token for your PokitDok Platform Application. If not provided a new
+                token is generated. Defaults to None.
+             API clients to reuse an access token across requests. Defaults to None.
         """
         self.base_headers = {
             'User-Agent': 'python-pokitdok/{0} {1}'.format(pokitdok.__version__, requests.utils.default_user_agent())
@@ -53,7 +57,7 @@ class PokitDokClient(object):
         self.code = code
         self.auto_refresh = auto_refresh
         self.token_refresh_callback = token_refresh_callback
-        self.token = {}
+        self.token = token
         self.url_base = "{0}/api/{1}".format(base, version)
         self.token_url = "{0}/oauth2/token".format(base)
         self.authorize_url = "{0}/oauth2/authorize".format(base)
@@ -86,18 +90,20 @@ class PokitDokClient(object):
         """
         refresh_url = self.token_url if self.auto_refresh else None
         if code is None:
-
+            # client credentials flow
             self.api_client = OAuth2Session(self.client_id, client=BackendApplicationClient(self.client_id),
                                             auto_refresh_url=refresh_url, token_updater=self.token_refresh_callback,
                                             auto_refresh_kwargs={
                                                 'client_id': self.client_id,
-                                                'client_secret': self.client_secret})
-            self.token = self.api_client.fetch_token(self.token_url, client_id=self.client_id,
-                                                     client_secret=self.client_secret)
+                                                'client_secret': self.client_secret}, token=self.token)
         else:
+            # authorization grant flow
             self.code = code
             self.initialize_auth_api_client(refresh_url)
-            self.token = self.api_client.fetch_token(self.token_url, code=code, client_id=self.client_id,
+
+        # request a new token if one has not been provided
+        if self.token is None:
+            self.token = self.api_client.fetch_token(token_url=self.token_url, code=code, client_id=self.client_id,
                                                      client_secret=self.client_secret, scope=self.scope)
         return self.token
 
