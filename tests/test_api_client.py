@@ -97,6 +97,25 @@ class TestAPIClient(object):
         assert self.pd_client.api_client is not None
         assert self.pd_client.api_client.token is not None
 
+    def test_connect_existing_token(self):
+        """
+            Tests pokitdok.api.connect (PokitDok.__init__()) with an existing token
+            Validates that the API client instantiation supports an existing token
+        """
+        with HTTMock(self.mock_oauth2_token):
+            self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET)
+            first_token = copy.deepcopy(self.pd_client.token)
+
+            self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET, token=first_token)
+            second_token = copy.deepcopy(self.pd_client.token)
+            # first token should be equal to the second
+            assert first_token == second_token
+
+            # validate unique tokens for new client instances
+            self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET)
+            third_token = copy.deepcopy(self.pd_client.token)
+            assert third_token not in [first_token, second_token]
+
     def test_request_post(self):
         """
             Tests the PokitDok.request convenience method with a POST request.
