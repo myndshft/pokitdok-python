@@ -457,6 +457,14 @@ class PokitDokClient(object):
 
         return self.api_client.get(identity_url, headers=self.base_headers).json()
 
+    def identity_match(self, identity_match_data):
+        """
+            Creates an identity match job.
+            :param identity_match_data: The dictionary containing the identity match data.
+            :returns: An activity id of the identity match job
+        """
+        return self.post('/identity/match', data=identity_match_data)
+
     def pharmacy_plans(self, **kwargs):
         """
             Search drug plan information by trading partner and various plan identifiers
