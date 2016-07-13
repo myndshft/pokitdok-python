@@ -120,36 +120,6 @@ claim_status_request = {
     'trading_partner_id': 'MOCKPAYER'
 }
 
-claims_convert_request = """ISA*00*          *00*          *01*9012345720000  *01*9088877320000  *151004*2235*U*00501*000000007*0*T*:~
-GS*HC*901234572000*908887732000*20151004*2235*7*X*005010X222~
-ST*837*0001~
-BHT*0019*00*2KYXDRE61GU20TFMBPA*20151004*2231*CH~
-NM1*41*2*Pokitdok, Inc.*****46*12345~
-PER*IC**EM*x12info@pokitdok.com~
-NM1*40*2*MOCKPAYER*****46*12345~
-HL*1**20*1~
-PRV*BI*PXC*207Q00000X~
-NM1*85*1*Aya-Ay*Jerome****XX*1467560003~
-N3*8311 WARREN H ABERNATHY HWY~
-N4*SPARTANBURG*SC*293010000~
-REF*EI*123456789~
-HL*2*1*22*0~
-SBR*P*18*******ZZ~
-NM1*IL*1*Doe*Jane****MI*W000000000~
-N3*123 N MAIN ST~
-N4*SPARTANBURG*SC*29301~
-DMG*D8*19700101*F~
-NM1*PR*2*MOCKPAYER*****PI*12345~
-CLM*0f17b46dd39a4bb0add152e99633adbc*60***11:B:1*Y*A*Y*I~
-HI*BK:4871~
-LX*1~
-SV1*HC:99213*60*UN*1.0***1~
-DTP*472*D8*20140601~
-SE*24*0001~
-GE*1*905~
-IEA*1*000000905~
-"""
-
 eligibility_request = {
     'member': {
         'birth_date': '1970-01-01',
@@ -244,10 +214,13 @@ enrollment_request = {
 
 _module_directory = os.path.dirname(__file__)
 _x12_file_path = os.path.join(_module_directory, 'enrollment.834')
+_claims_covert_file_path = os.path.join(_module_directory, 'chiropractic_example.837')
 
 enrollment_snapshot_request = {'trading_partner_id': 'MOCKPAYER', 'x12_file': _x12_file_path}
 
 files_request = {'trading_partner_id': 'MOCKPAYER', 'x12_file': _x12_file_path}
+
+claims_convert_request = {'x12_claims_file': _claims_covert_file_path}
 
 identity_request = {
     'prefix': 'Mr.',
@@ -275,6 +248,36 @@ identity_request = {
 
         }
     ]
+}
+
+identity_match_request = {
+    "data_filters": ["filter_a", "filter_b"],
+    "match_configuration": [
+        {
+            "source_field": "first_name",
+            "match_algorithm": "levenshtein",
+            "search_fields": ["nickname"],
+            "weight": 30
+        },
+        {
+            "source_field": "middle_name",
+            "match_algorithm": "stemming",
+            "weight": 30
+        },
+        {
+            "source_field": "last_name",
+            "match_algorithm": "soundex",
+            "weight": 30
+        },
+        {
+            "source_field": "birth_date",
+            "match_algorithm": "exact",
+            "search_fields": ["dob", "date_of_birth"],
+            "weight": 10
+        }
+    ],
+    "threshold": 80,
+    "callback_url": "https://platform.pokidok.com/callme?handler=thething"
 }
 
 referrals_request = {

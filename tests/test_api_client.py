@@ -292,7 +292,7 @@ class TestAPIClient(object):
             Tests PokitDok.claims_convert
         """
         with HTTMock(self.mock_api_response):
-            mocked_response = self.pd_client.icd_convert(tests.claims_convert_request)
+            mocked_response = self.pd_client.claims_convert(**tests.claims_convert_request)
         assert mocked_response is not None 
 
     def test_eligibility(self):
@@ -556,7 +556,15 @@ class TestAPIClient(object):
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.identity_history(identity_uuid='881bc095-2068-43cb-9783-cce63036412',
                                                               historical_version=1)
-        assert mocked_response is not None 
+        assert mocked_response is not None
+
+    def test_identity_match(self):
+        """
+            Tests PokitDok.identity_match
+\        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.identity_match(tests.identity_match_request)
+        assert mocked_response is not None
 
     def test_pharmacy_plans(self):
         """
