@@ -9,10 +9,10 @@
 from __future__ import absolute_import
 
 __title__ = 'pokitdok'
-__version__ = '1.8'
+__version__ = '2.0'
 __author__ = 'PokitDok, Inc.'
 __license__ = 'MIT'
-__copyright__ = 'Copyright 2014-2015 PokitDok, Inc.'
+__copyright__ = 'Copyright 2014-2016 PokitDok, Inc.'
 
 
 import pokitdok.api
