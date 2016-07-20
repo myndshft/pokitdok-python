@@ -153,6 +153,13 @@ without going back through the authorization code grant redirect flow.   If you 
 information or the user revokes your authorization, you'll need to go back through the authorization process
 to get a new access token for scope protected APIs.
 
+Check SSL protocol and cipher
+-----------------------------
+
+.. code-block:: python
+
+    pd.request('/ssl/', method='get')
+
 Supported Python Versions
 -------------------------
 
