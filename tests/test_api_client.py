@@ -335,14 +335,6 @@ class TestAPIClient(object):
             mocked_response = self.pd_client.enrollment_snapshot_data(snapshot_id='12345')
         assert mocked_response is not None 
 
-    def test_files(self):
-        """
-            Tests PokitDok.files
-        """
-        with HTTMock(self.mock_api_response):
-            mocked_response = self.pd_client.files(**tests.files_request)
-        assert mocked_response is not None 
-
     def test_insurance_prices(self):
         """
             Tests PokitDok.insurance_prices
