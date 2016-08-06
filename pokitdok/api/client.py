@@ -57,12 +57,19 @@ class PokitDokClient(object):
         self.code = code
         self.auto_refresh = auto_refresh
         self.token_refresh_callback = token_refresh_callback
+        # point to the token_updater for refreshing token
+        if self.token_refresh_callback is None:
+            self.token_refresh_callback = self.token_updater
         self.token = token
         self.url_base = "{0}/api/{1}".format(base, version)
         self.token_url = "{0}/oauth2/token".format(base)
         self.authorize_url = "{0}/oauth2/authorize".format(base)
         self.api_client = None
         self.fetch_access_token(code=self.code)
+
+    def token_updater(self, token):
+        if token is not None:
+            self.token = token
 
     def initialize_auth_api_client(self, refresh_url):
         self.api_client = OAuth2Session(self.client_id, redirect_uri=self.redirect_uri, scope=self.scope,
