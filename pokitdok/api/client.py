@@ -12,8 +12,8 @@ import json
 import os
 import pokitdok
 import requests
-from requests_oauthlib import OAuth2Session
-from oauthlib.oauth2 import BackendApplicationClient
+from requests_oauthlib import OAuth2Session, TokenUpdated
+from oauthlib.oauth2 import BackendApplicationClient, TokenExpiredError
 
 
 class PokitDokClient(object):
@@ -57,19 +57,12 @@ class PokitDokClient(object):
         self.code = code
         self.auto_refresh = auto_refresh
         self.token_refresh_callback = token_refresh_callback
-        # point to the token_updater for refreshing token
-        if self.token_refresh_callback is None:
-            self.token_refresh_callback = self.token_updater
         self.token = token
         self.url_base = "{0}/api/{1}".format(base, version)
         self.token_url = "{0}/oauth2/token".format(base)
         self.authorize_url = "{0}/oauth2/authorize".format(base)
         self.api_client = None
         self.fetch_access_token(code=self.code)
-
-    def token_updater(self, token):
-        if token is not None:
-            self.token = token
 
     def initialize_auth_api_client(self, refresh_url):
         self.api_client = OAuth2Session(self.client_id, redirect_uri=self.redirect_uri, scope=self.scope,
@@ -134,7 +127,16 @@ class PokitDokClient(object):
 
         request_url = "{0}{1}".format(self.url_base, path)
         request_method = getattr(self.api_client, method)
-        return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
+        try:
+            return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
+        except (TokenUpdated, TokenExpiredError):
+            # Set Token to None and re-fetch/authenticate
+            if self.auto_refresh:
+                self.token = None
+                self.token = self.fetch_access_token(self.code)
+                return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
+            else:
+                raise TokenExpiredError('Access Token has expired. Please, re-authenticate. Use auto_refresh=True to have your client auto refresh')
 
     def get(self, path, **kwargs):
         """
