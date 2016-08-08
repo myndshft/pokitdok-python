@@ -277,18 +277,6 @@ class PokitDokClient(object):
         path = "/enrollment/snapshot/{0}/data".format(snapshot_id)
         return self.get(path, **kwargs)
 
-    def files(self, trading_partner_id, x12_file):
-        """
-            Submit a raw X12 file to the platform for processing
-
-            :param trading_partner_id: the trading partner that should receive the X12 file information
-            :param x12_file: the path to a X12 file to be submitted to the platform for processing
-        """
-        return self.post('/files/', data={'trading_partner_id': trading_partner_id},
-                         files={
-                             'file': (os.path.split(x12_file)[-1], open(x12_file, 'rb'), 'application/EDI-X12')
-                         })
-
     def insurance_prices(self, **kwargs):
         """
             Fetch insurance price information
