@@ -613,7 +613,6 @@ class TestAPIClient(object):
 
             # expire the token and make sure new token is created and not the same as first token
             self.pd_client.token['expires_in'] = -10
-            self.pd_client.token['expires_at'] = ((datetime.datetime.utcnow() - datetime.timedelta(minutes=61)) - datetime.datetime(1970, 1, 1)).total_seconds()
             self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET, token=self.pd_client.token, auto_refresh=True)
 
             # attempt to make a call, which should get new token...thus auto_refresh working
