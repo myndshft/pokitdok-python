@@ -12,8 +12,8 @@ import json
 import os
 import pokitdok
 import requests
-from requests_oauthlib import OAuth2Session
-from oauthlib.oauth2 import BackendApplicationClient
+from requests_oauthlib import OAuth2Session, TokenUpdated
+from oauthlib.oauth2 import BackendApplicationClient, TokenExpiredError
 
 
 class PokitDokClient(object):
@@ -127,7 +127,16 @@ class PokitDokClient(object):
 
         request_url = "{0}{1}".format(self.url_base, path)
         request_method = getattr(self.api_client, method)
-        return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
+        try:
+            return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
+        except (TokenUpdated, TokenExpiredError):
+            # Set Token to None and re-fetch/authenticate
+            if self.auto_refresh:
+                self.token = None
+                self.token = self.fetch_access_token(self.code)
+                return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
+            else:
+                raise TokenExpiredError('Access Token has expired. Please, re-authenticate. Use auto_refresh=True to have your client auto refresh')
 
     def get(self, path, **kwargs):
         """

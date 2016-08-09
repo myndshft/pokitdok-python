@@ -592,3 +592,30 @@ class TestAPIClient(object):
             mocked_response = self.pd_client.pharmacy_network(trading_partner_id='MOCKPAYER', plan_number='S5596033',
                                                                 zipcode='94401', radius='10mi')
         assert mocked_response is not None
+
+    def test_connect_refresh_token(self):
+        """
+            Tests pokitdok.api.connect and getting a refresh token
+            Validates that the API client instantiation supports an existing token and refreshing a token for auto_refresh
+        """
+        with HTTMock(self.mock_oauth2_token):
+            # get token initial token
+            self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET, auto_refresh=True)
+            first_token = copy.deepcopy(self.pd_client.token)
+
+            # expire the token and make sure new token is created and not the same as first token
+            self.pd_client.token['expires_in'] = -10
+            self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET, token=self.pd_client.token, auto_refresh=True)
+
+            # attempt to make a call, which should get new token...thus auto_refresh working
+            mocked_response = self.pd_client.pharmacy_plans(trading_partner_id='MOCKPAYER', plan_number='S5820003')
+            assert mocked_response is not None
+            second_token = copy.deepcopy(self.pd_client.token)
+            assert first_token != second_token
+
+            # attempt to make a call, which should NOT get a new token. Shows that token_updater is working to
+            # reset token on PokitDokClient
+            mocked_response = self.pd_client.pharmacy_plans(trading_partner_id='MOCKPAYER', plan_number='S5820003')
+            assert mocked_response is not None
+            third_token = copy.deepcopy(self.pd_client.token)
+            assert second_token == third_token
