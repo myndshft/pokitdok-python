@@ -64,7 +64,8 @@ class PokitDokClient(object):
         self.api_client = None
 
         self.initialize_api_client()
-        self.fetch_access_token(code=self.code)
+        if self.token is None:
+            self.fetch_access_token(code=self.code)
 
     def initialize_api_client(self):
         """
