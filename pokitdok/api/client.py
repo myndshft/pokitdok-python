@@ -71,13 +71,13 @@ class PokitDokClient(object):
         """
             Initialize OAuth2Session client depending on client credentials flow or authorization grant flow
         """
-        refresh_url = self.token_url if self.auto_refresh else None
         if self.code is None:
             # client credentials flow
             self.api_client = OAuth2Session(self.client_id, client=BackendApplicationClient(self.client_id),
                                             token=self.token)
         else:
             # authorization grant flow
+            refresh_url = self.token_url if self.auto_refresh else None
             self.api_client = OAuth2Session(self.client_id, redirect_uri=self.redirect_uri, scope=self.scope,
                                             auto_refresh_url=refresh_url, token_updater=self.token_refresh_callback,
                                             auto_refresh_kwargs={
