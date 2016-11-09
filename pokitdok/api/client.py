@@ -62,49 +62,45 @@ class PokitDokClient(object):
         self.token_url = "{0}/oauth2/token".format(base)
         self.authorize_url = "{0}/oauth2/authorize".format(base)
         self.api_client = None
-        self.fetch_access_token(code=self.code)
 
-    def initialize_auth_api_client(self, refresh_url):
-        self.api_client = OAuth2Session(self.client_id, redirect_uri=self.redirect_uri, scope=self.scope,
-                                        auto_refresh_url=refresh_url, token_updater=self.token_refresh_callback,
-                                        auto_refresh_kwargs={
-                                            'client_id': self.client_id,
-                                            'client_secret': self.client_secret})
+        self.initialize_api_client()
+        if self.token is None:
+            self.fetch_access_token(code=self.code)
+
+    def initialize_api_client(self):
+        """
+            Initialize OAuth2Session client depending on client credentials flow or authorization grant flow
+        """
+        if self.code is None:
+            # client credentials flow
+            self.api_client = OAuth2Session(self.client_id, client=BackendApplicationClient(self.client_id),
+                                            token=self.token)
+        else:
+            # authorization grant flow
+            refresh_url = self.token_url if self.auto_refresh else None
+            self.api_client = OAuth2Session(self.client_id, redirect_uri=self.redirect_uri, scope=self.scope,
+                                            auto_refresh_url=refresh_url, token_updater=self.token_refresh_callback,
+                                            auto_refresh_kwargs={
+                                                'client_id': self.client_id,
+                                                'client_secret': self.client_secret})
 
     def authorization_url(self):
         """
             Construct OAuth2 Authorization Grant URL
             :return: (authorization url, state value) tuple
         """
-        refresh_url = self.token_url if self.auto_refresh else None
-        self.initialize_auth_api_client(refresh_url)
+        self.initialize_api_client()
         return self.api_client.authorization_url(self.authorize_url)
 
     def fetch_access_token(self, code=None):
         """
-            Retrieves an OAuth2 access token.  If `code` is not specified, the client_credentials
-            grant type will be used based on the client_id and client_secret.  If `code` is not None,
-            an authorization_code grant type will be used.
+            Retrieves an OAuth2 access token.
             :param code: optional code value obtained via an authorization grant
             :return: the client application's token information as a dictionary
         """
-        refresh_url = self.token_url if self.auto_refresh else None
-        if code is None:
-            # client credentials flow
-            self.api_client = OAuth2Session(self.client_id, client=BackendApplicationClient(self.client_id),
-                                            auto_refresh_url=refresh_url, token_updater=self.token_refresh_callback,
-                                            auto_refresh_kwargs={
-                                                'client_id': self.client_id,
-                                                'client_secret': self.client_secret}, token=self.token)
-        else:
-            # authorization grant flow
-            self.code = code
-            self.initialize_auth_api_client(refresh_url)
-
-        # request a new token if one has not been provided
-        if self.token is None:
-            self.token = self.api_client.fetch_token(token_url=self.token_url, code=code, client_id=self.client_id,
-                                                     client_secret=self.client_secret, scope=self.scope)
+        self.api_client.token = None
+        self.token = self.api_client.fetch_token(token_url=self.token_url, code=code, client_id=self.client_id,
+                                                 client_secret=self.client_secret, scope=self.scope)
         return self.token
 
     def request(self, path, method='get', data=None, files=None, **kwargs):
@@ -130,10 +126,9 @@ class PokitDokClient(object):
         try:
             return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
         except (TokenUpdated, TokenExpiredError):
-            # Set Token to None and re-fetch/authenticate
             if self.auto_refresh:
-                self.token = None
-                self.token = self.fetch_access_token(self.code)
+                # Re-fetch token and try request again
+                self.fetch_access_token(self.code)
                 return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
             else:
                 raise TokenExpiredError('Access Token has expired. Please, re-authenticate. Use auto_refresh=True to have your client auto refresh')
