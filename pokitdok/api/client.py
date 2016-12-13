@@ -10,6 +10,7 @@
 from __future__ import absolute_import
 import json
 import os
+import platform
 import pokitdok
 import requests
 from requests_oauthlib import OAuth2Session, TokenUpdated
@@ -44,7 +45,9 @@ class PokitDokClient(object):
              API clients to reuse an access token across requests. Defaults to None.
         """
         self.base_headers = {
-            'User-Agent': 'python-pokitdok/{0} {1}'.format(pokitdok.__version__, requests.utils.default_user_agent())
+            'User-Agent': 'pokitdok-python#{0}#{1}#{2}'.format(pokitdok.__version__,
+                                                               platform.system(),
+                                                               platform.release())
         }
         self.json_headers = {
             'Content-type': 'application/json',
