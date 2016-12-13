@@ -134,7 +134,8 @@ class PokitDokClient(object):
                 self.fetch_access_token(self.code)
                 return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
             else:
-                raise TokenExpiredError('Access Token has expired. Please, re-authenticate. Use auto_refresh=True to have your client auto refresh')
+                raise TokenExpiredError('Access Token has expired. Please, re-authenticate. '
+                                        'Use auto_refresh=True to have your client auto refresh')
 
     def get(self, path, **kwargs):
         """
@@ -199,6 +200,16 @@ class PokitDokClient(object):
         """
         return self.post('/claims/', data=claims_request)
 
+    def claims_convert(self, x12_claims_file):
+        """
+            Submit a raw X12 837 file to convert to a claims API request and map any ICD-9 codes to ICD-10
+
+            :param x12_claims_file: the path to a X12 claims file to be submitted to the platform for processing
+        """
+        return self.post('/claims/convert', files={
+            'file': (os.path.split(x12_claims_file)[-1], open(x12_claims_file, 'rb'), 'application/EDI-X12')
+        })
+
     def claims_status(self, claims_status_request):
         """
             Submit a claims status request
@@ -228,16 +239,6 @@ class PokitDokClient(object):
             :param code: A diagnosis code that should be used to retrieve information
         """
         return self.get("/icd/convert/{0}".format(code))
-
-    def claims_convert(self, x12_claims_file):
-        """
-            Submit a raw X12 837 file to convert to a claims API request and map any ICD-9 codes to ICD-10
-
-            :param x12_claims_file: the path to a X12 claims file to be submitted to the platform for processing
-        """
-        return self.post('/claims/convert', files={
-            'file': (os.path.split(x12_claims_file)[-1], open(x12_claims_file, 'rb'), 'application/EDI-X12')
-        })
 
     def eligibility(self, eligibility_request):
         """
@@ -290,6 +291,21 @@ class PokitDokClient(object):
         """
         return self.get('/prices/insurance', **kwargs)
 
+    def oop_insurance_prices(self, **kwargs):
+        """
+        Loads procedure prices for a specific trading partner
+        """
+        return self.post('/oop/insurance-load-price', **kwargs)
+
+    def oop_insurance_estimate(self, **kwargs):
+        """
+        Returns estimated out of pocket cost and eligibility information for a given procedure
+        """
+        return self.post('/oop/insurance-estimate', **kwargs)
+
+    # BACKWARDS COMPATIBILITY AND FEATURE DEPRECATION NOTICE:
+    # this convenience function will be deprecated in a future release.
+    # please move to using the trading partners endpoint
     def payers(self, **kwargs):
         """
             Fetch payer information for supported trading partners
@@ -380,13 +396,18 @@ class PokitDokClient(object):
         """
         return self.post("/schedule/slots/", data=slots_request)
 
-    def appointments(self, appointment_uuid=None, **kwargs):
+    def get_appointments(self, appointment_uuid=None, **kwargs):
         """
             Query for open appointment slots or retrieve information for a specific appointment
             :param appointment_uuid: The uuid of a specific appointment.
         """
         path = "/schedule/appointments/{0}".format(appointment_uuid if appointment_uuid else '')
         return self.get(path, **kwargs)
+
+    # BACKWARDS COMPATIBILITY AND FEATURE DEPRECATION NOTICE:
+    # this convenience function will be deprecated in a future release.
+    # Please use get_appointments
+    appointments = get_appointments
 
     def book_appointment(self, appointment_uuid, appointment_request):
         """
@@ -425,7 +446,7 @@ class PokitDokClient(object):
         path = "/identity/{0}".format(identity_uuid)
         return self.put(path, data=identity_request)
 
-    def identity(self, identity_uuid=None, **kwargs):
+    def get_identity(self, identity_uuid=None, **kwargs):
         """
             Queries for an existing identity resource by uuid or for multiple resources using parameters.
             :uuid: The identity resource uuid. Used to execute an exact match query by uuid.
@@ -435,6 +456,33 @@ class PokitDokClient(object):
         """
         path = "/identity{0}".format('/{0}'.format(identity_uuid) if identity_uuid else '')
         return self.get(path, **kwargs)
+
+    # BACKWARDS COMPATIBILITY AND FEATURE DEPRECATION NOTICE:
+    # this convenience function will be deprecated in a future release.
+    # Please use get_identity
+    identity = get_identity
+
+    def validate_identity(self, identity_payload):
+        """
+        Tests the validity of an identity through the Identity Proof api (our knowledge based authentication solution)
+        :param identity_payload:
+        :return: validation_response
+        """
+        return self.post('/identity/proof/valid', data=identity_payload)
+
+    def create_proof_questionnaire(self, identity_payload):
+        """
+        Validates an identity proof request and generates a Knowledge Based Authentication questionnaire if possible
+        :return: questionnaire_response
+        """
+        return self.post('/identity/proof/questions/generate/', data=identity_payload)
+
+    def answer_proof_question(self, answer_request):
+        """
+        Submit a user’s response to a knowledge based authentication question
+        :return: the answer response
+        """
+        return self.post('/identity/proof/questions/score/', data=answer_request)
 
     def identity_history(self, identity_uuid, historical_version=None):
         """
