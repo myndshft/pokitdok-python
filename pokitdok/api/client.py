@@ -86,8 +86,8 @@ class PokitDokClient(object):
         self.identity_proof_score_url = "/identity/proof/questions/score/"
         self.identity_proof_valid_url = "/identity/proof/valid/"
         self.mpc_url = "/mpc/{}"
-        self.oop_estimate_url = "/oop/insurance-estimate"
-        self.oop_load_price_url = "/oop/insurance-load-price "
+        self.oop_insurance_estimate_url = "/oop/insurance-estimate"
+        self.oop_insurance_price_url = "/oop/insurance-load-price "
         self.pharmacy_formulary_url = "/pharmacy/formulary"
         self.pharmacy_network_url = "/pharmacy/network"
         self.pharmacy_plans_url = "/pharmacy/plans"
@@ -333,13 +333,13 @@ class PokitDokClient(object):
         """
         Loads procedure prices for a specific trading partner
         """
-        return self.post(self.oop_load_price_url, **kwargs)
+        return self.post(self.oop_insurance_price_url, **kwargs)
 
     def oop_insurance_estimate(self, **kwargs):
         """
         Returns estimated out of pocket cost and eligibility information for a given procedure
         """
-        return self.post(self.oop_estimate_url, **kwargs)
+        return self.post(self.oop_insurance_estimate_url, **kwargs)
 
     # BACKWARDS COMPATIBILITY AND FEATURE DEPRECATION NOTICE:
     # this convenience function will be deprecated in a future release.

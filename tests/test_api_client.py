@@ -6,6 +6,7 @@ import datetime
 import json
 import tests
 import copy
+import platform
 from unittest import TestCase
 import requests
 
@@ -17,13 +18,17 @@ class TestAPIClient(object):
     """
     ASSERTION_EQ_MSG = 'Expected {} != Actual {}'
     BASE_HEADERS = {
-        'User-Agent': 'python-pokitdok/{0} {1}'.format(pokitdok.__version__, requests.utils.default_user_agent())
+        'User-Agent': 'pokitdok-python#{0}#{1}#{2}'.format(pokitdok.__version__,
+                                                           platform.system(),
+                                                           platform.release())
     }
     BASE_URL = 'https://platform.pokitdok.com/v4/api'
     CLIENT_ID = 'F7q38MzlwOxUwTHb7jvk'
     CLIENT_SECRET = 'O8DRamKmKMLtSTPjK99eUlbfOQEc44VVmp8ARmcY'
     JSON_HEADERS = {
-        'User-Agent': 'python-pokitdok/{0} {1}'.format(pokitdok.__version__, requests.utils.default_user_agent()),
+        'User-Agent': 'pokitdok-python#{0}#{1}#{2}'.format(pokitdok.__version__,
+                                                           platform.system(),
+                                                           platform.release()),
         'Content-type': 'application/json',
     }
     MATCH_NETWORK_LOCATION = r'(.*\.)?pokitdok\.com'
@@ -343,6 +348,8 @@ class TestAPIClient(object):
             mocked_response = self.pd_client.insurance_prices(cpt_code='87799', zip_code='32218')
         assert mocked_response is not None 
 
+    # ENDPOINT DEPRECATION NOTICE
+    # this test will be removed in a future release
     def test_payers(self):
         """
             Tests PokitDok.payers
@@ -591,6 +598,39 @@ class TestAPIClient(object):
         with HTTMock(self.mock_api_response):
             mocked_response = self.pd_client.pharmacy_network(trading_partner_id='MOCKPAYER', plan_number='S5596033',
                                                                 zipcode='94401', radius='10mi')
+        assert mocked_response is not None
+
+    def test_oop_insurance_prices(self):
+        """
+            Tests PokitDok.oop_insurance_prices
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.oop_insurance_prices({
+                'trading_partner_id': 'MOCKPAYER',
+                'cpt_bundle': ['81291', '99999'],
+                'price': {
+                    'amount': '1300',
+                    'currency': 'USD'
+                })
+        assert mocked_response is not None
+
+    def test_oop_insurance_estimate(self):
+        """
+            Tests PokitDok.oop_insurance_estimate
+        """
+        with HTTMock(self.mock_api_response):
+            mocked_response = self.pd_client.oop_insurance_estimate({
+                "trading_partner_id": "MOCKPAYER",
+                "cpt_bundle": ['81291', '99999'],
+                "eligibility": {
+                    "member": {
+                        "birth_date": "1972-02-25",
+                        "first_name": "Mose",
+                        "last_name": "Def",
+                        "id": "999999999"
+                    }
+                }
+            })
         assert mocked_response is not None
 
     def test_connect_refresh_token(self):
