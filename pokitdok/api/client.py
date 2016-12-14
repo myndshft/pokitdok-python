@@ -66,7 +66,7 @@ class PokitDokClient(object):
         self.authorize_url = "{0}/oauth2/authorize".format(base)
         self.api_client = None
 
-        self.activities_url = "/activities/{}"
+        self.activities_url = "/activities/{0}"
         self.authorizations_url = "/authorizations/"
         self.ccd_url = "/ccd/"
         self.claims_url = "/claims/"
@@ -75,17 +75,17 @@ class PokitDokClient(object):
         self.eligibility_url = "/eligibility/"
         self.enrollment_url = "/enrollment/"
         self.enrollment_snapshot_url = "/enrollment/snapshot"
-        self.enrollment_snapshot_data_url = "/enrollment/snapshot/{}/data"
-        self.icd_url = "/icd/convert/{}"
+        self.enrollment_snapshot_data_url = "/enrollment/snapshot/{0}/data"
+        self.icd_url = "/icd/convert/{0}"
         self.identity_post_url = "/identity/"
-        self.identity_put_url = "/identity/{}"
+        self.identity_put_url = "/identity/{0}"
         self.identity_get_url = "/identity"
         self.identity_match_url = "/identity/match"
-        self.identity_history_url = "{}/identity/{}/history"
+        self.identity_history_url = "{0}/identity/{1}/history"
         self.identity_proof_generate_url = "/identity/proof/questions/generate/"
         self.identity_proof_score_url = "/identity/proof/questions/score/"
         self.identity_proof_valid_url = "/identity/proof/valid/"
-        self.mpc_url = "/mpc/{}"
+        self.mpc_url = "/mpc/{0}"
         self.oop_insurance_estimate_url = "/oop/insurance-estimate"
         self.oop_insurance_price_url = "/oop/insurance-load-price "
         self.pharmacy_formulary_url = "/pharmacy/formulary"
@@ -94,13 +94,13 @@ class PokitDokClient(object):
         self.plans_url = "/plans/"
         self.prices_cash_url = "/prices/cash"
         self.prices_insurance_url = "/prices/insurance"
-        self.providers_url = "/providers/{}"
+        self.providers_url = "/providers/{0}"
         self.referrals_url = "/referrals/"
-        self.appointments_url = "/schedule/appointments/{}"
-        self.appointment_types_url = "/schedule/appointmenttypes/{}"
-        self.schedulers_url = "/schedule/schedulers/{}"
+        self.appointments_url = "/schedule/appointments/{0}"
+        self.appointment_types_url = "/schedule/appointmenttypes/{0}"
+        self.schedulers_url = "/schedule/schedulers/{0}"
         self.schedule_slots_url = "/schedule/slots/"
-        self.trading_partners_url = "/tradingpartners/{}"
+        self.trading_partners_url = "/tradingpartners/{0}"
 
         self.initialize_api_client()
         if self.token is None:
@@ -494,7 +494,7 @@ class PokitDokClient(object):
         """
         path = self.identity_get_url
         if identity_uuid:
-            path += '/{}'.format(identity_uuid)
+            path += '/{0}'.format(identity_uuid)
         return self.get(path, **kwargs)
 
     # BACKWARDS COMPATIBILITY AND FEATURE DEPRECATION NOTICE:
@@ -578,5 +578,5 @@ class PokitDokClient(object):
         """
         path = self.pharmacy_network_url
         if npi:
-            path += '/{}'.format(npi)
+            path += '/{0}'.format(npi)
         return self.get(path, **kwargs)
