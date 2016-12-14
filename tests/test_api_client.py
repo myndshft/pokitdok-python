@@ -18,17 +18,19 @@ class TestAPIClient(object):
     """
     ASSERTION_EQ_MSG = 'Expected {} != Actual {}'
     BASE_HEADERS = {
-        'User-Agent': 'pokitdok-python#{0}#{1}#{2}'.format(pokitdok.__version__,
-                                                           platform.system(),
-                                                           platform.release())
+        'User-Agent': 'pokitdok-python#{0}#{1}#{2}#{3}'.format(pokitdok.__version__,
+                                                               platform.python_version(),
+                                                               platform.system(),
+                                                               platform.release())
     }
     BASE_URL = 'https://platform.pokitdok.com/v4/api'
     CLIENT_ID = 'F7q38MzlwOxUwTHb7jvk'
     CLIENT_SECRET = 'O8DRamKmKMLtSTPjK99eUlbfOQEc44VVmp8ARmcY'
     JSON_HEADERS = {
-        'User-Agent': 'pokitdok-python#{0}#{1}#{2}'.format(pokitdok.__version__,
-                                                           platform.system(),
-                                                           platform.release()),
+        'User-Agent': 'pokitdok-python#{0}#{1}#{2}#{3}'.format(pokitdok.__version__,
+                                                               platform.python_version(),
+                                                               platform.system(),
+                                                               platform.release())
         'Content-type': 'application/json',
     }
     MATCH_NETWORK_LOCATION = r'(.*\.)?pokitdok\.com'

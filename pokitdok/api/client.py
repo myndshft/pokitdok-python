@@ -45,9 +45,10 @@ class PokitDokClient(object):
              API clients to reuse an access token across requests. Defaults to None.
         """
         self.base_headers = {
-            'User-Agent': 'pokitdok-python#{0}#{1}#{2}'.format(pokitdok.__version__,
-                                                               platform.system(),
-                                                               platform.release())
+            'User-Agent': 'pokitdok-python#{0}#{1}#{2}#{3}'.format(pokitdok.__version__,
+                                                                   platform.python_version(),
+                                                                   platform.system(),
+                                                                   platform.release())
         }
         self.json_headers = {
             'Content-type': 'application/json',
