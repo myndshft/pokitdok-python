@@ -329,17 +329,17 @@ class PokitDokClient(object):
         """
         return self.get(self.prices_insurance_url, **kwargs)
 
-    def oop_insurance_prices(self, **kwargs):
+    def oop_insurance_prices(self, request_data):
         """
         Loads procedure prices for a specific trading partner
         """
-        return self.post(self.oop_insurance_price_url, **kwargs)
+        return self.post(self.oop_insurance_price_url, data=request_data)
 
-    def oop_insurance_estimate(self, **kwargs):
+    def oop_insurance_estimate(self, request_data):
         """
         Returns estimated out of pocket cost and eligibility information for a given procedure
         """
-        return self.post(self.oop_insurance_estimate_url, **kwargs)
+        return self.post(self.oop_insurance_estimate_url, data=request_data)
 
     # BACKWARDS COMPATIBILITY AND FEATURE DEPRECATION NOTICE:
     # this convenience function will be deprecated in a future release.

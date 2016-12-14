@@ -611,7 +611,8 @@ class TestAPIClient(object):
                 'price': {
                     'amount': '1300',
                     'currency': 'USD'
-                })
+                }
+            })
         assert mocked_response is not None
 
     def test_oop_insurance_estimate(self):
