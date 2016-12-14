@@ -30,7 +30,7 @@ class TestAPIClient(object):
         'User-Agent': 'pokitdok-python#{0}#{1}#{2}#{3}'.format(pokitdok.__version__,
                                                                platform.python_version(),
                                                                platform.system(),
-                                                               platform.release())
+                                                               platform.release()),
         'Content-type': 'application/json',
     }
     MATCH_NETWORK_LOCATION = r'(.*\.)?pokitdok\.com'
