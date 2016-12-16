@@ -15,6 +15,7 @@ import pokitdok
 import requests
 from requests_oauthlib import OAuth2Session, TokenUpdated
 from oauthlib.oauth2 import BackendApplicationClient, TokenExpiredError
+from warnings import warn
 
 
 class PokitDokClient(object):
@@ -343,13 +344,13 @@ class PokitDokClient(object):
         return self.post(self.oop_insurance_estimate_url, data=request_data)
 
     # BACKWARDS COMPATIBILITY AND FEATURE DEPRECATION NOTICE:
-    # this convenience function will be deprecated in a future release.
-    # please move to using the trading partners endpoint
     def payers(self, **kwargs):
         """
             Fetch payer information for supported trading partners
 
         """
+        warn(DeprecationWarning('This convenience function will be deprecated '
+                                'in an upcoming release. Use trading_partners instead.'), stacklevel=2)
         return self.get('/payers/',  **kwargs)
 
     def plans(self, **kwargs):
@@ -444,9 +445,11 @@ class PokitDokClient(object):
         return self.get(path, **kwargs)
 
     # BACKWARDS COMPATIBILITY AND FEATURE DEPRECATION NOTICE:
-    # this convenience function will be deprecated in a future release.
-    # Please use get_appointments
-    appointments = get_appointments
+    def appointments(self, appointment_uuid=None, **kwargs):
+        warn(DeprecationWarning('This convenience function will be deprecated '
+                                'in an upcoming release. Use get_appointments instead.'), stacklevel=2)
+
+        return self.get_appointments(appointment_uuid, **kwargs)
 
     def book_appointment(self, appointment_uuid, appointment_request):
         """
@@ -499,9 +502,11 @@ class PokitDokClient(object):
         return self.get(path, **kwargs)
 
     # BACKWARDS COMPATIBILITY AND FEATURE DEPRECATION NOTICE:
-    # this convenience function will be deprecated in a future release.
-    # Please use get_identity
-    identity = get_identity
+    def identity(self, identity_uuid=None, **kwargs):
+        warn(DeprecationWarning('This convenience function will be deprecated '
+                                'in an upcoming release. Use get_identity instead.'), stacklevel=2)
+
+        return self.get_identity(identity_uuid, **kwargs)
 
     def validate_identity(self, identity_payload):
         """
