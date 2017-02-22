@@ -12,3 +12,4 @@ sudo: false
 env:
   global:
     - CI=true
+    OPENSSL=1.0.1
