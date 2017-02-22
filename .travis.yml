@@ -15,5 +15,19 @@ env:
 
 matrix:
   include:
+  # Also run the tests against cryptography master.
+  - python: "2.6"
+    env:
+      OPENSSL=1.0.1
+  - python: "2.7"
+    env:
+      OPENSSL=1.0.1
+  - python: "3.4"
+    env:
+      OPENSSL=1.0.1
+  - python: "3.5"
+    env:
+      OPENSSL=1.0.1
+  - python: "pypy"
     env:
       OPENSSL=1.0.1
