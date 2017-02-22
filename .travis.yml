@@ -12,4 +12,8 @@ sudo: false
 env:
   global:
     - CI=true
-    OPENSSL=1.0.1
+    
+matrix:
+  include:
+    env:
+      OPENSSL=0.9.8
