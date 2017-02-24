@@ -1,0 +1,16 @@
+FROM python:2.7
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+COPY setup.py setup.cfg /usr/src/app/
+RUN mkdir -p /usr/src/app/pokitdok/
+COPY pokitdok/ /usr/src/app/pokitdok/
+RUN mkdir -p /usr/src/app/tests/
+COPY tests/ /usr/src/app/tests/
+COPY .env /usr/src/app/
+RUN /bin/bash -c "chown root /usr/src/app/.env"
+RUN /bin/bash -c "source /usr/src/app/.env"
+
+RUN python setup.py develop
+RUN nosetests tests/

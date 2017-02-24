@@ -148,31 +148,31 @@ class TestAPIClient(object):
     # get/post/put tests
     # ******************************
     #
-
-    def test_post(self):
-        """
-        POST Test
-        """
-        self.pd_client = pokitdok.api.connect(**client_settings)
-        request = {
-            "member": {
-                "birth_date": "1970-01-25",
-                "first_name": "Jane",
-                "last_name": "Doe",
-                "id": "W000000000"
-            },
-            "provider": {
-                "first_name": "JEROME",
-                "last_name": "AYA-AY",
-                "npi": "1467560003"
-            },
-            "trading_partner_id": "MOCKPAYER"
-        }
-        # TODO WEDNESDAY
-        response = self.pd_client.request(self.pd_client.eligibility_url, "POST", request)
-        assert response["meta"].keys() is not None
-        assert response["data"].keys() is not None
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+    #
+    # def test_post(self):
+    #     """
+    #     POST Test
+    #     """
+    #     self.pd_client = pokitdok.api.connect(**client_settings)
+    #     request = {
+    #         "member": {
+    #             "birth_date": "1970-01-25",
+    #             "first_name": "Jane",
+    #             "last_name": "Doe",
+    #             "id": "W000000000"
+    #         },
+    #         "provider": {
+    #             "first_name": "JEROME",
+    #             "last_name": "AYA-AY",
+    #             "npi": "1467560003"
+    #         },
+    #         "trading_partner_id": "MOCKPAYER"
+    #     }
+    #     # TODO WEDNESDAY
+    #     response = self.pd_client.request(self.pd_client.eligibility_url, "POST", request)
+    #     assert response["meta"].keys() is not None
+    #     assert response["data"].keys() is not None
+    #     assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
 #     def test_request_get(self):
 #         """

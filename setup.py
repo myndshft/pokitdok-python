@@ -35,10 +35,10 @@ setup(
     include_package_data=True,
     platforms="any",
     install_requires=[
-        "requests>=2.3.0", "oauthlib<0.7.0", "requests-oauthlib==0.4.1"
+        "requests>=2.3.0", "oauthlib<0.7.0", "requests-oauthlib==0.4.1", "nose==1.3.7"
     ],
     tests_require=[
-        "httmock==1.2.4", "nose==1.3.7"
+        "nose==1.3.7"
     ],
     test_suite='nose.collector',
     keywords=['health', 'api', 'pokitdok', 'X12', 'eligibility', 'claims', 'providers', 'prices', 'healthcare',

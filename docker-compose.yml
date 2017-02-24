@@ -1,0 +1,6 @@
+pokitdok-test:
+  build: .
+  dockerfile: Dockerfile-${PYTHON_VERSION}
+  environment:
+        - POKITDOK_CLIENT_ID=${POKITDOK_CLIENT_ID}
+        - POKITDOK_CLIENT_SECRET=${POKITDOK_CLIENT_SECRET}
