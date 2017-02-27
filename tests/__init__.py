@@ -1,4 +1,4 @@
-import config
+import tests.config as config
 
 client_settings = {
     'client_id': config.client_id,

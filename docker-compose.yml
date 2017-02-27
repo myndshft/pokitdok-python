@@ -1,3 +1,0 @@
-pokitdok-test:
-  build: .
-  dockerfile: Dockerfile-${PYTHON_VERSION}
