@@ -1,19 +1,19 @@
-FROM python:2.7
+FROM python:3.3
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY setup.py setup.cfg /usr/src/app/
 RUN mkdir -p /usr/src/app/pokitdok/
-COPY pokitdok/ /usr/src/app/pokitdok/
+COPY pokitdok/. /usr/src/app/pokitdok/
 
 RUN mkdir -p /usr/src/app/tests/
 RUN mkdir -p /usr/src/app/tests/config/
 
-COPY tests/. /usr/src/app/tests
-COPY tests/config/. /usr/src/app/tests/config
+COPY tests/. /usr/src/app/tests/
+COPY tests/config/. /usr/src/app/tests/config/
 
 RUN python setup.py develop
 
 # store your client_id and secret in a python file: tests/config/local.py
-RUN APP_ENV=local nosetests tests/
+RUN APP_ENV=local PYTHONPATH=. nosetests tests/

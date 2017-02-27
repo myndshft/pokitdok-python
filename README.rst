@@ -207,12 +207,13 @@ Check SSL protocol and cipher
 Supported Python Versions
 -------------------------
 
-This library aims to support and is tested against these Python versions:
+This library aims to support and is tested within the [official Docker images](https://hub.docker.com/_/python/) for the following Python versions:
 
-* 2.6.9
-* 2.7.6
-* 3.4.0
-* 3.5.0
+* 2.7
+* 3.3
+* 3.4
+* 3.5
+* 3.6
 * PyPy
 
 You may have luck with other interpreters - let us know how it goes.
