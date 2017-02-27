@@ -149,113 +149,135 @@ class TestAPIClient(object):
     # ******************************
     #
     #
-    # def test_post(self):
-    #     """
-    #     POST Test
-    #     """
-    #     self.pd_client = pokitdok.api.connect(**client_settings)
-    #     request = {
-    #         "member": {
-    #             "birth_date": "1970-01-25",
-    #             "first_name": "Jane",
-    #             "last_name": "Doe",
-    #             "id": "W000000000"
-    #         },
-    #         "provider": {
-    #             "first_name": "JEROME",
-    #             "last_name": "AYA-AY",
-    #             "npi": "1467560003"
-    #         },
-    #         "trading_partner_id": "MOCKPAYER"
-    #     }
-    #     # TODO WEDNESDAY
-    #     response = self.pd_client.request(self.pd_client.eligibility_url, "POST", request)
-    #     assert response["meta"].keys() is not None
-    #     assert response["data"].keys() is not None
-    #     assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+    def test_post(self):
+        """
+        POST Test
+        """
+        self.pd_client = pokitdok.api.connect(**client_settings)
+        request = {
+            "member": {
+                "birth_date": "1970-01-25",
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "id": "W000000000"
+            },
+            "provider": {
+                "first_name": "JEROME",
+                "last_name": "AYA-AY",
+                "npi": "1467560003"
+            },
+            "trading_partner_id": "MOCKPAYER"
+        }
+        response = self.pd_client.request(self.pd_client.eligibility_url, method='post', data=request)
+        assert response["meta"].keys() is not None
+        assert response["data"].keys() is not None
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
-#     def test_request_get(self):
-#         """
-#             Tests the PokitDok.request convenience method with a GET request.
-#             Validates that the requests request is configured correctly and has the appropriate headers.
-#         """
-#         with HTTMock(self.mock_api_response):
-#             self.pd_client.request(self.TEST_REQUEST_PATH, method='get')
-#
-#         for k, v in self.BASE_HEADERS.items():
-#             assert k in self.current_request.headers
-#
-#             actual_value = self.current_request.headers[k]
-#             assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
-#
-#         assert 'GET' == self.current_request.method
-#
-#     def test_get(self):
-#         """
-#             Tests the PokitDok.get convenience method.
-#             Validates that the requests request is configured correctly and has the appropriate headers.
-#         """
-#         with HTTMock(self.mock_api_response):
-#             self.pd_client.get(self.TEST_REQUEST_PATH)
-#
-#         for k, v in self.BASE_HEADERS.items():
-#             assert k in self.current_request.headers
-#
-#             actual_value = self.current_request.headers[k]
-#             assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
-#
-#         assert 'GET' == self.current_request.method
-#
-#     def test_post(self):
-#         """
-#             Tests the PokitDok.post convenience method.
-#             Validates that the requests request is configured correctly and has the appropriate headers.
-#         """
-#         with HTTMock(self.mock_api_response):
-#             self.pd_client.post(self.TEST_REQUEST_PATH, data={'field': 'value'})
-#
-#         for k, v in self.JSON_HEADERS.items():
-#             assert k in self.current_request.headers
-#
-#             actual_value = self.current_request.headers[k]
-#             assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
-#
-#         assert 'POST' == self.current_request.method
-#
-#     def test_put(self):
-#         """
-#             Tests the PokitDok.put convenience method.
-#             Validates that the requests request is configured correctly and has the appropriate headers.
-#         """
-#         with HTTMock(self.mock_api_response):
-#             url = '{0}/{1}'.format(self.TEST_REQUEST_PATH, 123456)
-#             self.pd_client.put(url, data={'first_name': 'Oscar', 'last_name': 'Whitmire'})
-#
-#         for k, v in self.JSON_HEADERS.items():
-#             assert k in self.current_request.headers
-#
-#             actual_value = self.current_request.headers[k]
-#             assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
-#
-#         assert 'PUT' == self.current_request.method
-#
-#     def test_delete(self):
-#         """
-#             Tests the PokitDok.delete convenience method.
-#             Validates that the requests request is configured correctly and has the appropriate headers.
-#         """
-#         with HTTMock(self.mock_api_response):
-#             url = '{0}/{1}'.format(self.TEST_REQUEST_PATH, 123456)
-#             self.pd_client.delete(url)
-#
-#         for k, v in self.BASE_HEADERS.items():
-#             assert k in self.current_request.headers
-#
-#             actual_value = self.current_request.headers[k]
-#             assert v == self.current_request.headers[k], self.ASSERTION_EQ_MSG.format(v, actual_value)
-#
-#         assert 'DELETE' == self.current_request.method
-#
+    def test_put_delete_claims_activities(self):
+        """
+            Exercise the workflow of submitting a and deleting a claim'
+        """
+        test_claim = {
+            "transaction_code": "chargeable",
+            "trading_partner_id": "MOCKPAYER",
+            "billing_provider": {
+                "taxonomy_code": "207Q00000X",
+                "first_name": "Jerome",
+                "last_name": "Aya-Ay",
+                "npi": "1467560003",
+                "address": {
+                    "address_lines": [
+                        "8311 WARREN H ABERNATHY HWY"
+                    ],
+                    "city": "SPARTANBURG",
+                    "state": "SC",
+                    "zipcode": "29301"
+                },
+                "tax_id": "123456789"
+            },
+            "subscriber": {
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "member_id": "W000000000",
+                "address": {
+                    "address_lines": ["123 N MAIN ST"],
+                    "city": "SPARTANBURG",
+                    "state": "SC",
+                    "zipcode": "29301"
+                },
+                "birth_date": "1970-01-25",
+                "gender": "female"
+            },
+            "claim": {
+                "total_charge_amount": 60.0,
+                "service_lines": [
+                    {
+                        "procedure_code": "99213",
+                        "charge_amount": 60.0,
+                        "unit_count": 1.0,
+                        "diagnosis_codes": [
+                            "J10.1"
+                        ],
+                        "service_date": "2016-01-25"
+                    }
+                ]
+            }
+        }
+        # assert success of the claim post
+        response = self.pd_client.claims(test_claim)
+        assert response["meta"].keys() is not None
+        assert response["data"].keys() is not None
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+        # use the activities endpoint via a GET to analyze the current status of this claim
+        activity_id = response["meta"]["activity_id"]
+        activity_url = "/activities/" + activity_id
+        get_response = self.pd_client.request(activity_url, method='get', data={})
+        assert get_response["meta"].keys() is not None
+        assert get_response["data"].keys() is not None
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+        # look in the history to see if it has transitioned from state "init" to "canceled"
+        history = get_response["data"]["history"]
+        if len(history) != 1:
+            # this means that the claim is been picked up and is processing within the internal pokitdok system
+            # we aim to test out the put functionality by deleting the claim,
+            # so we need to resubmit a claim to get one that is going to stay in the INIT stage
+            response = self.pd_client.claims(test_claim)
+            assert response["meta"].keys() is not None
+            assert response["data"].keys() is not None
+            assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+            activity_id = response["meta"]["activity_id"]
+            activity_url = "/activities/" + activity_id
+
+        # exercise the PUT functionality to delete the claim from its INIT status
+        put_response = self.pd_client.request(activity_url, method='put', data={"transition": "cancel"})
+        assert put_response["meta"].keys() is not None
+        assert put_response["data"].keys() is not None
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", str(put_response))
+
+        # look in the history to see if it has transitioned from state "init" to "canceled"
+        history = put_response["data"]["history"]
+        assert len(history) == 3, "Tested for cancelled claim, but recived the following claim history: {}".format(str(history))
+
+        # exercise the PUT functionality to delete an already deleted claim
+        put_response = self.pd_client.request(activity_url, method='put', data={"transition": "cancel"})
+        assert put_response["data"]["errors"] is not None
+        assert self.pd_client.status_code == 422, self.ASSERTION_EQ_MSG.format("422", self.pd_client.status_code)
+
+        # exercise the activities endpoint to get the status of this claims transaction
+        activities_response = self.pd_client.activities(response["meta"]["activity_id"])
+        assert activities_response["meta"] is not None
+        assert activities_response["data"] is not None
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+        # exercise the activities endpoint to get the status of this claims transaction
+        activities_response = self.pd_client.activities(response["meta"]["activity_id"])
+        assert activities_response["meta"] is not None
+        assert activities_response["data"] is not None
+        assert self.pd_client.status_code == 404, self.ASSERTION_EQ_MSG.format("404", self.pd_client.status_code)
+        assert "is not a valid Activity Id" in activities_response["data"]["errors"]["query"]
+
 #     def test_activities(self):
 #         """
 #             Tests PokitDok.activities.
