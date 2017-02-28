@@ -266,456 +266,389 @@ class TestAPIClient(object):
         assert self.pd_client.status_code == 422, self.ASSERTION_EQ_MSG.format("422", self.pd_client.status_code)
 
         # exercise the activities endpoint to get the status of this claims transaction
-        activities_response = self.pd_client.activities(response["meta"]["activity_id"])
+        assert activity_id in activity_url, 'Expected {} to be within {}'.format(activity_id, activity_url)
+        activities_response = self.pd_client.activities(activity_id)
         assert activities_response["meta"] is not None
         assert activities_response["data"] is not None
         assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+    #
+    # ******************************
+    # X12 API tests
+    # ******************************
+    #
 
-        # exercise the activities endpoint to get the status of this claims transaction
-        activities_response = self.pd_client.activities(response["meta"]["activity_id"])
-        assert activities_response["meta"] is not None
-        assert activities_response["data"] is not None
-        assert self.pd_client.status_code == 404, self.ASSERTION_EQ_MSG.format("404", self.pd_client.status_code)
-        assert "is not a valid Activity Id" in activities_response["data"]["errors"]["query"]
+    def test_authorizations(self):
+        """
+        X12 API Convenience function test: authorizations
+        make a call to the live endpoint for: authorizations
+        """
+        request = {
+            "event": {
+                "category": "health_services_review",
+                "certification_type": "initial",
+                "delivery": {
+                    "quantity": 1,
+                    "quantity_qualifier": "visits"
+                },
+                "diagnoses": [
+                    {
+                        "code": "R10.9",
+                        "date": "2016-01-25"
+                    }
+                ],
+                "place_of_service": "office",
+                "provider": {
+                    "organization_name": "KELLY ULTRASOUND CENTER, LLC",
+                    "npi": "1760779011",
+                    "phone": "8642341234"
+                },
+                "services": [
+                    {
+                        "cpt_code": "76700",
+                        "measurement": "unit",
+                        "quantity": 1
+                    }
+                ],
+                "type": "diagnostic_medical"
+            },
+            "patient": {
+                "birth_date": "1970-01-25",
+                "first_name": "JANE",
+                "last_name": "DOE",
+                "id": "1234567890"
+            },
+            "provider": {
+                "first_name": "JEROME",
+                "npi": "1467560003",
+                "last_name": "AYA-AY"
+            },
+            "trading_partner_id": "MOCKPAYER"
+        }
+        response = self.pd_client.authorizations(request)
+        assert response["meta"].keys() is not None
+        assert response["data"].keys() is not None
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
-#     def test_activities(self):
-#         """
-#             Tests PokitDok.activities.
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.activities()
-#         assert mocked_response is not None
-#
-#     def test_activities_with_activity_id(self):
-#         """
-#             Tests PokitDok.activities with a specific activity id
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.activities('activity_id')
-#         assert mocked_response is not None
-#
-#     def test_cash_prices(self):
-#         """
-#             Tests PokitDok.cash_prices
-# \        """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.cash_prices(zip_code='94101', cpt_code='95017')
-#         assert mocked_response is not None
-#
-#     def test_ccd(self):
-#         """
-#             Tests PokitDok.ccd
-# \        """
-#         with HTTMock(self.mock_api_response):
-#             ccd_request = {'trading_partner_id': 'MOCKPAYER'}
-#             mocked_response = self.pd_client.ccd(ccd_request)
-#         assert mocked_response is not None
-#
-#     def test_claims(self):
-#         """
-#             Tests PokitDok.claims
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.claims(tests.claim_request)
-#         assert mocked_response is not None
-#
-#     def test_claims_status(self):
-#         """
-#             Tests PokitDok.claims_status
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.claims_status(tests.claim_status_request)
-#         assert mocked_response is not None
-#
-#     def test_mpc_code_lookup(self):
-#         """
-#             Tests PokitDok.mpc (medical procedure code) lookup for a specific code
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.mpc(code='99213')
-#         assert mocked_response is not None
-#
-#     def test_mpc_query(self):
-#         """
-#             Tests PokitDok.mpc (medical procedure code) query
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.mpc(name='office')
-#         assert mocked_response is not None
-#
-#     def test_icd_convert(self):
-#         """
-#             Tests PokitDok.icd_convert
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.icd_convert(code='250.12')
-#         assert mocked_response is not None
-#
-#     def test_claims_convert(self):
-#         """
-#             Tests PokitDok.claims_convert
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.claims_convert(**tests.claims_convert_request)
-#         assert mocked_response is not None
-#
-#     def test_eligibility(self):
-#         """
-#             Tests PokitDok.eligibility
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.eligibility(tests.eligibility_request)
-#         assert mocked_response is not None
-#
-#     def test_enrollment(self):
-#         """
-#             Tests PokitDok.enrollment
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.enrollment(tests.enrollment_request)
-#         assert mocked_response is not None
-#
-#     def test_enrollment_snapshot(self):
-#         """
-#             Tests PokitDok.enrollment_snapshot
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.enrollment_snapshot(**tests.enrollment_snapshot_request)
-#         assert mocked_response is not None
-#
-#     def test_enrollment_snapshots(self):
-#         """
-#             Tests PokitDok.enrollment_snapshots
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.enrollment_snapshots(snapshot_id='12345')
-#         assert mocked_response is not None
-#
-#     def test_enrollment_snapshot_data(self):
-#         """
-#             Tests PokitDok.enrollment_snapshot_data
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.enrollment_snapshot_data(snapshot_id='12345')
-#         assert mocked_response is not None
-#
-#     def test_insurance_prices(self):
-#         """
-#             Tests PokitDok.insurance_prices
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.insurance_prices(cpt_code='87799', zip_code='32218')
-#         assert mocked_response is not None
-#
-#     # ENDPOINT DEPRECATION NOTICE
-#     # this test will be removed in a future release
-#     def test_payers(self):
-#         """
-#             Tests PokitDok.payers
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.payers()
-#         assert mocked_response is not None
-#
-#     def test_plans(self):
-#         """
-#             Tests PokitDok.plans
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.plans()
-#         assert mocked_response is not None
-#
-#     def test_plans_by_state_type(self):
-#         """
-#             Tests PokitDok.plans lookup with state and plan type criteria
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.plans(state='SC', type='PPO')
-#         assert mocked_response is not None
-#
-#     def test_providers_npi(self):
-#         """
-#             Tests PokitDok.providers lookup by NPI
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.providers(npi='1467560003')
-#         assert mocked_response is not None
-#
-#     def test_providers_search(self):
-#         """
-#             Tests PokitDok.providers search by zipcode, specialty, and radius
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.providers(zipcode='29307',
-#                                                        specialty='rheumatology',
-#                                                        radius='20mi')
-#         assert mocked_response is not None
-#
-#     def test_trading_partners(self):
-#         """
-#             Tests PokitDok.trading_partners
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.trading_partners()
-#         assert mocked_response is not None
-#
-#     def test_trading_partners_trading_partner_id(self):
-#         """
-#             Tests PokitDok.trading_partners lookup by trading_partner_id
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.trading_partners(trading_partner_id='MOCKPAYER')
-#         assert mocked_response is not None
-#
-#     def test_referrals(self):
-#         """
-#             Tests PokitDok.referrals
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.referrals(tests.referrals_request)
-#         assert mocked_response is not None
-#
-#     def test_authorizations(self):
-#         """
-#             Tests PokitDok.authorizations
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.authorizations(tests.authorization_request)
-#         assert mocked_response is not None
-#
-#     def test_schedulers(self):
-#         """
-#             Tests PokitDok.schedulers
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.schedulers()
-#         assert mocked_response is not None
-#
-#     def test_schedulers_with_scheduler_uuid(self):
-#         """
-#             Tests PokitDok.schedulers lookup for a specific resource
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.schedulers(scheduler_uuid='967d207f-b024-41cc-8cac-89575a1f6fef')
-#         assert mocked_response is not None
-#
-#     def test_appointment_types(self):
-#         """
-#             Tests PokitDok.appointment_types
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.appointment_types()
-#         assert mocked_response is not None
-#
-#     def test_appointment_types_with_appointment_type_uuid(self):
-#         """
-#             Tests PokitDok.schedulers lookup for a specific resource
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.appointment_types(
-#                 appointment_type_uuid='ef987693-0a19-447f-814d-f8f3abbf4860')
-#         assert mocked_response is not None
-#
-#     def test_schedule_slots(self):
-#         """
-#             Tests PokitDok.schedule_slots
-#         :return:
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.schedule_slots(tests.slot_create_request)
-#         assert mocked_response is not None
-#
-#     def test_appointments_with_appointment_uuid(self):
-#         """
-#             Tests PokitDok.appointments lookup for a specific resource
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.appointments(appointment_uuid='ef987691-0a19-447f-814d-f8f3abbf4859')
-#         assert mocked_response is not None
-#
-#     def test_appointments_with_search(self):
-#         """
-#             Tests PokitDok.appointments lookup using search criteria: appointment_type, start_date, and end_date
-#         """
-#         with HTTMock(self.mock_api_response):
-#             search_criteria = {
-#                 'appointment_type': 'AT1',
-#                 'start_date': datetime.date(2016, month=1, day=15),
-#                 'end_date': datetime.date(2016, month=1, day=20),
-#             }
-#             mocked_response = self.pd_client.appointments(**search_criteria)
-#         assert mocked_response is not None
-#
-#     def test_book_appointment(self):
-#         """
-#             Tests PokitDok.book_appointment
-# \        """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.book_appointment('ef987691-0a19-447f-814d-f8f3abbf4859',
-#                                                               tests.appointment_book_request)
-#         assert mocked_response is not None
-#
-#     def test_cancel_appointment(self):
-#         """
-#             Tests PokitDok.cancel_appointment
-# \        """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.cancel_appointment(appointment_uuid='ef987691-0a19-447f-814d-f8f3abbf4859')
-#         assert mocked_response is not None
-#
-#     def test_create_identity(self):
-#         """
-#             Tests PokitDok.create_identity
-# \        """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.create_identity(tests.identity_request)
-#         assert mocked_response is not None
-#
-#     def test_identity_with_uuid(self):
-#         """
-#             Tests PokitDok.identity lookup for a specific resource
-# \        """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.identity(identity_uuid='881bc095-2068-43cb-9783-cce63036412')
-#         assert mocked_response is not None
-#
-#     def test_identity_search(self):
-#         """
-#             Tests PokitDok.identity with search criteria of first_name and last_name
-# \        """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.identity(first_name='Oscar', last_name='Whitmire')
-#         assert mocked_response is not None
-#
-#     def test_update_identity(self):
-#         """
-#             Tests PokitDok.create_identity
-# \        """
-#         with HTTMock(self.mock_api_response):
-#             updated_request = copy.deepcopy(tests.identity_request)
-#             updated_request['email'] = 'oscar@yahoo.com'
-#
-#             mocked_response = self.pd_client.update_identity(identity_uuid='881bc095-2068-43cb-9783-cce63036412',
-#                                                              identity_request=updated_request)
-#         assert mocked_response is not None
-#
-#     def test_identity_history_with_uuid(self):
-#         """
-#             Tests PokitDok.identity_history lookup to return a change summary for a specific resource
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.identity_history(identity_uuid='881bc095-2068-43cb-9783-cce63036412')
-#         assert mocked_response is not None
-#
-#     def test_identity_history_with_uuid_version(self):
-#         """
-#             Tests PokitDok.identity_history lookup for a version of a specific resource
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.identity_history(identity_uuid='881bc095-2068-43cb-9783-cce63036412',
-#                                                               historical_version=1)
-#         assert mocked_response is not None
-#
-#     def test_identity_match(self):
-#         """
-#             Tests PokitDok.identity_match
-# \        """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.identity_match(tests.identity_match_request)
-#         assert mocked_response is not None
-#
-#     def test_pharmacy_plans(self):
-#         """
-#             Tests PokitDok.pharmacy_plans
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.pharmacy_plans(trading_partner_id='MOCKPAYER', plan_number='S5820003')
-#         assert mocked_response is not None
-#
-#     def test_pharmacy_formulary(self):
-#         """
-#             Tests PokitDok.pharmacy_formulary
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.pharmacy_formulary(trading_partner_id='MOCKPAYER', plan_number='S5820003',
-#                                                                 ndc='59310-579-22')
-#         assert mocked_response is not None
-#
-#     def test_pharmacy_network_by_npi(self):
-#         """
-#             Tests PokitDok.pharmacy_network by NPI
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.pharmacy_network(trading_partner_id='MOCKPAYER', plan_number='S5596033',
-#                                                                 npi='1912301953')
-#         assert mocked_response is not None
-#
-#     def test_pharmacy_network_search(self):
-#         """
-#             Tests PokitDok.pharmacy_network search
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.pharmacy_network(trading_partner_id='MOCKPAYER', plan_number='S5596033',
-#                                                                 zipcode='94401', radius='10mi')
-#         assert mocked_response is not None
-#
-#     def test_oop_insurance_prices(self):
-#         """
-#             Tests PokitDok.oop_insurance_prices
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.oop_insurance_prices({
-#                 'trading_partner_id': 'MOCKPAYER',
-#                 'cpt_bundle': ['81291', '99999'],
-#                 'price': {
-#                     'amount': '1300',
-#                     'currency': 'USD'
-#                 }
-#             })
-#         assert mocked_response is not None
-#
-#     def test_oop_insurance_estimate(self):
-#         """
-#             Tests PokitDok.oop_insurance_estimate
-#         """
-#         with HTTMock(self.mock_api_response):
-#             mocked_response = self.pd_client.oop_insurance_estimate({
-#                 "trading_partner_id": "MOCKPAYER",
-#                 "cpt_bundle": ['81291', '99999'],
-#                 "eligibility": {
-#                     "member": {
-#                         "birth_date": "1972-02-25",
-#                         "first_name": "Mose",
-#                         "last_name": "Def",
-#                         "id": "999999999"
-#                     }
-#                 }
-#             })
-#         assert mocked_response is not None
-#
-#     def test_connect_refresh_token(self):
-#         """
-#             Tests pokitdok.api.connect and getting a refresh token
-#             Validates that the API client instantiation supports an existing token and refreshing a token for auto_refresh
-#         """
-#         with HTTMock(self.mock_oauth2_token):
-#             # get token initial token
-#             self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET, auto_refresh=True)
-#             first_token = copy.deepcopy(self.pd_client.token)
-#
-#             # expire the token and make sure new token is created and not the same as first token
-#             self.pd_client.token['expires_in'] = -10
-#             self.pd_client = pokitdok.api.connect(self.CLIENT_ID, self.CLIENT_SECRET, token=self.pd_client.token, auto_refresh=True)
-#
-#             # attempt to make a call, which should get new token...thus auto_refresh working
-#             mocked_response = self.pd_client.pharmacy_plans(trading_partner_id='MOCKPAYER', plan_number='S5820003')
-#             assert mocked_response is not None
-#             second_token = copy.deepcopy(self.pd_client.token)
-#             assert first_token != second_token
-#
-#             # attempt to make a call, which should NOT get a new token. Shows that token_updater is working to
-#             # reset token on PokitDokClient
-#             mocked_response = self.pd_client.pharmacy_plans(trading_partner_id='MOCKPAYER', plan_number='S5820003')
-#             assert mocked_response is not None
-#             third_token = copy.deepcopy(self.pd_client.token)
-#             assert second_token == third_token
+    def test_claims_status(self):
+        """
+        X12 API Convenience function test: claims_status
+        make a call to the live endpoint for: claims_status
+        """
+        request = {
+            "patient": {
+                "birth_date": "1970-01-25",
+                "first_name": "JANE",
+                "last_name": "DOE",
+                "id": "1234567890"
+            },
+            "provider": {
+                "first_name": "Jerome",
+                "last_name": "Aya-Ay",
+                "npi": "1467560003"
+            },
+            "service_date": "2014-01-25",
+            "trading_partner_id": "MOCKPAYER"
+        }
+        response = self.pd_client.claims_status(request)
+        assert response["meta"].keys() is not None
+        assert response["data"].keys() is not None
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_claims_convert(self):
+        """
+        X12 API Convenience function test: claims_convert
+        make a call to the live endpoint for: claims_convert
+        """
+        request = "tests/chiropractic_example.837"
+        response = self.pd_client.claims_convert(request)
+        assert response["meta"].keys() is not None
+        assert response["data"].keys() is not None
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_eligibility(self):
+        """
+        X12 API Convenience function test: eligibility
+        make a call to the live endpoint for: eligibility
+        """
+        request = {
+            "member": {
+                "birth_date": "1970-01-25",
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "id": "W000000000"
+            },
+            "provider": {
+                "first_name": "JEROME",
+                "last_name": "AYA-AY",
+                "npi": "1467560003"
+            },
+            "trading_partner_id": "MOCKPAYER"
+        }
+        response = self.pd_client.eligibility(request)
+        assert response["meta"].keys() is not None
+        assert response["data"].keys() is not None
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_referrals(self):
+        """
+        X12 API Convenience function test: referrals
+        make a call to the live endpoint for: referrals
+        """
+        request = {
+            "event": {
+                "category": "specialty_care_review",
+                "certification_type": "initial",
+                "delivery": {
+                    "quantity": 1,
+                    "quantity_qualifier": "visits"
+                },
+                "diagnoses": [
+                    {
+                        "code": "H72.90",
+                        "date": "2014-09-25"
+                    }
+                ],
+                "place_of_service": "office",
+                "provider": {
+                    "first_name": "JOHN",
+                    "npi": "1154387751",
+                    "last_name": "FOSTER",
+                    "phone": "8645822900"
+                },
+                "type": "consultation"
+            },
+            "patient": {
+                "birth_date": "1970-01-25",
+                "first_name": "JANE",
+                "last_name": "DOE",
+                "id": "1234567890"
+            },
+            "provider": {
+                "first_name": "CHRISTINA",
+                "last_name": "BERTOLAMI",
+                "npi": "1619131232"
+            },
+            "trading_partner_id": "MOCKPAYER"
+        }
+        response = self.pd_client.referrals(request)
+        assert response["meta"].keys() is not None
+        assert response["data"].keys() is not None
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    #
+    # ******************************
+    # Data API tests
+    # ******************************
+    #
+
+    def test_cash_prices(self):
+        """
+        Data API Convenience function test: cash_prices
+        make a call to the live endpoint for: cash_prices
+        """
+        response = self.pd_client.cash_prices(zip_code='29412', cpt_code='99385')
+        assert response["meta"] is not None
+        assert response["data"] is not None
+        assert type(response["data"]) is list, self.ASSERTION_EQ_MSG.format("list", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_icd_convert(self):
+        """
+        Data API Convenience function test: icd_convert
+        make a call to the live endpoint for: icd_convert
+        """
+        response = self.pd_client.icd_convert('250.12')
+        assert response["meta"] is not None
+        assert response["data"] is not None
+        assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_mpc(self):
+        """
+        Data API Convenience function test: mpc
+        make a call to the live endpoint for: mpc
+        """
+        response = self.pd_client.mpc(code='99213')
+        assert response["meta"] is not None
+        assert response["data"] is not None
+        assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_insurance_prices(self):
+        """
+        Data API Convenience function test: insurance_prices
+        make a call to the live endpoint for: insurance_prices
+        """
+        response = self.pd_client.insurance_prices(zip_code='94401', cpt_code='90658')
+        assert response["meta"] is not None
+        assert response["data"] is not None
+        assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_oop_insurance_estimate(self):
+        """
+        Data API Convenience function test: oop_insurance_estimate
+        make a call to the live endpoint for: oop_insurance_estimate
+        """
+        request = {
+            "trading_partner_id" : "MOCKPAYER",
+            "cpt_bundle": ["99999", "81291"],
+            "service_type_codes": ["30"],
+            "eligibility": {
+                "provider": {
+                    "npi": "1912301953",
+                    "organization_name": "PokitDok, Inc"
+                },
+                "member": {
+                    "birth_date": "1975-04-26",
+                    "first_name": "Joe",
+                    "last_name": "Immortan",
+                    "id": "999999999"
+                }
+            }
+        }
+        response = self.pd_client.oop_insurance_estimate(request)
+        assert response["meta"] is not None
+        assert response["data"]is not None
+        assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_oop_insurance_prices(self):
+        """
+        Data API Convenience function test: oop_insurance_prices
+        make a call to the live endpoint for: oop_insurance_prices
+        """
+        request = {
+            "trading_partner_id": "MOCKPAYER",
+            "cpt_bundle": ["81291", "99999"],
+            "price": {
+                "amount": "1300",
+                "currency": "USD"
+            }
+        }
+        response = self.pd_client.oop_insurance_prices(request)
+        assert response["meta"] is not None, 'Expected a non-empty data section. Full response: {}'.format(str(response))
+        assert response["data"] is not None, 'Expected a non-empty data section. Full response: {}'.format(str(response))
+        assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", str(response))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_plans(self):
+        """
+        Data API Convenience function test: plans
+        make a call to the live endpoint for: plans
+        """
+        response = self.pd_client.plans(state='SC', plan_type='PPO')
+        assert response["meta"] is not None
+        assert response["data"] is not None
+        assert type(response["data"]) is list, self.ASSERTION_EQ_MSG.format("list", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_providers(self):
+        """
+        Data API Convenience function test: providers
+        make a call to the live endpoint for: providers
+        """
+        response = self.pd_client.providers(npi='1467560003')
+        assert response["meta"] is not None
+        assert response["data"] is not None
+        assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_trading_partners(self):
+        """
+        Data API Convenience function test: trading_partners
+        make a call to the live endpoint for: trading_partners
+        """
+        response = self.pd_client.trading_partners('aetna')
+        assert response["meta"] is not None
+        assert response["data"] is not None
+        assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    #
+    # ******************************
+    # Pharmacy API Convenience Functions
+    # ******************************
+    #
+
+    def test_pharmacy_plans(self):
+        """
+        Pharmacy API Convenience function test: pharmacy_plans
+        make a call to the live endpoint for: pharmacy_plans
+        """
+        response = self.pd_client.pharmacy_plans(trading_partner_id='medicare_national', plan_number='S5820003')
+        assert response["meta"] is not None
+        assert response["data"] is not None
+        assert type(response["data"]) is list, self.ASSERTION_EQ_MSG.format("list", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_pharmacy_formulary(self):
+        """
+        Pharmacy API Convenience function test: pharmacy_formulary
+        make a call to the live endpoint for: pharmacy_formulary
+        """
+        response = self.pd_client.pharmacy_formulary(trading_partner_id='medicare_national', plan_number='S5820003', drug='simvastatin')
+        assert response["meta"] is not None
+        assert response["data"] is not None
+        assert type(response["data"]) is list, self.ASSERTION_EQ_MSG.format("list", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    def test_pharmacy_network(self):
+        """
+        Pharmacy API Convenience function test: pharmacy_network
+        make a call to the live endpoint for: pharmacy_network
+        """
+        response = self.pd_client.pharmacy_network(npi='1427382266', trading_partner_id='medicare_national', plan_number='S5820003')
+        assert response["meta"] is not None
+        assert response["data"] is not None
+        assert type(response["data"]) is list, self.ASSERTION_EQ_MSG.format("list", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+
+    #
+    # ******************************
+    # identity tests
+    # ******************************
+    #
+
+    def test_validate_identity(self):
+        """
+        Pharmacy API Convenience function test: validate_identity
+        make a call to the live endpoint for: validate_identity
+        """
+        request = {
+            "first_name": 'Duard',
+            "last_name": 'Osinski',
+            "birth_date": {
+                "day": 12,
+                "month": 3,
+                "year": 1952
+            },
+            "ssn": '491450000',
+            "address": {
+                "city": 'North Perley',
+                "country_code": 'US',
+                "postal_code": '24330',
+                "state_or_province": 'GA',
+                "street1": '41072 Douglas Terrace ',
+                "street2": 'Apt. 992'
+            }
+        }
+        response = self.pd_client.validate_identity(request)
+        assert response["meta"] is not None
+        assert response["data"] is not None
+        assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
+        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+

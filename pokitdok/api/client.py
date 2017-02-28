@@ -90,7 +90,7 @@ class PokitDokClient(object):
         self.identity_proof_valid_url = "/identity/proof/valid/"
         self.mpc_url = "/mpc/{0}"
         self.oop_insurance_estimate_url = "/oop/insurance-estimate"
-        self.oop_insurance_price_url = "/oop/insurance-load-price "
+        self.oop_insurance_price_url = "/oop/insurance-load-price"
         self.pharmacy_formulary_url = "/pharmacy/formulary"
         self.pharmacy_network_url = "/pharmacy/network"
         self.pharmacy_plans_url = "/pharmacy/plans"
