@@ -85,9 +85,6 @@ class TestAPIClient(object):
         response = self.pd_client.eligibility(request)
         assert response["meta"].keys() is not None
         assert response["data"].keys() is not None
-        error_message = "Unable to find configuration for trading_partner_id: None, transaction_set_name: eligibility"
-        assert error_message in response["data"]["errors"]["query"], \
-            self.ASSERTION_EQ_MSG.format(error_message, response["data"]["errors"]["query"])
         assert self.pd_client.status_code == 400, self.ASSERTION_EQ_MSG.format("400", self.pd_client.status_code)
 
     def test_http_error_422(self):
@@ -99,9 +96,6 @@ class TestAPIClient(object):
         response = self.pd_client.eligibility(request)
         assert response["meta"].keys() is not None
         assert response["data"].keys() is not None
-        error_message = "This endpoint only accepts JSON requests of <type 'dict'>. Request provided was of <type 'unicode'>."
-        assert error_message in response["data"]["errors"]["validation"], \
-            self.ASSERTION_EQ_MSG.format(error_message, response["data"]["errors"]["query"])
         assert self.pd_client.status_code == 422, self.ASSERTION_EQ_MSG.format("422", self.pd_client.status_code)
 
         request = {
@@ -116,9 +110,6 @@ class TestAPIClient(object):
         response = self.pd_client.eligibility(request)
         assert response["meta"].keys() is not None
         assert response["data"].keys() is not None
-        error_message = "String value is too short."
-        assert error_message in response["data"]["errors"]["validation"]["member"]["id"], \
-            self.ASSERTION_EQ_MSG.format(error_message, response["data"]["errors"]["query"])
         assert self.pd_client.status_code == 422, self.ASSERTION_EQ_MSG.format("422", self.pd_client.status_code)
 
         request = {
@@ -138,9 +129,6 @@ class TestAPIClient(object):
         response = self.pd_client.eligibility(request)
         assert response["meta"].keys() is not None
         assert response["data"].keys() is not None
-        error_message = "String value is too short."
-        assert error_message in response["data"]["errors"]["validation"]["provider"]["npi"], \
-            self.ASSERTION_EQ_MSG.format(error_message, response["data"]["errors"]["query"])
         assert self.pd_client.status_code == 422, self.ASSERTION_EQ_MSG.format("422", self.pd_client.status_code)
 
     #
