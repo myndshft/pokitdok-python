@@ -1,14 +1,10 @@
 from __future__ import absolute_import
 
 import pokitdok
-import datetime
-import json
-import tests
 import copy
-import platform
-from unittest import TestCase
-import requests
 from tests import client_settings
+
+
 
 class TestAPIClient(object):
     """
@@ -29,14 +25,24 @@ class TestAPIClient(object):
     # client set up tests
     # ******************************
     #
+    def assert_helper(self, response, status_code):
+        """
+        helper function for assert statement pattern
+        :param response_payload: the payload to test
+        :param status_code: the expected status code
+        """
+        assert response["meta"] is not None, "The meta section is unexpectedly empty. Full reponse: {}" .format(str(response))
+        assert response["data"] is not None, "The data section is unexpectedly empty. Full reponse: {}" .format(str(response))
+        assert self.pd_client.status_code == status_code, self.ASSERTION_EQ_MSG.format(str(status_code),
+                                                                                       self.pd_client.status_code)
 
     def test_connect(self):
         """
         tests the basic init of the client
         :return:
         """
-        assert self.pd_client.api_client is not None
-        assert self.pd_client.api_client.token is not None
+        assert self.pd_client.api_client is not None, "The api client was not initialized."
+        assert self.pd_client.api_client.token is not None, "The api client was not initialized."
         assert "pokitdok-python" in self.pd_client.base_headers["User-Agent"],\
             self.ASSERTION_EQ_MSG.format("pokitdok-python", self.pd_client.base_headers)
 
@@ -51,12 +57,12 @@ class TestAPIClient(object):
         self.pd_client = pokitdok.api.connect(token=first_token, **client_settings)
         second_token = copy.deepcopy(self.pd_client.token)
         # first token should be equal to the second
-        assert first_token == second_token
+        assert first_token == second_token, "The tokens do not match"
 
         # validate unique tokens for new client instances
         self.pd_client = pokitdok.api.connect(**client_settings)
         third_token = copy.deepcopy(self.pd_client.token)
-        assert third_token not in [first_token, second_token]
+        assert third_token not in [first_token, second_token], "The tokens are not unique"
 
     #
     # ******************************
@@ -83,9 +89,7 @@ class TestAPIClient(object):
             },
         }
         response = self.pd_client.eligibility(request)
-        assert response["meta"].keys() is not None
-        assert response["data"].keys() is not None
-        assert self.pd_client.status_code == 400, self.ASSERTION_EQ_MSG.format("400", self.pd_client.status_code)
+        self.assert_helper(response, 400)
 
     def test_http_error_422(self):
         """
@@ -94,9 +98,7 @@ class TestAPIClient(object):
         self.pd_client = pokitdok.api.connect(**client_settings)
         request = "bad request"
         response = self.pd_client.eligibility(request)
-        assert response["meta"].keys() is not None
-        assert response["data"].keys() is not None
-        assert self.pd_client.status_code == 422, self.ASSERTION_EQ_MSG.format("422", self.pd_client.status_code)
+        self.assert_helper(response, 422)
 
         request = {
             "member": {
@@ -108,9 +110,7 @@ class TestAPIClient(object):
             "trading_partner_id": 'MOCKPAYER'
         }
         response = self.pd_client.eligibility(request)
-        assert response["meta"].keys() is not None
-        assert response["data"].keys() is not None
-        assert self.pd_client.status_code == 422, self.ASSERTION_EQ_MSG.format("422", self.pd_client.status_code)
+        self.assert_helper(response, 422)
 
         request = {
             "member": {
@@ -127,9 +127,7 @@ class TestAPIClient(object):
             "trading_partner_id": 'MOCKPAYER'
         }
         response = self.pd_client.eligibility(request)
-        assert response["meta"].keys() is not None
-        assert response["data"].keys() is not None
-        assert self.pd_client.status_code == 422, self.ASSERTION_EQ_MSG.format("422", self.pd_client.status_code)
+        self.assert_helper(response, 422)
 
     #
     # ******************************
@@ -157,9 +155,7 @@ class TestAPIClient(object):
             "trading_partner_id": "MOCKPAYER"
         }
         response = self.pd_client.request(self.pd_client.eligibility_url, method='post', data=request)
-        assert response["meta"].keys() is not None
-        assert response["data"].keys() is not None
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+        self.assert_helper(response, 200)
 
     def test_put_delete_claims_activities(self):
         """
@@ -213,17 +209,13 @@ class TestAPIClient(object):
         }
         # assert success of the claim post
         response = self.pd_client.claims(test_claim)
-        assert response["meta"].keys() is not None
-        assert response["data"].keys() is not None
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+        self.assert_helper(response, 200)
 
         # use the activities endpoint via a GET to analyze the current status of this claim
         activity_id = response["meta"]["activity_id"]
         activity_url = "/activities/" + activity_id
         get_response = self.pd_client.request(activity_url, method='get', data={})
-        assert get_response["meta"].keys() is not None
-        assert get_response["data"].keys() is not None
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+        self.assert_helper(response, 200)
 
         # look in the history to see if it has transitioned from state "init" to "canceled"
         history = get_response["data"]["history"]
@@ -232,17 +224,13 @@ class TestAPIClient(object):
             # we aim to test out the put functionality by deleting the claim,
             # so we need to resubmit a claim to get one that is going to stay in the INIT stage
             response = self.pd_client.claims(test_claim)
-            assert response["meta"].keys() is not None
-            assert response["data"].keys() is not None
-            assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+            self.assert_helper(response, 200)
             activity_id = response["meta"]["activity_id"]
             activity_url = "/activities/" + activity_id
 
         # exercise the PUT functionality to delete the claim from its INIT status
         put_response = self.pd_client.request(activity_url, method='put', data={"transition": "cancel"})
-        assert put_response["meta"].keys() is not None
-        assert put_response["data"].keys() is not None
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", str(put_response))
+        self.assert_helper(response, 200)
 
         # look in the history to see if it has transitioned from state "init" to "canceled"
         history = put_response["data"]["history"]
@@ -250,15 +238,13 @@ class TestAPIClient(object):
 
         # exercise the PUT functionality to delete an already deleted claim
         put_response = self.pd_client.request(activity_url, method='put', data={"transition": "cancel"})
-        assert put_response["data"]["errors"] is not None
+        assert put_response["data"]["errors"] is not None, "Expected an errors section and it is missing. Full response: {}".format(str(response))
         assert self.pd_client.status_code == 422, self.ASSERTION_EQ_MSG.format("422", self.pd_client.status_code)
 
         # exercise the activities endpoint to get the status of this claims transaction
         assert activity_id in activity_url, 'Expected {} to be within {}'.format(activity_id, activity_url)
         activities_response = self.pd_client.activities(activity_id)
-        assert activities_response["meta"] is not None
-        assert activities_response["data"] is not None
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+        self.assert_helper(response, 200)
     #
     # ******************************
     # X12 API tests
@@ -313,9 +299,7 @@ class TestAPIClient(object):
             "trading_partner_id": "MOCKPAYER"
         }
         response = self.pd_client.authorizations(request)
-        assert response["meta"].keys() is not None
-        assert response["data"].keys() is not None
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+        self.assert_helper(response, 200)
 
     def test_claims_status(self):
         """
@@ -338,9 +322,7 @@ class TestAPIClient(object):
             "trading_partner_id": "MOCKPAYER"
         }
         response = self.pd_client.claims_status(request)
-        assert response["meta"].keys() is not None
-        assert response["data"].keys() is not None
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+        self.assert_helper(response, 200)
 
     def test_claims_convert(self):
         """
@@ -349,9 +331,7 @@ class TestAPIClient(object):
         """
         request = "tests/chiropractic_example.837"
         response = self.pd_client.claims_convert(request)
-        assert response["meta"].keys() is not None
-        assert response["data"].keys() is not None
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+        self.assert_helper(response, 200)
 
     def test_eligibility(self):
         """
@@ -373,9 +353,7 @@ class TestAPIClient(object):
             "trading_partner_id": "MOCKPAYER"
         }
         response = self.pd_client.eligibility(request)
-        assert response["meta"].keys() is not None
-        assert response["data"].keys() is not None
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+        self.assert_helper(response, 200)
 
     def test_referrals(self):
         """
@@ -419,9 +397,7 @@ class TestAPIClient(object):
             "trading_partner_id": "MOCKPAYER"
         }
         response = self.pd_client.referrals(request)
-        assert response["meta"].keys() is not None
-        assert response["data"].keys() is not None
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
+        self.assert_helper(response, 200)
 
     #
     # ******************************
@@ -435,11 +411,9 @@ class TestAPIClient(object):
         make a call to the live endpoint for: cash_prices
         """
         response = self.pd_client.cash_prices(zip_code='29412', cpt_code='99385')
-        assert response["meta"] is not None
-        assert response["data"] is not None
+        self.assert_helper(response, 200)
         assert type(response["data"]) is list, self.ASSERTION_EQ_MSG.format("list", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
     def test_icd_convert(self):
         """
@@ -447,11 +421,9 @@ class TestAPIClient(object):
         make a call to the live endpoint for: icd_convert
         """
         response = self.pd_client.icd_convert('250.12')
-        assert response["meta"] is not None
-        assert response["data"] is not None
+        self.assert_helper(response, 200)
         assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
     def test_mpc(self):
         """
@@ -459,11 +431,9 @@ class TestAPIClient(object):
         make a call to the live endpoint for: mpc
         """
         response = self.pd_client.mpc(code='99213')
-        assert response["meta"] is not None
-        assert response["data"] is not None
+        self.assert_helper(response, 200)
         assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
     def test_insurance_prices(self):
         """
@@ -471,11 +441,9 @@ class TestAPIClient(object):
         make a call to the live endpoint for: insurance_prices
         """
         response = self.pd_client.insurance_prices(zip_code='94401', cpt_code='90658')
-        assert response["meta"] is not None
-        assert response["data"] is not None
+        self.assert_helper(response, 200)
         assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
     def test_oop_insurance_estimate(self):
         """
@@ -500,11 +468,9 @@ class TestAPIClient(object):
             }
         }
         response = self.pd_client.oop_insurance_estimate(request)
-        assert response["meta"] is not None
-        assert response["data"]is not None
+        self.assert_helper(response, 200)
         assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
     def test_oop_insurance_prices(self):
         """
@@ -520,11 +486,9 @@ class TestAPIClient(object):
             }
         }
         response = self.pd_client.oop_insurance_prices(request)
-        assert response["meta"] is not None, 'Expected a non-empty data section. Full response: {}'.format(str(response))
-        assert response["data"] is not None, 'Expected a non-empty data section. Full response: {}'.format(str(response))
+        self.assert_helper(response, 200)
         assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", str(response))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
     def test_plans(self):
         """
@@ -532,11 +496,9 @@ class TestAPIClient(object):
         make a call to the live endpoint for: plans
         """
         response = self.pd_client.plans(state='SC', plan_type='PPO')
-        assert response["meta"] is not None
-        assert response["data"] is not None
+        self.assert_helper(response, 200)
         assert type(response["data"]) is list, self.ASSERTION_EQ_MSG.format("list", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
     def test_providers(self):
         """
@@ -544,11 +506,9 @@ class TestAPIClient(object):
         make a call to the live endpoint for: providers
         """
         response = self.pd_client.providers(npi='1467560003')
-        assert response["meta"] is not None
-        assert response["data"] is not None
+        self.assert_helper(response, 200)
         assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
     def test_trading_partners(self):
         """
@@ -556,11 +516,9 @@ class TestAPIClient(object):
         make a call to the live endpoint for: trading_partners
         """
         response = self.pd_client.trading_partners('aetna')
-        assert response["meta"] is not None
-        assert response["data"] is not None
+        self.assert_helper(response, 200)
         assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
     #
     # ******************************
@@ -574,11 +532,9 @@ class TestAPIClient(object):
         make a call to the live endpoint for: pharmacy_plans
         """
         response = self.pd_client.pharmacy_plans(trading_partner_id='medicare_national', plan_number='S5820003')
-        assert response["meta"] is not None
-        assert response["data"] is not None
+        self.assert_helper(response, 200)
         assert type(response["data"]) is list, self.ASSERTION_EQ_MSG.format("list", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
     def test_pharmacy_formulary(self):
         """
@@ -586,11 +542,9 @@ class TestAPIClient(object):
         make a call to the live endpoint for: pharmacy_formulary
         """
         response = self.pd_client.pharmacy_formulary(trading_partner_id='medicare_national', plan_number='S5820003', drug='simvastatin')
-        assert response["meta"] is not None
-        assert response["data"] is not None
+        self.assert_helper(response, 200)
         assert type(response["data"]) is list, self.ASSERTION_EQ_MSG.format("list", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
     def test_pharmacy_network(self):
         """
@@ -598,11 +552,9 @@ class TestAPIClient(object):
         make a call to the live endpoint for: pharmacy_network
         """
         response = self.pd_client.pharmacy_network(npi='1427382266', trading_partner_id='medicare_national', plan_number='S5820003')
-        assert response["meta"] is not None
-        assert response["data"] is not None
+        self.assert_helper(response, 200)
         assert type(response["data"]) is list, self.ASSERTION_EQ_MSG.format("list", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 
     #
     # ******************************
@@ -634,9 +586,7 @@ class TestAPIClient(object):
             }
         }
         response = self.pd_client.validate_identity(request)
-        assert response["meta"] is not None
-        assert response["data"] is not None
+        self.assert_helper(response, 200)
         assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
-        assert self.pd_client.status_code == 200, self.ASSERTION_EQ_MSG.format("200", self.pd_client.status_code)
 

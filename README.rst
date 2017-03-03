@@ -214,13 +214,19 @@ This library is tested within the [official Docker images](https://hub.docker.co
 * 3.3
 * 3.4
 * 3.5
-* 3.6
+* pypy:2-5.6.0
 
 If you already have docker, you can run the tests yourself via docker by running the testing script included in this repository:
 
 .. code-block:: bash
 
     $ sh run_tests_in_docker.sh
+
+To use the testing process, you will need to drop your `client_id` and `client_secret` in a file called `env.list` with the structure:
+.. code-block:: bash
+
+    POKITDOK_CLIENT_ID=<your_id>
+    POKITDOK_CLIENT_SECRET=<your_secret>
 
 You may have luck with other interpreters - let us know how it goes.
 
