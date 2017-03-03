@@ -1,3 +1,4 @@
+tests/config/local.py
 *.py[cod]
 *.ipynb
 venv
