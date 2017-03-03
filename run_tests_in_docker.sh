@@ -11,4 +11,4 @@ done
 docker run --rm -it \
 --env-file ./env.list \
 -v $PWD:/app/pokitdok pypy:2-5.6.0 \
-/bin/sh /app/pokitdok/setup_and_test.sh
+/bin/sh /app/pokitdok/setup_and_test_pypy.sh
