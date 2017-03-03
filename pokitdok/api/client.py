@@ -67,6 +67,7 @@ class PokitDokClient(object):
         self.token_url = "{0}/oauth2/token".format(base)
         self.authorize_url = "{0}/oauth2/authorize".format(base)
         self.api_client = None
+        self.status_code = 0
 
         self.activities_url = "/activities/{0}"
         self.authorizations_url = "/authorizations/"
@@ -89,7 +90,7 @@ class PokitDokClient(object):
         self.identity_proof_valid_url = "/identity/proof/valid/"
         self.mpc_url = "/mpc/{0}"
         self.oop_insurance_estimate_url = "/oop/insurance-estimate"
-        self.oop_insurance_price_url = "/oop/insurance-load-price "
+        self.oop_insurance_price_url = "/oop/insurance-load-price"
         self.pharmacy_formulary_url = "/pharmacy/formulary"
         self.pharmacy_network_url = "/pharmacy/network"
         self.pharmacy_plans_url = "/pharmacy/plans"
@@ -165,13 +166,16 @@ class PokitDokClient(object):
         request_url = "{0}{1}".format(self.url_base, path)
         request_method = getattr(self.api_client, method)
         try:
-            return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
+            response = request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers)
+            self.status_code = response.status_code
+            return response.json()
         except (TokenUpdated, TokenExpiredError):
             if self.auto_refresh:
                 # Re-fetch token and try request again
                 self.fetch_access_token(self.code)
                 return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
             else:
+                self.status_code = 401  # UNAUTHORIZED
                 raise TokenExpiredError('Access Token has expired. Please, re-authenticate. '
                                         'Use auto_refresh=True to have your client auto refresh')
 
