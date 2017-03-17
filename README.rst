@@ -31,33 +31,33 @@ The following steps create system variables for your PokitDok keys.
 To create system variables from a Linux terminal, first open your `.bashrc` file in your text editor of choice. :
 .. code-block:: bash
 
-vi $HOME/.bashrc
+    vi $HOME/.bashrc
 
 Next, add the two lines below to update your `.bashrc` to export `POKITDOK_*` environment variables. You will need to use your client_id and client_secret for your PokitDok application. These variables store the client credentials for your PokitDok App (you should never check your client_id and secret into publicly available code)
 
 .. code-block:: bash
 
-export POKITDOK_CLIENT_ID=<client id>
-export POKITDOK_CLIENT_SECRET=<client secret>
+    export POKITDOK_CLIENT_ID=<client id>
+    export POKITDOK_CLIENT_SECRET=<client secret>
 
 Lastly, open a terminal and source your `.bashrc` to make the variables accessible in your localhost:
 
 .. code-block:: bash
 
-source $HOME/.bashrc
+    source $HOME/.bashrc
 
 Then, to access your variables within a Python script:
 
 .. code-block:: python
-
-import os
-client_id = os.environ['POKITDOK_CLIENT_ID']
-client_secret = os.environ['POKITDOK_CLIENT_SECRET']
-client_settings = {
-    'client_id': client_id,
-    'client_secret': client_secret,
-}
-pd = pokitdok.api.connect(**client_settings)
+    
+    import os
+    client_id = os.environ['POKITDOK_CLIENT_ID']
+    client_secret = os.environ['POKITDOK_CLIENT_SECRET']
+    client_settings = {
+        'client_id': client_id,
+        'client_secret': client_secret,
+    }
+    pd = pokitdok.api.connect(**client_settings)
 
 
 Quick start
