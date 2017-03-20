@@ -345,7 +345,7 @@ class PokitDokClient(object):
         """
         Delete a procedure prices for a specific trading partner
         """
-        path = self.oop_insurance_price_url + "/" + str(load_price_uuid)
+        path = "{0}/{1}".format(self.oop_insurance_price_url, str(load_price_uuid))
         return self.delete(path, data=request_data)
 
     def oop_insurance_estimate(self, request_data):
