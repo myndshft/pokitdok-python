@@ -33,8 +33,7 @@ class TestAPIClient(object):
         """
         assert response["meta"] is not None, "The meta section is unexpectedly empty. Full reponse: {}" .format(str(response))
         assert response["data"] is not None, "The data section is unexpectedly empty. Full reponse: {}" .format(str(response))
-        assert self.pd_client.status_code == status_code, self.ASSERTION_EQ_MSG.format(str(status_code),
-                                                                                       self.pd_client.status_code)
+        assert self.pd_client.status_code == status_code, str(response)
 
     def test_connect(self):
         """
@@ -445,13 +444,28 @@ class TestAPIClient(object):
         assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
 
-    def test_oop_insurance_estimate(self):
+    def test_oop_insurance_prices(self):
         """
-        Data API Convenience function test: oop_insurance_estimate
-        make a call to the live endpoint for: oop_insurance_estimate
+        Data API Convenience function test: oop_insurance_prices
+        make a call to the live endpoint for: oop_insurance_prices
         """
         request = {
-            "trading_partner_id" : "MOCKPAYER",
+            "trading_partner_id": "MOCKPAYER",
+            "cpt_bundle": ["81291", "99999"],
+            "price": {
+                "amount": "1300",
+                "currency": "USD"
+            }
+        }
+        response = self.pd_client.oop_insurance_prices(request_data=request)
+        self.assert_helper(response, 200)
+        assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
+        assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", str(response))
+        load_uuid = response['data']['uuid']
+
+        # test oop insurance estimate from loaded data
+        request = {
+            "trading_partner_id":"MOCKPAYER",
             "cpt_bundle": ["99999", "81291"],
             "service_type_codes": ["30"],
             "eligibility": {
@@ -472,20 +486,8 @@ class TestAPIClient(object):
         assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["meta"]))
 
-    def test_oop_insurance_prices(self):
-        """
-        Data API Convenience function test: oop_insurance_prices
-        make a call to the live endpoint for: oop_insurance_prices
-        """
-        request = {
-            "trading_partner_id": "MOCKPAYER",
-            "cpt_bundle": ["81291", "99999"],
-            "price": {
-                "amount": "1300",
-                "currency": "USD"
-            }
-        }
-        response = self.pd_client.oop_insurance_prices(request)
+        # test the deletion of the loaded data
+        response = self.pd_client.oop_insurance_delete_price(load_price_uuid=load_uuid)
         self.assert_helper(response, 200)
         assert type(response["data"]) is dict, self.ASSERTION_EQ_MSG.format("dict", type(response["data"]))
         assert type(response["meta"]) is dict, self.ASSERTION_EQ_MSG.format("dict", str(response))

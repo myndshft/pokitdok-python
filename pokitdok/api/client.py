@@ -341,6 +341,13 @@ class PokitDokClient(object):
         """
         return self.post(self.oop_insurance_price_url, data=request_data)
 
+    def oop_insurance_delete_price(self, load_price_uuid, request_data=None):
+        """
+        Delete a procedure prices for a specific trading partner
+        """
+        path = self.oop_insurance_price_url + "/" + str(load_price_uuid)
+        return self.delete(path, data=request_data)
+
     def oop_insurance_estimate(self, request_data):
         """
         Returns estimated out of pocket cost and eligibility information for a given procedure
