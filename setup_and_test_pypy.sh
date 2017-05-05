@@ -3,4 +3,4 @@ curl -SL 'https://bootstrap.pypa.io/get-pip.py' | pypy
 pip install --upgrade pip
 cd /app/pokitdok/
 python setup.py develop
-nosetests tests/
+python setup.py test
