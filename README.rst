@@ -28,7 +28,8 @@ Handling your client_id and client_secret keys
 We recommend using environment variables to store your `client_id` and `client_secret` keys. This can be done via a config module or using system variables.
 The following steps create system variables for your PokitDok keys.
 
-To create system variables from a Linux terminal, first open your `.bashrc` file in your text editor of choice. :
+To create system variables from a Linux terminal, first open your `.bashrc` file in your text editor of choice.
+
 .. code-block:: bash
 
     vi $HOME/.bashrc
@@ -52,6 +53,7 @@ Then, to access your variables within a Python script:
     
     import os
     import pokitdok
+
     client_id = os.environ['POKITDOK_CLIENT_ID']
     client_secret = os.environ['POKITDOK_CLIENT_SECRET']
     client_settings = {
@@ -62,12 +64,14 @@ Then, to access your variables within a Python script:
 
 
 Quick start
------------
+---------------
+
+The client offers a few options for making API requests. High level convenience functions are available for each of the APIs for convenience. The example below demonstrates how to connect and use the `eligibility` convenience function to submit an eligibility request:
 
 .. code-block:: python
 
     import pokitdok
-
+    import os
     pd = pokitdok.api.connect(os.environ['POKITDOK_CLIENT_ID'], os.environ['POKITDOK_CLIENT_SECRET'])
 
     #submit an eligibility request
@@ -81,17 +85,17 @@ Quick start
         "trading_partner_id": "MOCKPAYER"
     })
 
-Making Requests
----------------
-
-The client offers a few options for making API requests.
-High level functions are available for each of the APIs for convenience.
 If your application would prefer to interact with the APIs at a lower level,
 you may elect to use the general purpose request method or one of the http method aliases built around it.
 
 .. code-block:: python
 
     # a low level "request" method is available that allows you to have more control over the construction of the API request
+
+    import pokitdok
+    import os
+    pd = pokitdok.api.connect(os.environ['POKITDOK_CLIENT_ID'], os.environ['POKITDOK_CLIENT_SECRET'])
+
     pd.request('/activities', method='get')
 
     pd.request('/eligibility/', method='post', data={
@@ -136,30 +140,17 @@ Authentication and Authorization
 
 Access to PokitDok APIs is controlled via OAuth2.  Most APIs are accessible with an
 access token acquired via a client credentials grant type since scope and account context
-are not required for their use.  If you're just interested in using APIs that don't
-require a specific scope and account context, you simply supply your app credentials
-and you're ready to go:
+are not required for their use.
 
-We recommend setting up environment variables for your client id and secret keys.
+If you'd like your access token to automatically refresh when using the authorization flow, you can connect like this:
 
 .. code-block:: python
 
-    import os
     import pokitdok
-    client_id = os.environ['POKITDOK_CLIENT_ID']
-    client_secret = os.environ['POKITDOK_CLIENT_SECRET']
-    client_settings = {
-        'client_id': client_id,
-        'client_secret': client_secret,
-    }
-    pd = pokitdok.api.connect(**client_settings)
-
-
-if you'd like your access token to automatically refresh when using the authorization flow, you can connect like this:
-
-.. code-block:: python
-
-    pd = pokitdok.api.connect(**client_settings, auto_refresh=True)
+    import os
+    pd = pokitdok.api.connect(os.environ['POKITDOK_CLIENT_ID'],
+                              os.environ['POKITDOK_CLIENT_SECRET'],
+                              auto_refresh=True)
 
 
 That instructs the Python client to use your refresh token to request a new access token
@@ -170,11 +161,18 @@ authorization from a user prior to requesting an access token.
 
 .. code-block:: python
 
+    import pokitdok
+    import os
+
     def new_token_handler(token):
         print('new token received: {0}'.format(token))
         # persist token information for later use
 
-    pd = pokitdok.api.connect(**client_settings, redirect_uri='https://yourapplication.com/redirect_uri', scope=['user_schedule'], auto_refresh=True, token_refresh_callback=new_token_handler)
+    pd = pokitdok.api.connect(**client_settings,
+                              redirect_uri='https://yourapplication.com/redirect_uri',
+                              scope=['user_schedule'],
+                              auto_refresh=True,
+                              token_refresh_callback=new_token_handler)
 
     authorization_url, state = pd.authorization_url()
     #redirect the user to authorization_url
@@ -189,6 +187,10 @@ If the state matches the original value, you may use the code to fetch an access
 
 .. code-block:: python
 
+    import pokitdok
+    import os
+
+    pd = pokitdok.api.connect(os.environ['POKITDOK_CLIENT_ID'], os.environ['POKITDOK_CLIENT_SECRET'])
     pd.fetch_access_token(code='<code value received via redirect>')
 
 
@@ -203,6 +205,10 @@ Check SSL protocol and cipher
 
 .. code-block:: python
 
+    import pokitdok
+    import os
+
+    pd = pokitdok.api.connect(os.environ['POKITDOK_CLIENT_ID'], os.environ['POKITDOK_CLIENT_SECRET'])
     pd.request('/ssl/', method='get')
 
 Supported Python Versions
@@ -224,6 +230,7 @@ If you already have docker, you can run the tests yourself via docker by running
     $ sh run_tests_in_docker.sh
 
 To use the testing process, you will need to drop your `client_id` and `client_secret` in a file called `env.list` with the structure:
+
 .. code-block:: bash
 
     POKITDOK_CLIENT_ID=<your_id>
