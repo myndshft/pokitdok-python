@@ -211,6 +211,19 @@ Check SSL protocol and cipher
     pd = pokitdok.api.connect(os.environ['POKITDOK_CLIENT_ID'], os.environ['POKITDOK_CLIENT_SECRET'])
     pd.request('/ssl/', method='get')
 
+
+Jupyter Notebooks
+-------
+We have a notebook available for you to use that demos how to use our APIs. To use that notebook, you will need to execute these commands from a terminal to then have access to the `PlatformQuickStartDemo.ipynb` notebook within a browser window.
+
+.. code-block:: bash
+
+    $ pip install jupyter
+    $ cd notebooks/
+    $ jupyter notebook
+
+
+
 Supported Python Versions
 -------------------------
 
@@ -237,6 +250,7 @@ To use the testing process, you will need to drop your `client_id` and `client_s
     POKITDOK_CLIENT_SECRET=<your_secret>
 
 You may have luck with other interpreters - let us know how it goes.
+
 
 License
 -------
