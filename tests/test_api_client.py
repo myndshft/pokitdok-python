@@ -233,7 +233,7 @@ class TestAPIClient(object):
 
         # look in the history to see if it has transitioned from state "init" to "canceled"
         history = put_response["data"]["history"]
-        assert len(history) == 3, "Tested for cancelled claim, but recived the following claim history: {}".format(str(history))
+        assert len(history) > 2, "Tested for cancelled claim, but recived the following claim history: {}".format(str(history))
 
         # exercise the PUT functionality to delete an already deleted claim
         put_response = self.pd_client.request(activity_url, method='put', data={"transition": "cancel"})
