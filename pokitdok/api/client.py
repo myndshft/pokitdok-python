@@ -24,8 +24,17 @@ class PokitDokClient(object):
         This class provides a wrapper around requests and requests-oauth
         to handle common API operations
     """
-    def __init__(self, client_id, client_secret, base="https://platform.pokitdok.com", version="v4",
-                 redirect_uri=None, scope=None, auto_refresh=False, token_refresh_callback=None, code=None,
+
+    def __init__(self,
+                 client_id,
+                 client_secret,
+                 base="https://platform.pokitdok.com",
+                 version="v4",
+                 redirect_uri=None,
+                 scope=None,
+                 auto_refresh=False,
+                 token_refresh_callback=None,
+                 code=None,
                  token=None):
         """
             Initialize a new PokitDok API Client
@@ -46,10 +55,11 @@ class PokitDokClient(object):
              API clients to reuse an access token across requests. Defaults to None.
         """
         self.base_headers = {
-            'User-Agent': 'pokitdok-python#{0}#{1}#{2}#{3}'.format(pokitdok.__version__,
-                                                                   platform.python_version(),
-                                                                   platform.system(),
-                                                                   platform.release())
+            'User-Agent':
+            'pokitdok-python#{0}#{1}#{2}#{3}'.format(pokitdok.__version__,
+                                                     platform.python_version(),
+                                                     platform.system(),
+                                                     platform.release())
         }
         self.json_headers = {
             'Content-type': 'application/json',
@@ -94,6 +104,7 @@ class PokitDokClient(object):
         self.pharmacy_formulary_url = "/pharmacy/formulary"
         self.pharmacy_network_url = "/pharmacy/network"
         self.pharmacy_plans_url = "/pharmacy/plans"
+        self.pharmacy_url = "/pharmacy/coverage"
         self.plans_url = "/plans/"
         self.prices_cash_url = "/prices/cash"
         self.prices_insurance_url = "/prices/insurance"
@@ -115,16 +126,23 @@ class PokitDokClient(object):
         """
         if self.code is None:
             # client credentials flow
-            self.api_client = OAuth2Session(self.client_id, client=BackendApplicationClient(self.client_id),
-                                            token=self.token)
+            self.api_client = OAuth2Session(
+                self.client_id,
+                client=BackendApplicationClient(self.client_id),
+                token=self.token)
         else:
             # authorization grant flow
             refresh_url = self.token_url if self.auto_refresh else None
-            self.api_client = OAuth2Session(self.client_id, redirect_uri=self.redirect_uri, scope=self.scope,
-                                            auto_refresh_url=refresh_url, token_updater=self.token_refresh_callback,
-                                            auto_refresh_kwargs={
-                                                'client_id': self.client_id,
-                                                'client_secret': self.client_secret})
+            self.api_client = OAuth2Session(
+                self.client_id,
+                redirect_uri=self.redirect_uri,
+                scope=self.scope,
+                auto_refresh_url=refresh_url,
+                token_updater=self.token_refresh_callback,
+                auto_refresh_kwargs={
+                    'client_id': self.client_id,
+                    'client_secret': self.client_secret
+                })
 
     def authorization_url(self):
         """
@@ -141,8 +159,12 @@ class PokitDokClient(object):
             :return: the client application's token information as a dictionary
         """
         self.api_client.token = None
-        self.token = self.api_client.fetch_token(token_url=self.token_url, code=code, client_id=self.client_id,
-                                                 client_secret=self.client_secret, scope=self.scope)
+        self.token = self.api_client.fetch_token(
+            token_url=self.token_url,
+            code=code,
+            client_id=self.client_id,
+            client_secret=self.client_secret,
+            scope=self.scope)
         return self.token
 
     def request(self, path, method='get', data=None, files=None, **kwargs):
@@ -166,18 +188,29 @@ class PokitDokClient(object):
         request_url = "{0}{1}".format(self.url_base, path)
         request_method = getattr(self.api_client, method)
         try:
-            response = request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers)
+            response = request_method(
+                request_url,
+                data=request_data,
+                files=files,
+                params=kwargs,
+                headers=headers)
             self.status_code = response.status_code
             return response.json()
         except (TokenUpdated, TokenExpiredError):
             if self.auto_refresh:
                 # Re-fetch token and try request again
                 self.fetch_access_token(self.code)
-                return request_method(request_url, data=request_data, files=files, params=kwargs, headers=headers).json()
+                return request_method(
+                    request_url,
+                    data=request_data,
+                    files=files,
+                    params=kwargs,
+                    headers=headers).json()
             else:
                 self.status_code = 401  # UNAUTHORIZED
-                raise TokenExpiredError('Access Token has expired. Please, re-authenticate. '
-                                        'Use auto_refresh=True to have your client auto refresh')
+                raise TokenExpiredError(
+                    'Access Token has expired. Please, re-authenticate. '
+                    'Use auto_refresh=True to have your client auto refresh')
 
     def get(self, path, **kwargs):
         """
@@ -248,9 +281,12 @@ class PokitDokClient(object):
 
             :param x12_claims_file: the path to a X12 claims file to be submitted to the platform for processing
         """
-        return self.post(self.claims_convert_url, files={
-            'file': (os.path.split(x12_claims_file)[-1], open(x12_claims_file, 'rb'), 'application/EDI-X12')
-        })
+        return self.post(
+            self.claims_convert_url,
+            files={
+                'file': (os.path.split(x12_claims_file)[-1],
+                         open(x12_claims_file, 'rb'), 'application/EDI-X12')
+            })
 
     def claims_status(self, claims_status_request):
         """
@@ -306,10 +342,13 @@ class PokitDokClient(object):
             :param trading_partner_id: the trading partner associated with the enrollment snapshot
             :param x12_file: the path to a X12 834 file that contains the current membership enrollment information
         """
-        return self.post(self.enrollment_snapshot_url, data={'trading_partner_id': trading_partner_id},
-                         files={
-                             'file': (os.path.split(x12_file)[-1], open(x12_file, 'rb'), 'application/EDI-X12')
-                         })
+        return self.post(
+            self.enrollment_snapshot_url,
+            data={'trading_partner_id': trading_partner_id},
+            files={
+                'file': (os.path.split(x12_file)[-1], open(x12_file, 'rb'),
+                         'application/EDI-X12')
+            })
 
     def enrollment_snapshots(self, snapshot_id=None, **kwargs):
         """
@@ -345,7 +384,8 @@ class PokitDokClient(object):
         """
         Delete a procedure price for a specific trading partner
         """
-        path = "{0}/{1}".format(self.oop_insurance_price_url, str(load_price_uuid))
+        path = "{0}/{1}".format(self.oop_insurance_price_url,
+                                str(load_price_uuid))
         return self.delete(path, data=request_data)
 
     def oop_insurance_estimate(self, request_data):
@@ -360,15 +400,26 @@ class PokitDokClient(object):
             Fetch payer information for supported trading partners
 
         """
-        warn(DeprecationWarning('This convenience function will be deprecated '
-                                'in an upcoming release. Use trading_partners instead.'), stacklevel=2)
-        return self.get('/payers/',  **kwargs)
+        warn(
+            DeprecationWarning(
+                'This convenience function will be deprecated '
+                'in an upcoming release. Use trading_partners instead.'),
+            stacklevel=2)
+        return self.get('/payers/', **kwargs)
 
     def plans(self, **kwargs):
         """
             Fetch insurance plans information
         """
         return self.get(self.plans_url, **kwargs)
+
+    def pharmacy(self, pharmacy_request):
+        """
+            Submit an pharmacy request
+
+            :param pharmacy_request: dictionary representing an eligibility request
+        """
+        return self.post(self.pharmacy_url, data=pharmacy_request)
 
     def providers(self, npi=None, **kwargs):
         """
@@ -407,7 +458,8 @@ class PokitDokClient(object):
             :returns a dictionary containing the specified trading partner or, if called with no arguments, a list of
                      available trading partners
         """
-        path = self.trading_partners_url.format(trading_partner_id if trading_partner_id else '')
+        path = self.trading_partners_url.format(trading_partner_id
+                                                if trading_partner_id else '')
         return self.get(path)
 
     def referrals(self, referral_request):
@@ -429,7 +481,8 @@ class PokitDokClient(object):
             Get information about supported scheduling systems or fetch data about a specific scheduling system
             :param scheduler_uuid: The uuid of a specific scheduling system.
         """
-        path = self.schedulers_url.format(scheduler_uuid if scheduler_uuid else '')
+        path = self.schedulers_url.format(scheduler_uuid
+                                          if scheduler_uuid else '')
         return self.get(path)
 
     def appointment_types(self, appointment_type_uuid=None):
@@ -437,7 +490,8 @@ class PokitDokClient(object):
             Get information about appointment types or fetch data about a specific appointment type
             :param appointment_type_uuid: The uuid of a specific appointment type.
         """
-        path = self.appointment_types_url.format(appointment_type_uuid if appointment_type_uuid else '')
+        path = self.appointment_types_url.format(appointment_type_uuid if
+                                                 appointment_type_uuid else '')
         return self.get(path)
 
     def schedule_slots(self, slots_request):
@@ -452,13 +506,17 @@ class PokitDokClient(object):
             Query for open appointment slots or retrieve information for a specific appointment
             :param appointment_uuid: The uuid of a specific appointment.
         """
-        path = self.appointments_url.format(appointment_uuid if appointment_uuid else '')
+        path = self.appointments_url.format(appointment_uuid
+                                            if appointment_uuid else '')
         return self.get(path, **kwargs)
 
     # BACKWARDS COMPATIBILITY AND FEATURE DEPRECATION NOTICE:
     def appointments(self, appointment_uuid=None, **kwargs):
-        warn(DeprecationWarning('This convenience function will be deprecated '
-                                'in an upcoming release. Use get_appointments instead.'), stacklevel=2)
+        warn(
+            DeprecationWarning(
+                'This convenience function will be deprecated '
+                'in an upcoming release. Use get_appointments instead.'),
+            stacklevel=2)
 
         return self.get_appointments(appointment_uuid, **kwargs)
 
@@ -514,8 +572,11 @@ class PokitDokClient(object):
 
     # BACKWARDS COMPATIBILITY AND FEATURE DEPRECATION NOTICE:
     def identity(self, identity_uuid=None, **kwargs):
-        warn(DeprecationWarning('This convenience function will be deprecated '
-                                'in an upcoming release. Use get_identity instead.'), stacklevel=2)
+        warn(
+            DeprecationWarning(
+                'This convenience function will be deprecated '
+                'in an upcoming release. Use get_identity instead.'),
+            stacklevel=2)
 
         return self.get_identity(identity_uuid, **kwargs)
 
@@ -532,7 +593,8 @@ class PokitDokClient(object):
         Validates an identity proof request and generates a Knowledge Based Authentication questionnaire if possible
         :return: questionnaire_response
         """
-        return self.post(self.identity_proof_generate_url, data=identity_payload)
+        return self.post(
+            self.identity_proof_generate_url, data=identity_payload)
 
     def answer_proof_question(self, answer_request):
         """
@@ -550,7 +612,8 @@ class PokitDokClient(object):
             :param historical_version: The historical version id. Used to return a historical identity record
             :return: history result (list)
         """
-        path = self.identity_history_url.format(self.url_base, str(identity_uuid))
+        path = self.identity_history_url.format(self.url_base,
+                                                str(identity_uuid))
 
         if historical_version is not None:
             path = "{0}/{1}".format(path, historical_version)
